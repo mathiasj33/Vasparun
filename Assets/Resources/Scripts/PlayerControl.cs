@@ -17,6 +17,10 @@ public class PlayerControl : MonoBehaviour
     private float timeSinceWallrun;
     private float jetpackTime, timeSinceJetpack;
 
+    private AudioSource wallrunAudio;
+    private AudioSource jetpackAudio;
+    private bool playJetpack;
+
     void Start()
     {
         firstPersonCamera = GameObject.Find("Main Camera").GetComponent<FirstPersonCamera>();
@@ -24,18 +28,34 @@ public class PlayerControl : MonoBehaviour
         wallrunControl = GetComponent<WallrunControl>();
         wallrunControl.enabled = false;
         findWallControl = GetComponent<FindWallControl>();
+
+        wallrunAudio = GetComponents<AudioSource>()[1];
+        jetpackAudio = GetComponents<AudioSource>()[2];
     }
 
     void Update()
     {
+        if (Input.GetKeyUp(KeyCode.K)) Respawn();
+
         timeSinceWallrun += Time.deltaTime;
         timeSinceJetpack += Time.deltaTime;
 
         transform.forward = firstPersonCamera.Camera.transform.forward;
         ApplyWallrun();
+        CheckJetpackAllowed();
         if (!wallrun)
             characterControl.Move(CalculateMovementVector());
-        firstPersonCamera.Camera.transform.position = transform.position + new Vector3(0, 0.9f, 0);
+
+        Vector2 headBob = firstPersonCamera.CalculateHeadBob();
+        Vector3 offset = firstPersonCamera.Camera.transform.right * headBob.x;
+        offset.y = 0.9f + headBob.y;
+
+        firstPersonCamera.Camera.transform.position = transform.position + offset;
+    }
+
+    private void Respawn()
+    {
+        characterControl.transform.position = new Vector3(0, 2, 0);
     }
 
     private void ApplyWallrun()
@@ -51,11 +71,11 @@ public class PlayerControl : MonoBehaviour
         WallInformation nearestWall = findWallControl.GetNearestWall();
         bool isWall = nearestWall != null;
         //if(isWall) Debug.DrawLine(nearestWall.HitPoint, nearestWall.HitPoint + new Vector3(0, .1f, 0), Color.green, 1000, false);
-        if (IsJumping() && isWall && nearestWall.Distance <= 2f)
+        if (IsJumping() && isWall && nearestWall.Distance <= 1f)
         {
             InitiateWallrun(nearestWall);
         }
-        else if (wallrun && (!isWall || nearestWall.Distance > 2f))
+        else if (wallrun && (!isWall || nearestWall.Distance > 1f)) Bug: unendlich jetpack wenn kurz loslassen. Feature: Anstatt Timer: Coroutines
         {
             EndWallrun();
         }
@@ -68,6 +88,8 @@ public class PlayerControl : MonoBehaviour
         wallrunControl.enabled = true;
         wallrun = true;
         firstPersonCamera.Rotate(wallInfo.Right);
+
+        wallrunAudio.Play();
         Debug.Log("INIT");
     }
 
@@ -84,7 +106,6 @@ public class PlayerControl : MonoBehaviour
     private Vector3 CalculateMovementVector()
     {
         ApplyGravity();
-        CheckJetpackAllowed();
         ApplyJetpack();
         ApplyJump();
         Vector3 inputVec = GetInputVector();
@@ -114,16 +135,24 @@ public class PlayerControl : MonoBehaviour
     private void CheckJetpackAllowed()
     {
         if (IsJumping() && Input.GetButtonUp("Jump")) jetpackAllowed = true;
-        if (!IsJumping()) jetpackAllowed = false;
+        if (!IsJumping())
+        {
+            jetpackAllowed = false;
+            playJetpack = true;
+        }
     }
 
     private void ApplyJetpack()
     {
         if (jetpackAllowed && IsJumping() && Input.GetButton("Jump") && !justJumpedFromWall)
         {
+            if(playJetpack)
+            {
+                jetpackAudio.Play();
+                playJetpack = false;
+            }
             if (timeSinceJetpack > 1 && jetpackTime > .5f) {
-                jetpackTime = 0;
-                jetpack = false;
+                ResetJetpack();
             }
 
             jetpackTime += Time.deltaTime;
@@ -134,15 +163,19 @@ public class PlayerControl : MonoBehaviour
                 return;
             }
             yMovement += 20 * Time.deltaTime / 20;
-            Debug.Log(yMovement);
             yMovement = Mathf.Min(yMovement, .05f);
             jetpack = true;
         }
         else
         {
-            jetpack = false;
-            jetpackTime = 0;
+            ResetJetpack();
         }
+    }
+
+    private void ResetJetpack()
+    {
+        jetpackTime = 0;
+        jetpack = false;
     }
 
     private Vector3 GetInputVector()
