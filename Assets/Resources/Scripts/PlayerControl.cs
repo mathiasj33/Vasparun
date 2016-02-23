@@ -3,6 +3,7 @@
 public class PlayerControl : MonoBehaviour
 {
     public float speed;
+    private Vector3 start;
 
     private FirstPersonCamera firstPersonCamera;
     private CharacterController characterControl;
@@ -31,6 +32,8 @@ public class PlayerControl : MonoBehaviour
 
         wallrunAudio = GetComponents<AudioSource>()[1];
         jetpackAudio = GetComponents<AudioSource>()[2];
+
+        start = transform.position;
     }
 
     void Update()
@@ -55,9 +58,9 @@ public class PlayerControl : MonoBehaviour
 
     private void Respawn()
     {
-        characterControl.transform.position = new Vector3(0, 2, 0);
+        characterControl.transform.position = start;
     }
-
+    //TODO: Coroutines; Bug: Manchmal wand detach (v.a. bei zylinder...). Vielleicht ab zwei meter aber character control halben meter weiter rein?? -> mehr spielraum, etwas mehr forgiving
     private void ApplyWallrun()
     {
         if (wallrun && Input.GetButtonDown("Jump"))
@@ -70,19 +73,24 @@ public class PlayerControl : MonoBehaviour
 
         WallInformation nearestWall = findWallControl.GetNearestWall();
         bool isWall = nearestWall != null;
+        if (isWall) wallrunControl.Direction = nearestWall.WallDirection;
         //if(isWall) Debug.DrawLine(nearestWall.HitPoint, nearestWall.HitPoint + new Vector3(0, .1f, 0), Color.green, 1000, false);
-        if (IsJumping() && isWall && nearestWall.Distance <= 1f)
+        if (IsJumping() && isWall && nearestWall.Distance <= 1.5f)
         {
             InitiateWallrun(nearestWall);
         }
-        else if (wallrun && (!isWall || nearestWall.Distance > 1f)) Bug: unendlich jetpack wenn kurz loslassen. Feature: Anstatt Timer: Coroutines
+        else if (wallrun && (!isWall || nearestWall.Distance > 2f))
         {
+            Debug.Log(isWall);
             EndWallrun();
         }
     }
 
     private void InitiateWallrun(WallInformation wallInfo)
     {
+        Vector3 dir = characterControl.transform.position - wallInfo.Position;
+        dir.Normalize();
+        //characterControl.transform.position = wallInfo.Position + dir;
         characterControl.enabled = false;
         wallrunControl.Direction = wallInfo.WallDirection;
         wallrunControl.enabled = true;
@@ -166,7 +174,7 @@ public class PlayerControl : MonoBehaviour
             yMovement = Mathf.Min(yMovement, .05f);
             jetpack = true;
         }
-        else
+        else if(!jetpackAllowed || !IsJumping())
         {
             ResetJetpack();
         }
