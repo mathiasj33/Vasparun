@@ -1,15 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FindWallControl : MonoBehaviour {
-
-	void Start () {
-	
-	}
-	
-	void Update () {
-	
-	}
+public class RayCastHelper : MonoBehaviour {
 
     public WallInformation GetNearestWall()
     {
@@ -26,6 +18,26 @@ public class FindWallControl : MonoBehaviour {
         if(isRightHit && isLeftHit)
         {
             return rightHit.distance < leftHit.distance ? new WallInformation(rightHit, true) : new WallInformation(leftHit, false);
+        }
+        return null;
+    }
+
+    public WallInformation GetWall(Vector3 direction, bool right)
+    {
+        Vector3 camPos = transform.position + new Vector3(0, 0.9f, 0);
+        RaycastHit hit;
+        bool isHit = Physics.Raycast(camPos, direction, out hit);
+
+        if (!isHit) return null;
+        return new WallInformation(hit, right);
+    }
+
+    public GameObject GetUnderPlayer()
+    {
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, -Vector3.up, out hit))
+        {
+            return hit.collider.gameObject;
         }
         return null;
     }

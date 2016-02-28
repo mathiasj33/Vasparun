@@ -1,22 +1,30 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
     public float speed;
-    private Vector3 start;
 
     private FirstPersonCamera firstPersonCamera;
     private CharacterController characterControl;
     private WallrunControl wallrunControl;
-    private FindWallControl findWallControl;
+    private RayCastHelper findWallControl;
+    private CheckpointControl checkpointControl;
 
+    private bool moving;
     private float yMovement;
-    private bool jetpack = false;
-    private bool jetpackAllowed = false;
-    private bool wallrun, justJumpedFromWall = false;
 
-    private float timeSinceWallrun;
-    private float jetpackTime, timeSinceJetpack;
+    private bool jetpack = false;
+    private bool jumpButtonReleased, jetpackAllowed = false;
+    private bool invokedJetpackEnd = false;
+
+    private bool wallrun, cylinder, cylinderRight, justJumpedFromWall = false;
+    private GameObject currentWall;
+    private bool wallrunAllowed = true;
+
+    private float heightBeforeFall;
+    private bool heightSet;
 
     private AudioSource wallrunAudio;
     private AudioSource jetpackAudio;
@@ -28,20 +36,16 @@ public class PlayerControl : MonoBehaviour
         characterControl = GetComponent<CharacterController>();
         wallrunControl = GetComponent<WallrunControl>();
         wallrunControl.enabled = false;
-        findWallControl = GetComponent<FindWallControl>();
+        findWallControl = GetComponent<RayCastHelper>();
+        checkpointControl = GetComponent<CheckpointControl>();
 
         wallrunAudio = GetComponents<AudioSource>()[1];
         jetpackAudio = GetComponents<AudioSource>()[2];
-
-        start = transform.position;
     }
 
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.K)) Respawn();
-
-        timeSinceWallrun += Time.deltaTime;
-        timeSinceJetpack += Time.deltaTime;
+        ApplyRespawn();
 
         transform.forward = firstPersonCamera.Camera.transform.forward;
         ApplyWallrun();
@@ -49,18 +53,37 @@ public class PlayerControl : MonoBehaviour
         if (!wallrun)
             characterControl.Move(CalculateMovementVector());
 
-        Vector2 headBob = firstPersonCamera.CalculateHeadBob();
+        Vector2 headBob = firstPersonCamera.CalculateHeadBob(moving);
         Vector3 offset = firstPersonCamera.Camera.transform.right * headBob.x;
         offset.y = 0.9f + headBob.y;
 
         firstPersonCamera.Camera.transform.position = transform.position + offset;
     }
 
+    private void ApplyRespawn()
+    {
+        if (!IsJumping())
+        {
+            heightBeforeFall = float.MinValue;
+            heightSet = false;
+            return;
+        }
+        if (IsJumping() && !heightSet)
+        {
+            heightBeforeFall = characterControl.transform.position.y;
+            heightSet = true;
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha1) || characterControl.transform.position.y <= heightBeforeFall - 20) Respawn();
+    }
+
     private void Respawn()
     {
-        characterControl.transform.position = start;
+        characterControl.transform.position = checkpointControl.LastCheckpoint.Position;
+        heightBeforeFall = float.MinValue;
+        heightSet = false;
     }
-    //TODO: Coroutines; Bug: Manchmal wand detach (v.a. bei zylinder...). Vielleicht ab zwei meter aber character control halben meter weiter rein?? -> mehr spielraum, etwas mehr forgiving
+
+    // TODO: Bug: Zu hoch springen? Audio fertig. (von JME komplett übertragen) Camera drehen, INDIEDB ETC., Design folgen
     private void ApplyWallrun()
     {
         if (wallrun && Input.GetButtonDown("Jump"))
@@ -68,37 +91,47 @@ public class PlayerControl : MonoBehaviour
             EndWallrun();
             justJumpedFromWall = true;
         }
-        if (timeSinceWallrun < .5f) return;
+        if (!wallrunAllowed) return;
         justJumpedFromWall = false;
 
-        WallInformation nearestWall = findWallControl.GetNearestWall();
+        WallInformation nearestWall;
+        if (!cylinder)
+        {
+            nearestWall = findWallControl.GetNearestWall();
+        }
+        else
+        {
+            Vector3 direction = currentWall.transform.position - transform.position;
+            nearestWall = findWallControl.GetWall(direction.normalized, cylinderRight);
+        }
         bool isWall = nearestWall != null;
-        if (isWall) wallrunControl.Direction = nearestWall.WallDirection;
-        //if(isWall) Debug.DrawLine(nearestWall.HitPoint, nearestWall.HitPoint + new Vector3(0, .1f, 0), Color.green, 1000, false);
+        if (isWall)
+        {
+            currentWall = nearestWall.GameObject;
+            wallrunControl.Direction = nearestWall.WallDirection;
+        }
+
         if (IsJumping() && isWall && nearestWall.Distance <= 1.5f)
         {
             InitiateWallrun(nearestWall);
         }
-        else if (wallrun && (!isWall || nearestWall.Distance > 2f))
+        else if (wallrun && !cylinder && (!isWall || nearestWall.Distance > 2f))
         {
-            Debug.Log(isWall);
             EndWallrun();
         }
     }
 
     private void InitiateWallrun(WallInformation wallInfo)
     {
-        Vector3 dir = characterControl.transform.position - wallInfo.Position;
-        dir.Normalize();
-        //characterControl.transform.position = wallInfo.Position + dir;
         characterControl.enabled = false;
         wallrunControl.Direction = wallInfo.WallDirection;
         wallrunControl.enabled = true;
         wallrun = true;
+        cylinder = wallInfo.Cylinder;
+        cylinderRight = wallInfo.Right;
         firstPersonCamera.Rotate(wallInfo.Right);
 
         wallrunAudio.Play();
-        Debug.Log("INIT");
     }
 
     private void EndWallrun()
@@ -106,9 +139,10 @@ public class PlayerControl : MonoBehaviour
         wallrunControl.enabled = false;
         characterControl.enabled = true;
         wallrun = false;
-        timeSinceWallrun = 0;
+        wallrunAllowed = false;
+        cylinder = false;
+        Invoke(.5f, () => wallrunAllowed = true);
         firstPersonCamera.RotateBack();
-        Debug.Log("END");
     }
 
     private Vector3 CalculateMovementVector()
@@ -137,53 +171,50 @@ public class PlayerControl : MonoBehaviour
             float factor = justJumpedFromWall ? 200 : 150;
             if (justJumpedFromWall) yMovement = 0;
             yMovement += factor * Time.deltaTime / 20;
+            if (justJumpedFromWall) justJumpedFromWall = false;
         }
     }
 
     private void CheckJetpackAllowed()
     {
-        if (IsJumping() && Input.GetButtonUp("Jump")) jetpackAllowed = true;
+        if (IsJumping() && Input.GetButtonUp("Jump")) jumpButtonReleased = true;
         if (!IsJumping())
         {
-            jetpackAllowed = false;
+            jumpButtonReleased = false;
+            jetpackAllowed = true;
             playJetpack = true;
+            invokedJetpackEnd = false;
         }
     }
 
     private void ApplyJetpack()
     {
-        if (jetpackAllowed && IsJumping() && Input.GetButton("Jump") && !justJumpedFromWall)
+        if (jumpButtonReleased && jetpackAllowed && IsJumping() && Input.GetButton("Jump") && !justJumpedFromWall)
         {
-            if(playJetpack)
+            if (playJetpack)
             {
                 jetpackAudio.Play();
                 playJetpack = false;
             }
-            if (timeSinceJetpack > 1 && jetpackTime > .5f) {
-                ResetJetpack();
+
+            if (!invokedJetpackEnd)
+            {
+                invokedJetpackEnd = true;
+                Invoke(.5f, () =>
+                {
+                    jetpackAllowed = false;
+                    jetpack = false;
+                });
             }
 
-            jetpackTime += Time.deltaTime;
-            if (jetpackTime > .5f)
-            {
-                if (timeSinceJetpack > 1) timeSinceJetpack = 0;
-                jetpack = false;
-                return;
-            }
             yMovement += 20 * Time.deltaTime / 20;
             yMovement = Mathf.Min(yMovement, .05f);
             jetpack = true;
         }
-        else if(!jetpackAllowed || !IsJumping())
+        else if (!jetpackAllowed || !IsJumping())
         {
-            ResetJetpack();
+            jetpack = false;
         }
-    }
-
-    private void ResetJetpack()
-    {
-        jetpackTime = 0;
-        jetpack = false;
     }
 
     private Vector3 GetInputVector()
@@ -193,6 +224,9 @@ public class PlayerControl : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
 
         float scale = speed * Time.deltaTime * 8;
+
+        if (FloatEquals(vertical, 0) && FloatEquals(horizontal, 0)) moving = false;
+        else moving = true;
 
         if (vertical > 0)
         {
@@ -218,5 +252,21 @@ public class PlayerControl : MonoBehaviour
     private bool IsJumping()
     {
         return !characterControl.isGrounded && !wallrun;
+    }
+
+    private bool FloatEquals(float f1, float f2)
+    {
+        return Mathf.Abs(f1 - f2) < 0.01f;
+    }
+
+    private void Invoke(float delay, Action action)
+    {
+        StartCoroutine(ExecuteAfter(delay, action));
+    }
+
+    private IEnumerator ExecuteAfter(float delay, Action action)
+    {
+        yield return new WaitForSeconds(delay);
+        action();
     }
 }

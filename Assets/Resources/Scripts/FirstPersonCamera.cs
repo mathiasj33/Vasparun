@@ -29,11 +29,23 @@ public class FirstPersonCamera : MonoBehaviour
         transform.localRotation *= Quaternion.AngleAxis(rotationZ, Vector3.forward);
     }
 
-    public Vector2 CalculateHeadBob()
+    public Vector2 CalculateHeadBob(bool moving)
     {
         Vector2 bob = new Vector2();
-        bob.x = (float) Mathf.Sin(Time.time * 7) * .15f;
-        bob.y = (float) Mathf.Sin((Time.time + 0.3f) * 4) * .1f;
+        float xPeriod = 7;
+        float yPeriod = 4;
+        if(!moving)
+        {
+            xPeriod /= 2;
+            yPeriod /= 2;
+        }
+
+        bob.x = (float) Mathf.Sin(Time.time * xPeriod) * .15f;
+        bob.y = (float) Mathf.Sin((Time.time + 0.3f) * yPeriod) * .1f;
+        if(!moving)
+        {
+            bob /= 2;
+        }
         return bob;
     }
 
