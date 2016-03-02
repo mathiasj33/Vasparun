@@ -6,6 +6,8 @@ public class PlayerControl : MonoBehaviour
 {
     public float speed;
 
+    private Invoker invoker;
+
     private FirstPersonCamera firstPersonCamera;
     private CharacterController characterControl;
     private WallrunControl wallrunControl;
@@ -19,19 +21,27 @@ public class PlayerControl : MonoBehaviour
     private bool jumpButtonReleased, jetpackAllowed = false;
     private bool invokedJetpackEnd = false;
 
-    private bool wallrun, cylinder, cylinderRight, justJumpedFromWall = false;
+    private bool wallrun, cylinder, cylinderRight, justJumpedFromWall, fellFromWall = false;
     private GameObject currentWall;
     private bool wallrunAllowed = true;
 
     private float heightBeforeFall;
     private bool heightSet;
 
+    private AudioSource footstepAudio;
+    private AudioSource landingAudio;
     private AudioSource wallrunAudio;
     private AudioSource jetpackAudio;
     private bool playJetpack;
 
+    private float footStepAudioTime;
+    private bool wasInAir;
+
     void Start()
     {
+        //AudioListener.volume = 0;
+
+        invoker = GetComponent<Invoker>();
         firstPersonCamera = GameObject.Find("Main Camera").GetComponent<FirstPersonCamera>();
         characterControl = GetComponent<CharacterController>();
         wallrunControl = GetComponent<WallrunControl>();
@@ -39,20 +49,46 @@ public class PlayerControl : MonoBehaviour
         findWallControl = GetComponent<RayCastHelper>();
         checkpointControl = GetComponent<CheckpointControl>();
 
-        wallrunAudio = GetComponents<AudioSource>()[1];
-        jetpackAudio = GetComponents<AudioSource>()[2];
+        AudioSource[] sources = GetComponents<AudioSource>();
+        footstepAudio = sources[1];
+        landingAudio = sources[2];
+        wallrunAudio = sources[3];
+        jetpackAudio = sources[4];
     }
 
     void Update()
     {
+        ApplyFootSounds();
         ApplyRespawn();
-
         transform.forward = firstPersonCamera.Camera.transform.forward;
         ApplyWallrun();
         CheckJetpackAllowed();
+
         if (!wallrun)
             characterControl.Move(CalculateMovementVector());
 
+        ApplyHeadbob();
+    }
+
+    private void ApplyFootSounds()
+    {
+        footStepAudioTime += Time.deltaTime;
+        if (footStepAudioTime > .5f && !IsJumping())
+        {
+            footstepAudio.Play();
+            footStepAudioTime = 0;
+        }
+
+        if (IsJumping()) wasInAir = true;
+        if(characterControl.isGrounded && wasInAir)
+        {
+            landingAudio.Play();
+            wasInAir = false;
+        }
+    }
+
+    private void ApplyHeadbob()
+    {
         Vector2 headBob = firstPersonCamera.CalculateHeadBob(moving);
         Vector3 offset = firstPersonCamera.Camera.transform.right * headBob.x;
         offset.y = 0.9f + headBob.y;
@@ -83,15 +119,17 @@ public class PlayerControl : MonoBehaviour
         heightSet = false;
     }
 
-    // TODO: Bug: Zu hoch springen? Audio fertig. (von JME komplett übertragen) Camera drehen, INDIEDB ETC., Design folgen
+    //TODO: weapon sway und bob, Beta
+    // TODO: Bug: Zu hoch springen? INDIEDB, BETA ETC., Design folgen, Camera position bei restart (selbst machen und config file), Weapon sway und bob
     private void ApplyWallrun()
     {
-        if (wallrun && Input.GetButtonDown("Jump"))
+        if (wallrun && (Input.GetButtonDown("Jump") || Input.GetAxis("Vertical") <= 0))
         {
+            fellFromWall = Input.GetAxis("Vertical") <= 0;
             EndWallrun();
             justJumpedFromWall = true;
         }
-        if (!wallrunAllowed) return;
+        if (!wallrunAllowed || fellFromWall) return;
         justJumpedFromWall = false;
 
         WallInformation nearestWall;
@@ -141,7 +179,7 @@ public class PlayerControl : MonoBehaviour
         wallrun = false;
         wallrunAllowed = false;
         cylinder = false;
-        Invoke(.5f, () => wallrunAllowed = true);
+        invoker.Invoke(.5f, () => wallrunAllowed = true);
         firstPersonCamera.RotateBack();
     }
 
@@ -167,10 +205,11 @@ public class PlayerControl : MonoBehaviour
     {
         if (Input.GetButtonDown("Jump"))
         {
-            if (IsJumping() && !justJumpedFromWall) return;
+            if (IsJumping() && !justJumpedFromWall && !fellFromWall) return;
             float factor = justJumpedFromWall ? 200 : 150;
             if (justJumpedFromWall) yMovement = 0;
             yMovement += factor * Time.deltaTime / 20;
+
             if (justJumpedFromWall) justJumpedFromWall = false;
         }
     }
@@ -184,6 +223,7 @@ public class PlayerControl : MonoBehaviour
             jetpackAllowed = true;
             playJetpack = true;
             invokedJetpackEnd = false;
+            fellFromWall = false;
         }
     }
 
@@ -200,16 +240,20 @@ public class PlayerControl : MonoBehaviour
             if (!invokedJetpackEnd)
             {
                 invokedJetpackEnd = true;
-                Invoke(.5f, () =>
+                invoker.Invoke(.5f, () =>
                 {
-                    jetpackAllowed = false;
-                    jetpack = false;
+                    if(IsJumping() && invokedJetpackEnd)
+                    {
+                        jetpackAllowed = false;
+                        jetpack = false;
+                    }
                 });
             }
 
             yMovement += 20 * Time.deltaTime / 20;
             yMovement = Mathf.Min(yMovement, .05f);
             jetpack = true;
+            fellFromWall = false;
         }
         else if (!jetpackAllowed || !IsJumping())
         {
@@ -259,14 +303,5 @@ public class PlayerControl : MonoBehaviour
         return Mathf.Abs(f1 - f2) < 0.01f;
     }
 
-    private void Invoke(float delay, Action action)
-    {
-        StartCoroutine(ExecuteAfter(delay, action));
-    }
-
-    private IEnumerator ExecuteAfter(float delay, Action action)
-    {
-        yield return new WaitForSeconds(delay);
-        action();
-    }
+    
 }
