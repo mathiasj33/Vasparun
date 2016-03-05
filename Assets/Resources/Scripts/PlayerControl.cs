@@ -15,6 +15,7 @@ public class PlayerControl : MonoBehaviour
     private CheckpointControl checkpointControl;
 
     private bool moving;
+    public bool Moving { get { return moving; } }
     private float yMovement;
 
     private bool jetpack = false;
@@ -39,7 +40,7 @@ public class PlayerControl : MonoBehaviour
 
     void Start()
     {
-        //AudioListener.volume = 0;
+        AudioListener.volume = 0;
 
         invoker = GetComponent<Invoker>();
         firstPersonCamera = GameObject.Find("Main Camera").GetComponent<FirstPersonCamera>();
@@ -53,7 +54,7 @@ public class PlayerControl : MonoBehaviour
         footstepAudio = sources[1];
         landingAudio = sources[2];
         wallrunAudio = sources[3];
-        jetpackAudio = sources[4];
+        jetpackAudio = sources[4];  ALS ERSTES: MOTIVATED MACHEN
     }
 
     void Update()
@@ -119,13 +120,12 @@ public class PlayerControl : MonoBehaviour
         heightSet = false;
     }
 
-    //TODO: weapon sway und bob, Beta
-    // TODO: Bug: Zu hoch springen? INDIEDB, BETA ETC., Design folgen, Camera position bei restart (selbst machen und config file), Weapon sway und bob
+    // TODO: Bug: Zu hoch springen? INDIEDB, BETA ETC., Design folgen, Camera position bei restart (selbst machen und config file)
     private void ApplyWallrun()
     {
-        if (wallrun && (Input.GetButtonDown("Jump") || Input.GetAxis("Vertical") <= 0))
+        if (wallrun && (Input.GetButtonDown("Jump") || !IsMovingForwardsOrSidewards()))
         {
-            fellFromWall = Input.GetAxis("Vertical") <= 0;
+            fellFromWall = !IsMovingForwardsOrSidewards();
             EndWallrun();
             justJumpedFromWall = true;
         }
@@ -303,5 +303,12 @@ public class PlayerControl : MonoBehaviour
         return Mathf.Abs(f1 - f2) < 0.01f;
     }
 
-    
+    private bool IsMovingForwardsOrSidewards()
+    {
+        float vertical = Input.GetAxis("Vertical");
+        float horizontal = Input.GetAxis("Horizontal");
+
+        if (vertical <= 0 && FloatEquals(horizontal, 0)) return false;
+        return true;
+    }
 }
