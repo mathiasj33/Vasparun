@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class WallInformation
 {
+    public bool Allowed { get; set; }
     public GameObject GameObject { get; set; }
     public float Distance { get; set; }
     public Vector3 WallDirection { get; set; }
@@ -15,6 +16,7 @@ public class WallInformation
     public WallInformation(RaycastHit hit, bool right)
     {
         GameObject = hit.collider.gameObject;
+        Allowed = GameObject.tag != "NoWallrun" && GameObject.tag != "HitWall";
         Distance = hit.distance;
         WallDirection = right ? Vector3.Cross(Vector3.up, hit.normal) : Vector3.Cross(hit.normal, Vector3.up);
         WallDirection.Normalize();

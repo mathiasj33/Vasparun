@@ -40,7 +40,7 @@ public class PlayerControl : MonoBehaviour
 
     void Start()
     {
-        AudioListener.volume = 0;
+        //AudioListener.volume = 0;
 
         invoker = GetComponent<Invoker>();
         firstPersonCamera = GameObject.Find("Main Camera").GetComponent<FirstPersonCamera>();
@@ -54,7 +54,7 @@ public class PlayerControl : MonoBehaviour
         footstepAudio = sources[1];
         landingAudio = sources[2];
         wallrunAudio = sources[3];
-        jetpackAudio = sources[4];  ALS ERSTES: MOTIVATED MACHEN
+        jetpackAudio = sources[4];
     }
 
     void Update()
@@ -120,7 +120,8 @@ public class PlayerControl : MonoBehaviour
         heightSet = false;
     }
 
-    // TODO: Bug: Zu hoch springen? INDIEDB, BETA ETC., Design folgen, Camera position bei restart (selbst machen und config file)
+    TODO: mit checkpoints regeln, emission?? BACKUP
+    // TODO: Bug: Zu hoch springen? Manchmal runterfallen!! INDIEDB, BETA ETC, Camera position bei restart (selbst machen und config file); Danebenschießen: Zeit minus; Nicht benutze Assets alle löschen!!!
     private void ApplyWallrun()
     {
         if (wallrun && (Input.GetButtonDown("Jump") || !IsMovingForwardsOrSidewards()))
@@ -139,21 +140,22 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
-            Vector3 direction = currentWall.transform.position - transform.position;
+            Vector3 direction = currentWall.transform.position - transform.position; //Backup!!
             nearestWall = findWallControl.GetWall(direction.normalized, cylinderRight);
         }
         bool isWall = nearestWall != null;
+        if (isWall && !nearestWall.Allowed) return;
         if (isWall)
         {
             currentWall = nearestWall.GameObject;
             wallrunControl.Direction = nearestWall.WallDirection;
         }
 
-        if (IsJumping() && isWall && nearestWall.Distance <= 1.5f)
+        if (IsJumping() && isWall && nearestWall.Distance <= 2f)
         {
             InitiateWallrun(nearestWall);
         }
-        else if (wallrun && !cylinder && (!isWall || nearestWall.Distance > 2f))
+        else if (wallrun && !cylinder && (!isWall || nearestWall.Distance > 3f))
         {
             EndWallrun();
         }

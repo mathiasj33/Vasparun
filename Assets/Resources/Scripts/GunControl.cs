@@ -18,7 +18,7 @@ public class GunControl : MonoBehaviour
     private Invoker invoker;
     private bool shootingAllowed = true;
 
-    private ParticleSystem particles;
+    private ParticleSystem gunParticles;
     private Transform start;
     private AudioSource laserAudio;
     private Animator animator;
@@ -30,7 +30,7 @@ public class GunControl : MonoBehaviour
     {
         invoker = GameObject.Find("Player").GetComponent<Invoker>();
         playerControl = GameObject.Find("Player").GetComponent<PlayerControl>();
-        particles = GameObject.Find("LaserParticle").GetComponent<ParticleSystem>();
+        gunParticles = GameObject.Find("LaserParticle").GetComponent<ParticleSystem>();
         start = GameObject.Find("Tip").transform;
         animator = GetComponent<Animator>();
         laserAudio = GameObject.Find("Player").GetComponents<AudioSource>()[5];
@@ -56,29 +56,37 @@ public class GunControl : MonoBehaviour
     {
         if (shootingAllowed && Input.GetButtonDown("Shoot"))
         {
-            Ray ray = new Ray(start.position, cam.transform.forward);
+            Ray ray = new Ray(cam.transform.position, cam.transform.forward);
             RaycastHit hit;
 
             LineRenderer laser = CreateLaser();
-            laser.SetPosition(0, start.position);
 
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit) && Vector3.Distance(hit.point, gameObject.transform.position) < 50)
             {
                 laser.SetPosition(1, hit.point);
+                GameObject go = hit.collider.gameObject;
+                if (go.tag == "HitWall")
+                {
+                    go.transform.parent.gameObject.GetComponent<ShootWallControl>().Shoot();
+                    go.AddComponent<FadeOutScript>();
+                }
             }
             else
             {
                 laser.SetPosition(1, ray.GetPoint(50));
             }
-            particles.Play();
-            laserAudio.Play();
-            animator.SetTrigger("Shoot");
-
-            StartCoroutine(FadeLaserOut(laser));
-
+            PlayShootEffects(laser);
             shootingAllowed = false;
-            invoker.Invoke(.4f, () => shootingAllowed = true);
+            invoker.Invoke(.3f, () => shootingAllowed = true);
         }
+    }
+
+    private void PlayShootEffects(LineRenderer laser)
+    {
+        gunParticles.Play();
+        laserAudio.Play();
+        animator.SetTrigger("Shoot");
+        StartCoroutine(FadeLaserOut(laser));
     }
 
     private IEnumerator FadeLaserOut(LineRenderer laser)
@@ -105,6 +113,7 @@ public class GunControl : MonoBehaviour
         laser.sharedMaterial = (Material)Resources.Load("Materials/laser");
         laser.SetColors(new Color(255, 0, 0, 1), new Color(255, 30, 0, 1));
         laser.SetWidth(0.2f, 0.01f);
+        laser.SetPosition(0, start.position);
         return laser;
     }
 

@@ -18,7 +18,7 @@ public class CheckpointManager : MonoBehaviour {
 
     private void AddCheckpointObjects()
     {
-        foreach(Transform t in GameObject.Find("level1").transform)
+        foreach(Transform t in GameObject.Find("World").transform)
         {
             GameObject go = t.gameObject;
             Bounds bounds = go.GetComponent<MeshCollider>().bounds;
