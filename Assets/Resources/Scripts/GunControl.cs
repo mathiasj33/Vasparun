@@ -69,6 +69,7 @@ public class GunControl : MonoBehaviour
                 {
                     go.transform.parent.gameObject.GetComponent<ShootWallControl>().Shoot();
                     go.AddComponent<FadeOutScript>();
+                    go.GetComponent<MeshCollider>().enabled = false;
                 }
             }
             else

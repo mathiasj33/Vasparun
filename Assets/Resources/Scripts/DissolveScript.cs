@@ -18,6 +18,5 @@ public class DissolveScript : MonoBehaviour {
             material.SetFloat("_AlphaCut", alphaCut);
             yield return null;
         }
-        Destroy(gameObject);
     }
 }

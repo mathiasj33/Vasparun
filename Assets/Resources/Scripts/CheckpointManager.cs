@@ -10,7 +10,7 @@ public class CheckpointManager : MonoBehaviour {
         AddCheckpointObjects();
 	}
 
-    public Checkpoint? GetCheckpoint(GameObject go)
+    public Checkpoint GetCheckpoint(GameObject go)
     {
         if (checkpoints.ContainsKey(go)) return checkpoints[go];
         return null;
@@ -24,8 +24,7 @@ public class CheckpointManager : MonoBehaviour {
             Bounds bounds = go.GetComponent<MeshCollider>().bounds;
             if (IsCheckpointGameObject(go))
             {
-                Checkpoint checkpoint = new Checkpoint();
-                checkpoint.Position = bounds.center + new Vector3(0, .5f, 0);
+                Checkpoint checkpoint = new Checkpoint(bounds.center + new Vector3(0, .5f, 0));
                 checkpoints.Add(go, checkpoint);
             }
         }

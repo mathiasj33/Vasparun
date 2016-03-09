@@ -18,6 +18,5 @@ public class FadeOutScript : MonoBehaviour {
             gameObject.GetComponent<MeshRenderer>().material.color = color;
             yield return null;
         }
-        Destroy(gameObject);
     }
 }

@@ -57,6 +57,13 @@ public class PlayerControl : MonoBehaviour
         jetpackAudio = sources[4];
     }
 
+    public void RespawnAt(Vector3 position)
+    {
+        characterControl.transform.position = position;
+        heightBeforeFall = float.MinValue;
+        heightSet = false;
+    }
+
     void Update()
     {
         ApplyFootSounds();
@@ -81,7 +88,7 @@ public class PlayerControl : MonoBehaviour
         }
 
         if (IsJumping()) wasInAir = true;
-        if(characterControl.isGrounded && wasInAir)
+        if (characterControl.isGrounded && wasInAir)
         {
             landingAudio.Play();
             wasInAir = false;
@@ -110,18 +117,10 @@ public class PlayerControl : MonoBehaviour
             heightBeforeFall = characterControl.transform.position.y;
             heightSet = true;
         }
-        if (Input.GetKeyUp(KeyCode.Alpha1) || characterControl.transform.position.y <= heightBeforeFall - 20) Respawn();
+        if (Input.GetKeyUp(KeyCode.Alpha1) || characterControl.transform.position.y <= heightBeforeFall - 20) checkpointControl.Revert();
     }
 
-    private void Respawn()
-    {
-        characterControl.transform.position = checkpointControl.LastCheckpoint.Position;
-        heightBeforeFall = float.MinValue;
-        heightSet = false;
-    }
-
-    TODO: mit checkpoints regeln, emission?? BACKUP
-    // TODO: Bug: Zu hoch springen? Manchmal runterfallen!! INDIEDB, BETA ETC, Camera position bei restart (selbst machen und config file); Danebenschießen: Zeit minus; Nicht benutze Assets alle löschen!!!
+    // TODO: Bug: Zu hoch springen? Manchmal runterfallen!!!! INDIEDB, BETA ETC, Camera position bei restart (selbst machen und config file); Danebenschießen: Zeit minus; Nicht benutze Assets alle löschen!!!
     private void ApplyWallrun()
     {
         if (wallrun && (Input.GetButtonDown("Jump") || !IsMovingForwardsOrSidewards()))
@@ -140,7 +139,7 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
-            Vector3 direction = currentWall.transform.position - transform.position; //Backup!!
+            Vector3 direction = currentWall.transform.position - transform.position;
             nearestWall = findWallControl.GetWall(direction.normalized, cylinderRight);
         }
         bool isWall = nearestWall != null;
@@ -244,7 +243,7 @@ public class PlayerControl : MonoBehaviour
                 invokedJetpackEnd = true;
                 invoker.Invoke(.5f, () =>
                 {
-                    if(IsJumping() && invokedJetpackEnd)
+                    if (IsJumping() && invokedJetpackEnd)
                     {
                         jetpackAllowed = false;
                         jetpack = false;
@@ -310,7 +309,7 @@ public class PlayerControl : MonoBehaviour
         float vertical = Input.GetAxis("Vertical");
         float horizontal = Input.GetAxis("Horizontal");
 
-        if (vertical <= 0 && FloatEquals(horizontal, 0)) return false;
+        if (FloatEquals(vertical, 0) && FloatEquals(horizontal, 0)) return false;
         return true;
     }
 }

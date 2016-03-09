@@ -7,6 +7,6 @@ public class WallrunControl : MonoBehaviour {
     public Vector3 Direction { get; set; }
 	
 	void Update () {
-        transform.position += Direction * speed * Time.deltaTime * 6;
+        transform.position += Direction * speed * Time.deltaTime * 7;
 	}
 }
