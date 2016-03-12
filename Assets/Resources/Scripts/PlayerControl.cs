@@ -55,6 +55,8 @@ public class PlayerControl : MonoBehaviour
         landingAudio = sources[2];
         wallrunAudio = sources[3];
         jetpackAudio = sources[4];
+        
+        //TODO: wände höher, a und d nicht benutzen müssen (normalisieren), jetpack indicator, Beta an andere und indiedb
     }
 
     public void RespawnAt(Vector3 position)
@@ -70,10 +72,10 @@ public class PlayerControl : MonoBehaviour
         ApplyRespawn();
         transform.forward = firstPersonCamera.Camera.transform.forward;
         ApplyWallrun();
-        CheckJetpackAllowed();
+        CheckJetpackAndJumpingAllowed();
 
         if (!wallrun)
-            characterControl.Move(CalculateMovementVector());
+            characterControl.Move(CalculateMovementVector() * Time.deltaTime * 60);
 
         ApplyHeadbob();
     }
@@ -81,7 +83,7 @@ public class PlayerControl : MonoBehaviour
     private void ApplyFootSounds()
     {
         footStepAudioTime += Time.deltaTime;
-        if (footStepAudioTime > .5f && !IsJumping())
+        if (Moving && footStepAudioTime > .5f && !IsJumping())
         {
             footstepAudio.Play();
             footStepAudioTime = 0;
@@ -120,7 +122,7 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Alpha1) || characterControl.transform.position.y <= heightBeforeFall - 20) checkpointControl.Revert();
     }
 
-    // TODO: Bug: Zu hoch springen? Manchmal runterfallen!!!! INDIEDB, BETA ETC, Camera position bei restart (selbst machen und config file); Danebenschießen: Zeit minus; Nicht benutze Assets alle löschen!!!
+    // TODO: Bug: Zu hoch springen? Manchmal runterfallen!!!! Camera bleibt gedreht? INDIEDB, BETA ETC, Camera position bei restart (selbst machen und config file); Danebenschießen: Zeit minus; Nicht benutze Assets alle löschen!!!
     private void ApplyWallrun()
     {
         if (wallrun && (Input.GetButtonDown("Jump") || !IsMovingForwardsOrSidewards()))
@@ -207,15 +209,15 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             if (IsJumping() && !justJumpedFromWall && !fellFromWall) return;
-            float factor = justJumpedFromWall ? 200 : 150;
+            float factor = justJumpedFromWall ? 200 : 150f;
             if (justJumpedFromWall) yMovement = 0;
-            yMovement += factor * Time.deltaTime / 20;
+            yMovement += factor * 0.0008f;
 
             if (justJumpedFromWall) justJumpedFromWall = false;
         }
     }
 
-    private void CheckJetpackAllowed()
+    private void CheckJetpackAndJumpingAllowed()
     {
         if (IsJumping() && Input.GetButtonUp("Jump")) jumpButtonReleased = true;
         if (!IsJumping())
@@ -290,7 +292,7 @@ public class PlayerControl : MonoBehaviour
             dir -= transform.right * .6f;
         }
         dir.y = 0;
-        dir *= scale;
+        dir *= speed * 8 * 0.016f;
         return dir;
     }
 

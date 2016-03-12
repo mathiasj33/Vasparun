@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class CheckpointControl : MonoBehaviour
 {
@@ -34,6 +35,12 @@ public class CheckpointControl : MonoBehaviour
     {
         GameObject go = rayCastHelper.GetUnderPlayer();
         if (go == null) return;
+        if (go.tag == "Finish")
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            SceneManager.LoadScene(0);
+        }
 
         Checkpoint checkpoint = checkpointManager.GetCheckpoint(go);
         if (checkpoint != null && checkpoint != lastCheckpoint)

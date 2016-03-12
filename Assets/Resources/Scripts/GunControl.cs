@@ -138,7 +138,7 @@ public class GunControl : MonoBehaviour
             factorY = -maxSwayAmount;
 
         Vector3 newRotation = new Vector3(startRotation.x + factorX, startRotation.y + factorY, startRotation.z);
-        transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(newRotation), Time.deltaTime * 10);
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(newRotation), 0.16f);
     }
 
     private void CheckBobFactor()
