@@ -13,6 +13,7 @@ public class PlayerControl : MonoBehaviour
     private WallrunControl wallrunControl;
     private RayCastHelper findWallControl;
     private CheckpointControl checkpointControl;
+    private ControllerTriggers triggers;
 
     private bool moving;
     public bool Moving { get { return moving; } }
@@ -49,14 +50,14 @@ public class PlayerControl : MonoBehaviour
         wallrunControl.enabled = false;
         findWallControl = GetComponent<RayCastHelper>();
         checkpointControl = GetComponent<CheckpointControl>();
+        triggers = GetComponent<ControllerTriggers>();
 
         AudioSource[] sources = GetComponents<AudioSource>();
         footstepAudio = sources[1];
         landingAudio = sources[2];
         wallrunAudio = sources[3];
         jetpackAudio = sources[4];
-        
-        //TODO: wände höher, a und d nicht benutzen müssen (normalisieren), jetpack indicator, Beta an andere und indiedb
+        //TODO: irgendwo bug dass zu früh shootable detached wird, NoWallrun implementieren, camera drehung bug, wenn frames unlimited: landing bug, wände höher, jetpack indicator, Beta an andere und indiedb + twitter + website URL
     }
 
     public void RespawnAt(Vector3 position)
@@ -125,7 +126,7 @@ public class PlayerControl : MonoBehaviour
     // TODO: Bug: Zu hoch springen? Manchmal runterfallen!!!! Camera bleibt gedreht? INDIEDB, BETA ETC, Camera position bei restart (selbst machen und config file); Danebenschießen: Zeit minus; Nicht benutze Assets alle löschen!!!
     private void ApplyWallrun()
     {
-        if (wallrun && (Input.GetButtonDown("Jump") || !IsMovingForwardsOrSidewards()))
+        if (wallrun && (Input.GetButtonDown("Jump") || triggers.LeftTriggerDown || !IsMovingForwardsOrSidewards()))
         {
             fellFromWall = !IsMovingForwardsOrSidewards();
             EndWallrun();
@@ -206,7 +207,7 @@ public class PlayerControl : MonoBehaviour
 
     private void ApplyJump()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") || triggers.LeftTriggerDown)
         {
             if (IsJumping() && !justJumpedFromWall && !fellFromWall) return;
             float factor = justJumpedFromWall ? 200 : 150f;
@@ -219,7 +220,7 @@ public class PlayerControl : MonoBehaviour
 
     private void CheckJetpackAndJumpingAllowed()
     {
-        if (IsJumping() && Input.GetButtonUp("Jump")) jumpButtonReleased = true;
+        if (IsJumping() && (Input.GetButtonUp("Jump") || triggers.LeftTriggerUp)) jumpButtonReleased = true;
         if (!IsJumping())
         {
             jumpButtonReleased = false;
@@ -232,7 +233,7 @@ public class PlayerControl : MonoBehaviour
 
     private void ApplyJetpack()
     {
-        if (jumpButtonReleased && jetpackAllowed && IsJumping() && Input.GetButton("Jump") && !justJumpedFromWall)
+        if (jumpButtonReleased && jetpackAllowed && IsJumping() && (Input.GetButton("Jump") || Input.GetAxis("JumpAxis") == 1) && !justJumpedFromWall)
         {
             if (playJetpack)
             {
@@ -285,13 +286,14 @@ public class PlayerControl : MonoBehaviour
         }
         if (horizontal > 0)
         {
-            dir += transform.right * .6f;
+            dir += transform.right * .6f;  //TODO: If controller used: das hier nur mal .3f und sensitivity *= 3
         }
         if (horizontal < 0)
         {
             dir -= transform.right * .6f;
         }
         dir.y = 0;
+        if(vertical > 0) dir.Normalize();
         dir *= speed * 8 * 0.016f;
         return dir;
     }

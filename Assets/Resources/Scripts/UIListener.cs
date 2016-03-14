@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIListener : MonoBehaviour {
 
+    public GameObject optionsPanel;
     public GameObject creditsPanel;
     public GameObject surveyPanel;
 
@@ -16,6 +18,19 @@ public class UIListener : MonoBehaviour {
     {
         if (IsModalWindowDisplayed()) return;
         SceneManager.LoadScene(2);
+    }
+
+    public void ShowOptions()
+    {
+        if (IsModalWindowDisplayed()) return;
+        optionsPanel.SetActive(true);
+    }
+
+    public void HideOptions()
+    {
+        Slider slider = GameObject.Find("SensitivitySlider").GetComponent<Slider>();
+        Globals.Sensitivity = slider.value;
+        optionsPanel.SetActive(false);
     }
 
     public void ShowCredits()
@@ -42,6 +57,6 @@ public class UIListener : MonoBehaviour {
 
     private bool IsModalWindowDisplayed()
     {
-        return creditsPanel.activeSelf || surveyPanel.activeSelf;
+        return optionsPanel.activeSelf || creditsPanel.activeSelf || surveyPanel.activeSelf;
     }
 }

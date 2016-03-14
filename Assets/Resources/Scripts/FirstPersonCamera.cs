@@ -6,7 +6,7 @@ using System;
 public class FirstPersonCamera : MonoBehaviour
 {
     public GameObject Camera { get { return gameObject; } }
-    public float cameraSensitivity = 1;
+    public float cameraSensitivity = 10;
 
     private float rotationY = 0.0f;
     private float rotationX = 0.0f;
@@ -21,15 +21,13 @@ public class FirstPersonCamera : MonoBehaviour
         Cursor.visible = false;
 
         rotationY = transform.localRotation.eulerAngles.y;
-
-        string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        cameraSensitivity = float.Parse(File.ReadAllText(path + "/sens.txt"));
+        if (Globals.Sensitivity != 0) cameraSensitivity = Globals.Sensitivity;
     }
 
     void Update()
     {
-        rotationY += Input.GetAxis("Mouse X") * cameraSensitivity;
-        rotationX += Input.GetAxis("Mouse Y") * cameraSensitivity;
+        rotationY += Input.GetAxis("Mouse X") * (cameraSensitivity / 10);
+        rotationX += Input.GetAxis("Mouse Y") * (cameraSensitivity / 10);
         rotationX = Mathf.Clamp(rotationX, -90, 90);
 
         transform.localRotation = Quaternion.AngleAxis(rotationY, Vector3.up);
@@ -68,7 +66,7 @@ public class FirstPersonCamera : MonoBehaviour
         StartCoroutine("RotateCameraBack");
     }
 
-    private IEnumerator RotateCamera()
+    private IEnumerator RotateCamera()  //TODO: Bug andere coroutine muss beendet werden!
     {
         int sign = rotateRight ? 1 : -1;
         while (rotationZ < 13 && rotationZ > -13)

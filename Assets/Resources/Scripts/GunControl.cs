@@ -5,6 +5,7 @@ public class GunControl : MonoBehaviour
 {
     public Camera cam;
     private PlayerControl playerControl;
+    private ControllerTriggers triggers;
 
     public float swayX = 10f;
     public float swayY = 5f;
@@ -30,6 +31,8 @@ public class GunControl : MonoBehaviour
     {
         invoker = GameObject.Find("Player").GetComponent<Invoker>();
         playerControl = GameObject.Find("Player").GetComponent<PlayerControl>();
+        triggers = GameObject.Find("Player").GetComponent<ControllerTriggers>();
+
         gunParticles = GameObject.Find("LaserParticle").GetComponent<ParticleSystem>();
         start = GameObject.Find("Tip").transform;
         animator = GetComponent<Animator>();
@@ -54,7 +57,7 @@ public class GunControl : MonoBehaviour
 
     private void CheckShooting()
     {
-        if (shootingAllowed && Input.GetButtonDown("Shoot"))
+        if (shootingAllowed && (Input.GetButtonDown("Shoot") || triggers.RightTriggerDown))
         {
             Ray ray = new Ray(cam.transform.position, cam.transform.forward);
             RaycastHit hit;
