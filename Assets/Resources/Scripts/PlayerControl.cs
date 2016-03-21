@@ -57,7 +57,7 @@ public class PlayerControl : MonoBehaviour
         landingAudio = sources[2];
         wallrunAudio = sources[3];
         jetpackAudio = sources[4];
-        //TODO: irgendwo bug dass zu früh shootable detached wird, NoWallrun implementieren, camera drehung bug, wenn frames unlimited: landing bug, wände höher, jetpack indicator, Beta an andere und indiedb + twitter + website URL
+        TODO: jetpack indicator (Gun leuchtet entweder grün oder rot)
     }
 
     public void RespawnAt(Vector3 position)
@@ -123,7 +123,7 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Alpha1) || characterControl.transform.position.y <= heightBeforeFall - 20) checkpointControl.Revert();
     }
 
-    // TODO: Bug: Zu hoch springen? Manchmal runterfallen!!!! Camera bleibt gedreht? INDIEDB, BETA ETC, Camera position bei restart (selbst machen und config file); Danebenschießen: Zeit minus; Nicht benutze Assets alle löschen!!!
+    // TODO: Bug: Zu hoch springen? Manchmal runterfallen!!!! INDIEDB, BETA ETC, Camera position bei restart (selbst machen und config file); Danebenschießen: Zeit minus; Nicht benutze Assets alle löschen!!!
     private void ApplyWallrun()
     {
         if (wallrun && (Input.GetButtonDown("Jump") || triggers.LeftTriggerDown || !IsMovingForwardsOrSidewards()))
@@ -202,7 +202,7 @@ public class PlayerControl : MonoBehaviour
         if (IsJumping())
             yMovement -= 9.81f * Time.deltaTime / 20;
         else
-            yMovement = -9.81f * Time.deltaTime / 20;
+            yMovement = -9.81f * 0.016f / 20;
     }
 
     private void ApplyJump()

@@ -34,6 +34,13 @@ public class Checkpoint
         revertSet.Clear();
     }
 
+    public Checkpoint Clone()
+    {
+        Checkpoint clone = new Checkpoint(new Vector3(Position.x, Position.y, Position.z));
+        clone.revertSet = revertSet;
+        return clone;
+    }
+
     public static bool operator ==(Checkpoint a, Checkpoint b)
     {
         if (System.Object.ReferenceEquals(a, b)) return true;

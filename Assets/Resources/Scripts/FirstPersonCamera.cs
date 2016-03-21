@@ -58,11 +58,13 @@ public class FirstPersonCamera : MonoBehaviour
     public void Rotate(bool right)
     {
         rotateRight = right;
+        StopCoroutine("RotateCameraBack");
         StartCoroutine("RotateCamera");
     }
 
     public void RotateBack()
     {
+        StopCoroutine("RotateCamera");
         StartCoroutine("RotateCameraBack");
     }
 

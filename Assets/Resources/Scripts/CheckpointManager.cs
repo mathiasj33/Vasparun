@@ -26,6 +26,7 @@ public class CheckpointManager : MonoBehaviour {
             {
                 Checkpoint checkpoint = new Checkpoint(bounds.center + new Vector3(0, .5f, 0));
                 checkpoints.Add(go, checkpoint);
+                if (go.tag == "Untagged") go.tag = "NoWallrun";
             }
         }
     }
