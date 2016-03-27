@@ -3,29 +3,43 @@ using System.Collections;
 
 public class SlideScript : MonoBehaviour
 {
-    public float speed = 1;
+    public float speed = 1;  TODO: sliding devblog
+    private PlayerControl playerControl;
+
     private RailInformation railInformation;
     public RailInformation RailInformation
     {
         set
         {
             this.railInformation = value;
-            railInformation.SetCurrentWaypointToClosest(transform.position, transform.forward); //TODO: Acceleration factor usw...
+            railInformation.SetCurrentWaypointToClosest(transform.position, transform.forward);
         }
     }
-    private Vector3 velocity = Vector3.zero;
+    public Vector3 Velocity { get; private set; }
     private float acceleration = .8f;
 
-    void Update() //TODO: mit anderen framerates testen
+    void Start()
     {
+        playerControl = GetComponent<PlayerControl>();
+        Velocity = Vector3.zero;
+    }
+
+    void Update()
+    {
+        if (railInformation.IsAtEnd())
+        {
+            playerControl.StopSliding();
+            return;
+        }
+
         Vector3 current = railInformation.GetCurrentWaypoint();
-        velocity = (current - transform.position).normalized * speed * acceleration * Time.deltaTime * 15 * 1.5f;
+        Velocity = (current - transform.position).normalized * speed * acceleration * Time.deltaTime * 15 * 1.5f;
 
-        if (velocity.y < .05f) acceleration *= (1 + Time.deltaTime / 2);
-        else if (velocity.y > .05f) acceleration /= (1 + Time.deltaTime / 2);
+        if (Velocity.y < .05f) acceleration *= (1 + Time.deltaTime / 2);
+        else if (Velocity.y > .05f) acceleration /= (1 + Time.deltaTime / 2);
 
-        IncreaseWaypoints(transform.position, velocity);
-        transform.position += velocity;
+        IncreaseWaypoints(transform.position, Velocity);
+        transform.position += Velocity;
     }
 
     private void IncreaseWaypoints(Vector3 start, Vector3 delta)

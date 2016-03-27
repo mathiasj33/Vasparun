@@ -8,7 +8,7 @@ public class RailInformation
 {
     private List<Vector3> waypoints = new List<Vector3>();
     private int current = 0;
-    private int direction = 1; //um den richtigen Waypoint zu bestimmen: closest to player und danach richtung wp - player normalisiern und den mit weniger abweichung von camera direction nehmen
+    private int direction = 1;
     private bool setDirection;
 
     public RailInformation(GameObject rail)
@@ -23,7 +23,7 @@ public class RailInformation
 
     public void SetCurrentWaypointToClosest(Vector3 position, Vector3 camDir)
     {
-        float minDistance =  waypoints.Min(wp => Vector3.Distance(position, wp));  //TODO: testen
+        float minDistance = waypoints.Min(wp => Vector3.Distance(position, wp));
 
         Vector3[] closests = GetClosestWaypoints(position);
         Vector3[] dirs = new Vector3[] { (closests[0] - position).normalized, (closests[1] - position).normalized };
@@ -69,6 +69,11 @@ public class RailInformation
     {
         if (setDirection) SetDirection(pos, camDir);
         current += direction;
+    }
+
+    public bool IsAtEnd()
+    {
+        return current >= waypoints.Count || current < 0;
     }
 }
 
