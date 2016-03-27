@@ -11,7 +11,7 @@ public class PlayerControl : MonoBehaviour
     private FirstPersonCamera firstPersonCamera;
     private CharacterController characterControl;
     private WallrunControl wallrunControl;
-    private RayCastHelper findWallControl;
+    private RayCastHelper rayCastHelper;
     private CheckpointControl checkpointControl;
     private ControllerTriggers triggers;
 
@@ -27,6 +27,8 @@ public class PlayerControl : MonoBehaviour
     private GameObject currentWall;
     private bool wallrunAllowed = true;
 
+    private bool sliding;
+
     private float heightBeforeFall;
     private bool heightSet;
 
@@ -34,6 +36,7 @@ public class PlayerControl : MonoBehaviour
     private AudioSource landingAudio;
     private AudioSource wallrunAudio;
     private AudioSource jetpackAudio;
+    private AudioSource slidingAudio;
     private bool playJetpack;
 
     private float footStepAudioTime;
@@ -48,7 +51,7 @@ public class PlayerControl : MonoBehaviour
         characterControl = GetComponent<CharacterController>();
         wallrunControl = GetComponent<WallrunControl>();
         wallrunControl.enabled = false;
-        findWallControl = GetComponent<RayCastHelper>();
+        rayCastHelper = GetComponent<RayCastHelper>();
         checkpointControl = GetComponent<CheckpointControl>();
         triggers = GetComponent<ControllerTriggers>();
 
@@ -57,7 +60,7 @@ public class PlayerControl : MonoBehaviour
         landingAudio = sources[2];
         wallrunAudio = sources[3];
         jetpackAudio = sources[4];
-        TODO: jetpack indicator (Gun leuchtet entweder grün oder rot)
+        slidingAudio = sources[6];
     }
 
     public void RespawnAt(Vector3 position)
@@ -73,18 +76,31 @@ public class PlayerControl : MonoBehaviour
         ApplyRespawn();
         transform.forward = firstPersonCamera.Camera.transform.forward;
         ApplyWallrun();
+        ApplyRail();
         CheckJetpackAndJumpingAllowed();
 
-        if (!wallrun)
+        if (!wallrun && !sliding)
             characterControl.Move(CalculateMovementVector() * Time.deltaTime * 60);
 
         ApplyHeadbob();
     }
 
+    private void ApplyRail()
+    {
+        RailInformation info = rayCastHelper.GetRail();
+        if (!sliding && info != null)
+        {
+            sliding = true;
+            gameObject.AddComponent<SlideScript>();
+            gameObject.GetComponent<SlideScript>().RailInformation = info;
+            slidingAudio.Play();
+        }
+    }
+
     private void ApplyFootSounds()
     {
         footStepAudioTime += Time.deltaTime;
-        if (Moving && footStepAudioTime > .5f && !IsJumping())
+        if (!sliding && Moving && footStepAudioTime > .5f && !IsJumping())
         {
             footstepAudio.Play();
             footStepAudioTime = 0;
@@ -104,12 +120,13 @@ public class PlayerControl : MonoBehaviour
         Vector3 offset = firstPersonCamera.Camera.transform.right * headBob.x;
         offset.y = 0.9f + headBob.y;
 
+        if (sliding) offset = new Vector3(0, 0.9f, 0);
         firstPersonCamera.Camera.transform.position = transform.position + offset;
     }
 
     private void ApplyRespawn()
     {
-        if (!IsJumping())
+        if (!IsJumping() || sliding)
         {
             heightBeforeFall = float.MinValue;
             heightSet = false;
@@ -123,7 +140,7 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Alpha1) || characterControl.transform.position.y <= heightBeforeFall - 20) checkpointControl.Revert();
     }
 
-    // TODO: Bug: Zu hoch springen? Manchmal runterfallen!!!! INDIEDB, BETA ETC, Camera position bei restart (selbst machen und config file); Danebenschießen: Zeit minus; Nicht benutze Assets alle löschen!!!
+    // TODO: Beta etc., Camera position bei restart (selbst machen und config file); Danebenschießen: Zeit minus; Nicht benutze Assets alle löschen!!!
     private void ApplyWallrun()
     {
         if (wallrun && (Input.GetButtonDown("Jump") || triggers.LeftTriggerDown || !IsMovingForwardsOrSidewards()))
@@ -138,12 +155,12 @@ public class PlayerControl : MonoBehaviour
         WallInformation nearestWall;
         if (!cylinder)
         {
-            nearestWall = findWallControl.GetNearestWall();
+            nearestWall = rayCastHelper.GetNearestWall();
         }
         else
         {
             Vector3 direction = currentWall.transform.position - transform.position;
-            nearestWall = findWallControl.GetWall(direction.normalized, cylinderRight);
+            nearestWall = rayCastHelper.GetWall(direction.normalized, cylinderRight);
         }
         bool isWall = nearestWall != null;
         if (isWall && !nearestWall.Allowed) return;
@@ -286,7 +303,7 @@ public class PlayerControl : MonoBehaviour
         }
         if (horizontal > 0)
         {
-            dir += transform.right * .6f;  //TODO: If controller used: das hier nur mal .3f und sensitivity *= 3
+            dir += transform.right * .6f;  //TODO: If controller used: das hier nur mal .3f und sensitivity *= 3. Erst aber controller support wegmachen
         }
         if (horizontal < 0)
         {

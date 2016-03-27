@@ -68,7 +68,7 @@ public class FirstPersonCamera : MonoBehaviour
         StartCoroutine("RotateCameraBack");
     }
 
-    private IEnumerator RotateCamera()  //TODO: Bug andere coroutine muss beendet werden!
+    private IEnumerator RotateCamera()
     {
         int sign = rotateRight ? 1 : -1;
         while (rotationZ < 13 && rotationZ > -13)

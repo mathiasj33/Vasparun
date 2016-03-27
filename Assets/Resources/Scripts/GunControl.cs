@@ -146,16 +146,16 @@ public class GunControl : MonoBehaviour
 
     private void CheckBobFactor()
     {
-        if(playerControl.Moving)
+        if (playerControl.Moving)
         {
-            if(bobFactor < 1)
+            if (bobFactor < 1)
             {
                 bobFactor += Time.deltaTime;
             }
         }
         else
         {
-            if(bobFactor > .5f)
+            if (bobFactor > .5f)
             {
                 bobFactor -= Time.deltaTime;
             }

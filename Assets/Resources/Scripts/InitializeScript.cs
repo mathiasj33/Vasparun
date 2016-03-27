@@ -9,6 +9,7 @@ public class InitializeScript : MonoBehaviour
     {
         InitWorldColliders();
         InitHitWalls();
+        InitRails();
     }
 
     private void InitWorldColliders()
@@ -35,6 +36,18 @@ public class InitializeScript : MonoBehaviour
                 child.tag = "HitWall";
                 child.AddComponent<MeshCollider>();
             }
+        }
+    }
+
+    private void InitRails()
+    {
+        CharacterController controller = GameObject.Find("Player").GetComponent<CharacterController>();
+        foreach (Transform t in GameObject.Find("Rails").transform)
+        {
+            GameObject go = t.gameObject;
+            go.tag = "Rail";
+            go.AddComponent<MeshCollider>();
+            Physics.IgnoreCollision(controller, go.GetComponent<MeshCollider>());
         }
     }
 
