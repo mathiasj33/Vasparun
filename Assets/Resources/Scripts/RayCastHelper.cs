@@ -42,16 +42,4 @@ public class RayCastHelper : MonoBehaviour
         }
         return null;
     }
-
-    public RailInformation GetRail()
-    {
-        Vector3 camPos = transform.position + new Vector3(0, 0.9f, 0);
-        RaycastHit hit;
-        if (Physics.Raycast(camPos, Vector3.up, out hit))
-        {
-            if (hit.collider.gameObject.tag == "Rail" && hit.distance < 3)
-                return new RailInformation(hit.collider.gameObject);
-        }
-        return null;
-    }
 }

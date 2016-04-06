@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <office:document xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0" xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0" xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0" xmlns:config="urn:oasis:names:tc:opendocument:xmlns:config:1.0" xmlns:ooo="http://openoffice.org/2004/office" xmlns:ooow="http://openoffice.org/2004/writer" xmlns:oooc="http://openoffice.org/2004/calc" xmlns:dom="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rpt="http://openoffice.org/2005/report" xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:grddl="http://www.w3.org/2003/g/data-view#" xmlns:officeooo="http://openoffice.org/2009/office" xmlns:tableooo="http://openoffice.org/2009/table" xmlns:drawooo="http://openoffice.org/2010/draw" xmlns:calcext="urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0" xmlns:loext="urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0" xmlns:field="urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0" xmlns:formx="urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0" xmlns:css3t="http://www.w3.org/TR/css3-text/" office:version="1.2" office:mimetype="application/vnd.oasis.opendocument.text">
- <office:meta><meta:creation-date>2016-02-21T01:12:54.823000000</meta:creation-date><dc:date>2016-03-18T14:43:20.461000000</dc:date><meta:editing-duration>PT5H16M59S</meta:editing-duration><meta:editing-cycles>182</meta:editing-cycles><meta:generator>LibreOffice/4.4.7.2$Windows_x86 LibreOffice_project/f3153a8b245191196a4b6b9abd1d0da16eead600</meta:generator><meta:document-statistic meta:table-count="0" meta:image-count="0" meta:object-count="0" meta:page-count="5" meta:paragraph-count="100" meta:word-count="2064" meta:character-count="11771" meta:non-whitespace-character-count="9826"/></office:meta>
+ <office:meta><meta:creation-date>2016-02-21T01:12:54.823000000</meta:creation-date><dc:date>2016-04-06T15:56:30.151000000</dc:date><meta:editing-duration>PT5H48M11S</meta:editing-duration><meta:editing-cycles>189</meta:editing-cycles><meta:generator>LibreOffice/4.4.7.2$Windows_x86 LibreOffice_project/f3153a8b245191196a4b6b9abd1d0da16eead600</meta:generator><meta:document-statistic meta:table-count="0" meta:image-count="0" meta:object-count="0" meta:page-count="4" meta:paragraph-count="90" meta:word-count="1602" meta:character-count="9159" meta:non-whitespace-character-count="7667"/></office:meta>
  <office:settings>
   <config:config-item-set config:name="ooo:view-settings">
-   <config:config-item config:name="ViewAreaTop" config:type="long">17780</config:config-item>
+   <config:config-item config:name="ViewAreaTop" config:type="long">52917</config:config-item>
    <config:config-item config:name="ViewAreaLeft" config:type="long">0</config:config-item>
    <config:config-item config:name="ViewAreaWidth" config:type="long">23682</config:config-item>
    <config:config-item config:name="ViewAreaHeight" config:type="long">22756</config:config-item>
@@ -13,12 +13,12 @@
    <config:config-item-map-indexed config:name="Views">
     <config:config-item-map-entry>
      <config:config-item config:name="ViewId" config:type="string">view2</config:config-item>
-     <config:config-item config:name="ViewLeft" config:type="long">13494</config:config-item>
-     <config:config-item config:name="ViewTop" config:type="long">34163</config:config-item>
+     <config:config-item config:name="ViewLeft" config:type="long">5327</config:config-item>
+     <config:config-item config:name="ViewTop" config:type="long">65338</config:config-item>
      <config:config-item config:name="VisibleLeft" config:type="long">0</config:config-item>
-     <config:config-item config:name="VisibleTop" config:type="long">17780</config:config-item>
+     <config:config-item config:name="VisibleTop" config:type="long">52917</config:config-item>
      <config:config-item config:name="VisibleRight" config:type="long">23680</config:config-item>
-     <config:config-item config:name="VisibleBottom" config:type="long">40534</config:config-item>
+     <config:config-item config:name="VisibleBottom" config:type="long">75671</config:config-item>
      <config:config-item config:name="ZoomType" config:type="short">0</config:config-item>
      <config:config-item config:name="ViewLayoutColumns" config:type="short">0</config:config-item>
      <config:config-item config:name="ViewLayoutBookMode" config:type="boolean">false</config:config-item>
@@ -59,7 +59,7 @@
    <config:config-item config:name="AllowPrintJobCancel" config:type="boolean">true</config:config-item>
    <config:config-item config:name="RsidRoot" config:type="int">1946782</config:config-item>
    <config:config-item config:name="TabsRelativeToIndent" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="Rsid" config:type="int">8001867</config:config-item>
+   <config:config-item config:name="Rsid" config:type="int">8172316</config:config-item>
    <config:config-item config:name="UnxForceZeroExtLeading" config:type="boolean">false</config:config-item>
    <config:config-item config:name="LoadReadonly" config:type="boolean">false</config:config-item>
    <config:config-item config:name="PrintBlackFonts" config:type="boolean">false</config:config-item>
@@ -436,7 +436,10 @@
   <style:style style:name="P63" style:family="paragraph" style:parent-style-name="Standard" style:list-style-name="L2">
    <style:text-properties fo:font-weight="normal" officeooo:rsid="005a069a" officeooo:paragraph-rsid="005a069a" style:font-weight-asian="normal" style:font-weight-complex="normal"/>
   </style:style>
-  <style:style style:name="P64" style:family="paragraph" style:parent-style-name="Standard" style:list-style-name="L1">
+  <style:style style:name="P64" style:family="paragraph" style:parent-style-name="Standard">
+   <style:text-properties fo:font-weight="normal" officeooo:rsid="0071c6e6" officeooo:paragraph-rsid="0071c6e6" style:font-weight-asian="normal" style:font-weight-complex="normal"/>
+  </style:style>
+  <style:style style:name="P65" style:family="paragraph" style:parent-style-name="Standard" style:list-style-name="L1">
    <style:text-properties officeooo:rsid="002d4e90" officeooo:paragraph-rsid="002d4e90"/>
   </style:style>
   <style:style style:name="T1" style:family="text">
@@ -718,11 +721,9 @@
    <text:p text:style-name="P1">zielline und start</text:p>
    <text:p text:style-name="P1">MVP</text:p>
    <text:p text:style-name="P47">verschiedene Skyboxen</text:p>
-   <text:p text:style-name="P54">verschiedene GlowFarben →&gt;&gt;<text:span text:style-name="T26"> VARIETY<text:line-break/>verschiedene Waffen?</text:span></text:p>
+   <text:p text:style-name="P54">verschiedene GlowFarben →&gt;&gt;<text:span text:style-name="T26"> VARIETY</text:span></text:p>
    <text:p text:style-name="P47">verschiedene Sountracks</text:p>
-   <text:p text:style-name="P48">controller support</text:p>
    <text:p text:style-name="P55">ein zwei richtig schwere Welten</text:p>
-   <text:p text:style-name="P55">community maps kickstarter</text:p>
    <text:p text:style-name="P50"/>
    <text:p text:style-name="P52">Patch system, beta testing</text:p>
    <text:p text:style-name="P1"/>
@@ -735,7 +736,7 @@
    <text:p text:style-name="P10">There are various powerups that the player can obtain during gameplay. They have a great effect on the gameplay but only last for a short duration. The player can choose when to activate his powerup, but he can only have one at a time.</text:p>
    <text:p text:style-name="P10"/>
    <text:p text:style-name="P10">These powerups exist:</text:p>
-   <text:list xml:id="list7401997842680786864" text:style-name="L1">
+   <text:list xml:id="list3843748240716180545" text:style-name="L1">
     <text:list-item>
      <text:p text:style-name="P56">Speed: The player gets faster for 5 seconds (use with shortcuts)</text:p>
     </text:list-item>
@@ -743,7 +744,7 @@
      <text:p text:style-name="P57">Slow motion: Everything happens in slow motion for 5 seconds (use when aiming)</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P64"><text:span text:style-name="T6">Increased damage: The player just has to hit any spot on the wall in order to </text:span><text:span text:style-name="T7">destroy</text:span><text:span text:style-name="T6"> it (one time use)</text:span></text:p>
+     <text:p text:style-name="P65"><text:span text:style-name="T6">Increased damage: The player just has to hit any spot on the wall in order to </text:span><text:span text:style-name="T7">destroy</text:span><text:span text:style-name="T6"> it (one time use)</text:span></text:p>
     </text:list-item>
     <text:list-item>
      <text:p text:style-name="P58">Jetpack fuel: The player can use his jetpack for 5 seconds (one time use)</text:p>
@@ -758,10 +759,10 @@
    <text:p text:style-name="P41"/>
    <text:p text:style-name="P41">Moving platforms:</text:p>
    <text:p text:style-name="P41">Platforms that move. How can I integrate this with Blender??</text:p>
-   <text:p text:style-name="P42"><text:soft-page-break/>Rails:</text:p>
-   <text:p text:style-name="P42">In some maps, there will be certain rails that the player will be <text:span text:style-name="T32">able to slide on (similar to Bioshock infinite). He will have to jump from rail to rail etc. and jump onto rails from wallrunning. While sliding on a rail, the player will also have to shoot walls etc. Blender integration? (Spline)</text:span></text:p>
+   <text:p text:style-name="P41"/>
+   <text:p text:style-name="P41"/>
    <text:p text:style-name="P42"/>
-   <text:p text:style-name="P43">Warp points:<text:line-break/>In some maps, there will be certain warp points where the player can pull himself to (like a Zelda hookshot). He will then keep his momentum and automatically unhook from the warp point. The player will shoot green lasers out if his gone if he wants to hook onto a point. He will have to do this in difficult situations such as jumping or wallrunning. Blender integration?</text:p>
+   <text:p text:style-name="P43"><text:soft-page-break/>Warp points:<text:line-break/>In some maps, there will be certain warp points where the player can pull himself to (like a Zelda hookshot). He will then keep his momentum and automatically unhook from the warp point. The player will shoot green lasers out if his gone if he wants to hook onto a point. He will have to do this in difficult situations such as jumping or wallrunning. Blender integration?</text:p>
    <text:p text:style-name="P42"/>
    <text:p text:style-name="P12">Shortcuts:</text:p>
    <text:p text:style-name="P20">In every map there are shortcuts. <text:span text:style-name="T10">These range from simple ones, such as being able to skip certain wallruns when using the jetpack intelligently, to complex jumps, that enable you to completely skip parts of the map. Players are encouraged to actively search for these shortcuts in order to beat the highscores. Some of them can only be achieved with powerups such as speed or jetpack fuel.</text:span></text:p>
@@ -769,21 +770,16 @@
    <text:p text:style-name="P10">Score system:</text:p>
    <text:p text:style-name="P24">For each player, the time taken to complete each map is measured. The one who completed the map in the shortest amount of time has the highest score.</text:p>
    <text:p text:style-name="P21"/>
-   <text:p text:style-name="P23">Map editor:</text:p>
-   <text:p text:style-name="P26">Every player can create own maps after downloading Blender and an example map with the necessary props. There are tutorials that will outline this process for players who are new to Blender.<text:line-break/>The player can choose the skybox, place powerups, lasers and destructible walls in <text:span text:style-name="T28">adding the objects as child objects of premade empties.</text:span></text:p>
-   <text:p text:style-name="P21"/>
    <text:p text:style-name="P39">Graphics:<text:line-break/>The graphics are kept at a fairly simple but good-looking level. The heavy use of bloom effects achieves a futuristic look. Each map will have a unique skybox and a different bloom color than the orthers.</text:p>
    <text:p text:style-name="P21"/>
    <text:p text:style-name="P22">Online / community integration:</text:p>
-   <text:p text:style-name="P28">The highscore for each map can be compared with the highscores of other members of the community once an account has been created / via the steam account. <text:span text:style-name="T22">After completing a map, the player will see personal records as well as his global position.</text:span><text:line-break/><text:span text:style-name="T13">Additionally, each player can upload custom maps to the server. These maps will be available via a community map browser. They will be community rated on a scale from 1 to 10 and each month, the 10 best rated maps will be featured in the community map browser. Maps that are not accepted by the community (worse than an average of 5) will be deleted after one month.<text:line-break/>Players are also able to play maps that they downloaded from a filehoster in order to share maps with friends without having to share them with the whole community.</text:span></text:p>
-   <text:p text:style-name="P28"/>
-   <text:p text:style-name="P6">Attention: <text:span text:style-name="T6">Community maps will be a stretch goal of the kickstarter campaign.</text:span></text:p>
+   <text:p text:style-name="P28">The highscore for each map can be compared with the highscores of other members of the community once an account has been created / via the steam account. <text:span text:style-name="T22">After completing a map, the player will see personal records as well as his global position.</text:span></text:p>
    <text:p text:style-name="P7"/>
    <text:p text:style-name="P3">UI</text:p>
    <text:p text:style-name="P20">Art: Futuristic fonts and buttons</text:p>
    <text:p text:style-name="P20"/>
    <text:p text:style-name="P14">Start screen:<text:line-break/>Right: Footage of different maps (camera fly)<text:line-break/><text:span text:style-name="T8">Left: Buttons(Select map, Select community map, Scoreboards, Options, End game)</text:span></text:p>
-   <text:p text:style-name="P14"><text:soft-page-break/></text:p>
+   <text:p text:style-name="P14"/>
    <text:p text:style-name="P15">Map selection screen:</text:p>
    <text:p text:style-name="P16">Different images of maps in borders aligned in a grid and the map number underneath. Scrollbar</text:p>
    <text:p text:style-name="P16"/>
@@ -796,18 +792,14 @@
    <text:p text:style-name="P13"/>
    <text:p text:style-name="P13">Ingame UI:<text:line-break/>There is a timer at the top showing the current run time. <text:span text:style-name="T32">There will also be an indicator which shows whether the player can still use his jetpack or not.</text:span></text:p>
    <text:p text:style-name="P2"/>
-   <text:p text:style-name="P4">Server side</text:p>
-   <text:p text:style-name="P30">The server will be written in Java/Go/C#. It will connect to a MySQL database to store the user data and the map highscores. The community maps will be saved to the local storage/on a filehoster <text:span text:style-name="T28">(dropbox etc.)</text:span>. <text:span text:style-name="T16">Every day, it will check all community maps and if their ranking is worse than 5 and they are older than one month, they will get deleted. The best rated maps will be chosen and provided in the featured section of the community browser.<text:line-break/><text:line-break/>Players will also be able to host servers themselves which will be achieved by sharing the server application. They can then choose to have their maps hosted either on the central server or on a custom filehosting account / their filesystem. On the website there will be an official list of trusted community servers.</text:span></text:p>
-   <text:p text:style-name="P30"/>
-   <text:p text:style-name="P5">Cheat prevention</text:p>
-   <text:p text:style-name="P31">The server will go through all of the top highscores every hour and compare them <text:span text:style-name="T17">to the current top highscore. If the time taken to complete the map is much less ( &gt; 30 sceonds), the positions of the player every 5 seconds will be sent to me / 5 randomly chosen community members with a playtime of more than 5 hours and will be evaluated. If at least 4 of the members vote that the player cheated, the highscore will be removed and the player will be notified. He will have a chance to complain and the positions will then be sent directly to me.<text:line-break/>The positions will be used to recreate the playthrough in a special submenu that only anti-cheat members and me can see.</text:span></text:p>
-   <text:p text:style-name="P31"><text:line-break/><text:span text:style-name="T18">Note: using shortcuts or intelligently using the map is not considered cheating!</text:span></text:p>
+   <text:p text:style-name="P4"><text:soft-page-break/>Server side</text:p>
+   <text:p text:style-name="P30">The server will be written in Java/Go/C#. It will connect to a MySQL database to store the user data and the map highscores.<text:span text:style-name="T16"><text:line-break/><text:line-break/>Players will also be able to host servers themselves which will be achieved by sharing the server application.</text:span></text:p>
    <text:p text:style-name="P2"/>
    <text:p text:style-name="P6">Beta testing</text:p>
    <text:p text:style-name="P37">I will launch a closed beta with about 20 backers or interested people. First it will start for 10 people only so that I can fix these bugs and 2 weeks later the rest will get access to the beta. It will contain all features except for community maps.</text:p>
    <text:p text:style-name="P2"/>
    <text:p text:style-name="P2">Achievements</text:p>
-   <text:list xml:id="list163291421260996721" text:style-name="L2">
+   <text:list xml:id="list3566360157354557467" text:style-name="L2">
     <text:list-item>
      <text:p text:style-name="P59">Finisher: Beat every main map</text:p>
     </text:list-item>
@@ -815,7 +807,7 @@
      <text:p text:style-name="P59">Community player: Beat 10 community maps</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P60"><text:soft-page-break/><text:span text:style-name="T3">Master: </text:span>Beat the creator <text:span text:style-name="T14">of the game </text:span>in every map</text:p>
+     <text:p text:style-name="P60"><text:span text:style-name="T3">Master: </text:span>Beat the creator <text:span text:style-name="T14">of the game </text:span>in every map</text:p>
     </text:list-item>
     <text:list-item>
      <text:p text:style-name="P61">Community master: Beat the creator of a community map on his own map</text:p>
@@ -858,7 +850,7 @@
    <text:p text:style-name="P37">Once I have gained some publicity and have a fairly well working game, I will start a Kickstarter campaign in order to <text:line-break/>a) gain even more publicity</text:p>
    <text:p text:style-name="P37">b) earn at least enough money to make the game possible and keep me motivated</text:p>
    <text:p text:style-name="P37">The money will be used for:</text:p>
-   <text:list xml:id="list2498296309811557634" text:style-name="L3">
+   <text:list xml:id="list7103893933811583930" text:style-name="L3">
     <text:list-item>
      <text:p text:style-name="P62">Server costs <text:span text:style-name="T28">at least for 2 years</text:span>(How much?)</text:p>
     </text:list-item>
@@ -872,7 +864,7 @@
      <text:p text:style-name="P62">Music</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P62">Steam Greenlight license</text:p>
+     <text:p text:style-name="P62"><text:soft-page-break/>Steam Greenlight license</text:p>
     </text:list-item>
     <text:list-item>
      <text:p text:style-name="P62">Motivational purposes</text:p>
@@ -887,7 +879,7 @@
    <text:p text:style-name="P37"/>
    <text:p text:style-name="P52"><text:span text:style-name="T6">There will be different badges, including: 1$ - The next time I hit a seemingly unfixable bug, I will think of your support, 5$ - copy of the game, 10$ - copy of the game, 20$ - copy of the game + closed beta access, 100$ (only 5) → mentioned in credits, 150$ (only one) → create one main map with me + all previous<text:line-break/></text:span><text:span text:style-name="T23">These are not final by any means<text:line-break/></text:span><text:span text:style-name="T6">Similar to </text:span><text:a xlink:type="simple" xlink:href="https://www.kickstarter.com/projects/80348891/pinstripe-an-adventure-through-hell?ref=category_recommended" text:style-name="Internet_20_link" text:visited-style-name="Visited_20_Internet_20_Link"><text:span text:style-name="T6">https://www.kickstarter.com/projects/80348891/pinstripe-an-adventure-through-hell?ref=category_recommended</text:span></text:a></text:p>
    <text:p text:style-name="P37"/>
-   <text:p text:style-name="P52"><text:soft-page-break/><text:span text:style-name="T6">There will be a lot of text describing the game, links to the blog and indieDB page and of course, most importantly, a </text:span><text:span text:style-name="T23">video</text:span><text:span text:style-name="T6">. This will show gameplay on a fairly cool map, shortcuts and all the main features until I cannot proceed any further because a not shootable wall is blocking me. The text on the wall says “Insert coins to proceed”.<text:line-break/>→ After that I will introduce myself, talk about me, my ambitions and Vasparun in general. I will outline the core principles that the viewers will have seen by now and express where I would like that project to go (a variety of community based maps with a decent voting system etc.).</text:span></text:p>
+   <text:p text:style-name="P52"><text:span text:style-name="T6">There will be a lot of text describing the game, links to the blog and indieDB page and of course, most importantly, a </text:span><text:span text:style-name="T23">video</text:span><text:span text:style-name="T6">. This will show gameplay on a fairly cool map, shortcuts and all the main features until I cannot proceed any further because a not shootable wall is blocking me. The text on the wall says “Insert coins to proceed”.<text:line-break/>→ After that I will introduce myself, talk about me, my ambitions and Vasparun in general. I will outline the core principles that the viewers will have seen by now and express where I would like that project to go (a variety of community based maps with a decent voting system etc.).</text:span></text:p>
    <text:p text:style-name="P37"/>
    <text:p text:style-name="P37">News:</text:p>
    <text:p text:style-name="P37">Once the kickstarter campaign is live, I will reach out to several German and no<text:span text:style-name="T25">n-</text:span>German <text:span text:style-name="T33">gaming </text:span>newspapers and provide them with a press kit of my game so that they can quickly get an overview. I will also provide some personal information about me as my young age might make their story more interesting and thus better for them.</text:p>

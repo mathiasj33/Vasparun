@@ -13,7 +13,6 @@ public class PlayerControl : MonoBehaviour
     private WallrunControl wallrunControl;
     private RayCastHelper rayCastHelper;
     private CheckpointControl checkpointControl;
-    private ControllerTriggers triggers;
 
     private bool moving;
     public bool Moving { get { return moving; } }
@@ -26,10 +25,6 @@ public class PlayerControl : MonoBehaviour
     private bool wallrun, cylinder, cylinderRight, justJumpedFromWall, fellFromWall = false;
     private GameObject currentWall;
     private bool wallrunAllowed = true;
-
-    private bool sliding;
-    private bool justStoppedSliding, justJumpedFromRail;
-    private Vector3 afterSlidingVelocity;
 
     private float heightBeforeFall;
     private bool heightSet;
@@ -55,7 +50,6 @@ public class PlayerControl : MonoBehaviour
         wallrunControl.enabled = false;
         rayCastHelper = GetComponent<RayCastHelper>();
         checkpointControl = GetComponent<CheckpointControl>();
-        triggers = GetComponent<ControllerTriggers>();
 
         AudioSource[] sources = GetComponents<AudioSource>();
         footstepAudio = sources[1];
@@ -78,49 +72,18 @@ public class PlayerControl : MonoBehaviour
         ApplyRespawn();
         transform.forward = firstPersonCamera.Camera.transform.forward;
         ApplyWallrun();
-        ApplyRail();
         CheckJetpackAndJumpingAllowed();
-        CheckAfterSlidingVelocity();
 
-        if (!wallrun && !sliding)
+        if (!wallrun)
             characterControl.Move(CalculateMovementVector() * Time.deltaTime * 60);
 
         ApplyHeadbob();
     }
 
-    public void StopSliding()
-    {
-        afterSlidingVelocity = gameObject.GetComponent<SlideScript>().Velocity;
-        Destroy(gameObject.GetComponent<SlideScript>());
-        slidingAudio.Stop();
-        sliding = false;
-        justStoppedSliding = true;
-        EnableJetpack();
-        invoker.Invoke(.5f, () => justStoppedSliding = false);
-        StartCoroutine("DecreaseSlidingVelocity");
-    }
-
-    private void ApplyRail()
-    {
-        RailInformation info = rayCastHelper.GetRail();
-        if (!sliding && info != null && !justStoppedSliding)
-        {
-            sliding = true;
-            gameObject.AddComponent<SlideScript>();
-            gameObject.GetComponent<SlideScript>().RailInformation = info;
-            slidingAudio.Play();
-        }
-        if(sliding && Input.GetButtonDown("Jump"))
-        {
-            justJumpedFromRail = true;
-            StopSliding();
-        }
-    }
-
     private void ApplyFootSounds()
     {
         footStepAudioTime += Time.deltaTime;
-        if (!sliding && Moving && footStepAudioTime > .5f && !IsJumping())
+        if (Moving && footStepAudioTime > .5f && !IsJumping())
         {
             footstepAudio.Play();
             footStepAudioTime = 0;
@@ -140,13 +103,12 @@ public class PlayerControl : MonoBehaviour
         Vector3 offset = firstPersonCamera.Camera.transform.right * headBob.x;
         offset.y = 0.9f + headBob.y;
 
-        if (sliding) offset = new Vector3(0, 0.9f, 0);
         firstPersonCamera.Camera.transform.position = transform.position + offset;
     }
 
     private void ApplyRespawn()
     {
-        if (!IsJumping() || sliding)
+        if (!IsJumping())
         {
             heightBeforeFall = float.MinValue;
             heightSet = false;
@@ -163,7 +125,7 @@ public class PlayerControl : MonoBehaviour
     // TODO: Beta etc., Camera position bei restart (selbst machen und config file); Danebenschießen: Zeit minus; Nicht benutze Assets alle löschen!!!
     private void ApplyWallrun()
     {
-        if (wallrun && (Input.GetButtonDown("Jump") || triggers.LeftTriggerDown || !IsMovingForwardsOrSidewards()))
+        if (wallrun && (Input.GetButtonDown("Jump") || !IsMovingForwardsOrSidewards()))
         {
             fellFromWall = !IsMovingForwardsOrSidewards();
             EndWallrun();
@@ -230,7 +192,6 @@ public class PlayerControl : MonoBehaviour
         ApplyJetpack();
         ApplyJump();
         Vector3 inputVec = GetInputVector();
-        inputVec += afterSlidingVelocity;
         if (jetpack) inputVec *= 1.5f;
         return inputVec + new Vector3(0, yMovement, 0);
     }
@@ -245,22 +206,20 @@ public class PlayerControl : MonoBehaviour
 
     private void ApplyJump()
     {
-        if (Input.GetButtonDown("Jump") || triggers.LeftTriggerDown)
+        if (Input.GetButtonDown("Jump"))
         {
-            if (IsJumping() && !justJumpedFromWall && !fellFromWall && !justJumpedFromRail) return;
+            if (IsJumping() && !justJumpedFromWall && !fellFromWall) return;
             float factor = justJumpedFromWall ? 200 : 150f;
-            if (justJumpedFromRail) factor = 400;
-            if (justJumpedFromWall || justJumpedFromRail) yMovement = 0;
+            if (justJumpedFromWall) yMovement = 0;
             yMovement += factor * 0.0008f;
 
             if (justJumpedFromWall) justJumpedFromWall = false;
-            if (justJumpedFromRail) justJumpedFromRail = false;
         }
     }
 
     private void CheckJetpackAndJumpingAllowed()
     {
-        if (IsJumping() && (Input.GetButtonUp("Jump") || triggers.LeftTriggerUp)) jumpButtonReleased = true;
+        if (IsJumping() && (Input.GetButtonUp("Jump"))) jumpButtonReleased = true;
         if (!IsJumping())
         {
             fellFromWall = false;
@@ -276,18 +235,9 @@ public class PlayerControl : MonoBehaviour
         invokedJetpackEnd = false;
     }
 
-    private void CheckAfterSlidingVelocity()
-    {
-        if(!IsJumping())
-        {
-            afterSlidingVelocity = Vector3.zero;
-            StopCoroutine("DecreaseSlidingVelocity");
-        }
-    }
-
     private void ApplyJetpack()
     {
-        if (jumpButtonReleased && jetpackAllowed && IsJumping() && (Input.GetButton("Jump") || Input.GetAxis("JumpAxis") == 1) && !justJumpedFromWall)
+        if (jumpButtonReleased && jetpackAllowed && IsJumping() && (Input.GetButton("Jump") ) && !justJumpedFromWall)
         {
             if (playJetpack)
             {
@@ -312,7 +262,6 @@ public class PlayerControl : MonoBehaviour
             yMovement = Mathf.Min(yMovement, .05f);
             jetpack = true;
             fellFromWall = false;
-            Debug.Log("applied jetpack");
         }
         else if (!jetpackAllowed || !IsJumping())
         {
@@ -341,7 +290,7 @@ public class PlayerControl : MonoBehaviour
         }
         if (horizontal > 0)
         {
-            dir += transform.right * .6f;  //TODO: If controller used: das hier nur mal .3f und sensitivity *= 3. Erst aber controller support wegmachen
+            dir += transform.right * .6f;
         }
         if (horizontal < 0)
         {
@@ -370,15 +319,5 @@ public class PlayerControl : MonoBehaviour
 
         if (FloatEquals(vertical, 0) && FloatEquals(horizontal, 0)) return false;
         return true;
-    }
-
-    private IEnumerator DecreaseSlidingVelocity()
-    {
-        while(afterSlidingVelocity.magnitude > .1f)
-        {
-            afterSlidingVelocity /= 1.5f;
-            yield return new WaitForSeconds(.1f) ;
-        }
-        afterSlidingVelocity = Vector3.zero;
     }
 }

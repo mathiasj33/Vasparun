@@ -5,7 +5,6 @@ public class GunControl : MonoBehaviour
 {
     public Camera cam;
     private PlayerControl playerControl;
-    private ControllerTriggers triggers;
 
     public float swayX = 10f;
     public float swayY = 5f;
@@ -31,7 +30,6 @@ public class GunControl : MonoBehaviour
     {
         invoker = GameObject.Find("Player").GetComponent<Invoker>();
         playerControl = GameObject.Find("Player").GetComponent<PlayerControl>();
-        triggers = GameObject.Find("Player").GetComponent<ControllerTriggers>();
 
         gunParticles = GameObject.Find("LaserParticle").GetComponent<ParticleSystem>();
         start = GameObject.Find("Tip").transform;
@@ -57,7 +55,7 @@ public class GunControl : MonoBehaviour
 
     private void CheckShooting()
     {
-        if (shootingAllowed && (Input.GetButtonDown("Shoot") || triggers.RightTriggerDown))
+        if (shootingAllowed && (Input.GetButtonDown("Shoot")))
         {
             Ray ray = new Ray(cam.transform.position, cam.transform.forward);
             RaycastHit hit;
@@ -114,7 +112,7 @@ public class GunControl : MonoBehaviour
         empty.AddComponent<LineRenderer>();
         LineRenderer laser = empty.GetComponent<LineRenderer>();
 
-        laser.sharedMaterial = (Material)Resources.Load("Materials/laser");
+        laser.sharedMaterial = (Material)Resources.Load("Models/Materials/laser");
         laser.SetColors(new Color(255, 0, 0, 1), new Color(255, 30, 0, 1));
         laser.SetWidth(0.2f, 0.01f);
         laser.SetPosition(0, start.position);

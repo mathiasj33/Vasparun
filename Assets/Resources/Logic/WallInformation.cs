@@ -16,7 +16,7 @@ public class WallInformation
     public WallInformation(RaycastHit hit, bool right)
     {
         GameObject = hit.collider.gameObject;
-        Allowed = GameObject.tag != "NoWallrun" && GameObject.tag != "HitWall" && GameObject.tag != "Finish" && GameObject.tag != "Rail";
+        Allowed = GameObject.tag != "NoWallrun" && GameObject.tag != "HitWall" && GameObject.tag != "Finish";
         Distance = hit.distance;
         WallDirection = right ? Vector3.Cross(Vector3.up, hit.normal) : Vector3.Cross(hit.normal, Vector3.up);
         WallDirection.Normalize();

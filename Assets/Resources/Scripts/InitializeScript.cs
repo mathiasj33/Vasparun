@@ -9,7 +9,6 @@ public class InitializeScript : MonoBehaviour
     {
         InitWorldColliders();
         InitHitWalls();
-        InitRails();
     }
 
     private void InitWorldColliders()
@@ -26,7 +25,7 @@ public class InitializeScript : MonoBehaviour
         {
             GameObject go = t.gameObject;
             go.tag = "NoWallrun";
-            go.GetComponent<MeshRenderer>().material = Instantiate((Material)Resources.Load("Materials/scifiWall"));
+            go.GetComponent<MeshRenderer>().material = Instantiate((Material)Resources.Load("Models/Materials/scifiWall"));
             go.AddComponent<ShootWallControl>();
             go.AddComponent<MeshCollider>();
 
@@ -37,36 +36,5 @@ public class InitializeScript : MonoBehaviour
                 child.AddComponent<MeshCollider>();
             }
         }
-    }
-
-    private void InitRails()
-    {
-        CharacterController controller = GameObject.Find("Player").GetComponent<CharacterController>();
-        foreach (Transform t in GameObject.Find("Rails").transform)
-        {
-            GameObject go = t.gameObject;
-            go.tag = "Rail";
-            go.AddComponent<MeshCollider>();
-            Physics.IgnoreCollision(controller, go.GetComponent<MeshCollider>());
-        }
-    }
-
-    private List<GameObject> GetAllChildren(Transform transform)
-    {
-        List<GameObject> children = new List<GameObject>();
-        bool hasChildren = transform.childCount > 0;
-
-        if (!hasChildren)
-        {
-            children.Add(transform.gameObject);
-        }
-        else
-        {
-            foreach (Transform t in transform)
-            {
-                children.AddRange(GetAllChildren(t));
-            }
-        }
-        return children;
     }
 }
