@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class CheckpointControl : MonoBehaviour //TODO: keine community maps, Website, screenshotsaturday, neural?
+public class CheckpointControl : MonoBehaviour
 {
     private CheckpointManager checkpointManager;
     private RayCastHelper rayCastHelper;

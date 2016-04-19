@@ -8,7 +8,7 @@ public class PlayerControl : MonoBehaviour
 
     private Invoker invoker;
 
-    private FirstPersonCamera firstPersonCamera;
+    private FirstPersonCamera firstPersonCamera;  //TODO: z.B. cylinder in wallruncontrol usw usw alles refactoren
     private CharacterController characterControl;
     private WallrunControl wallrunControl;
     private RayCastHelper rayCastHelper;
@@ -29,11 +29,7 @@ public class PlayerControl : MonoBehaviour
     private float heightBeforeFall;
     private bool heightSet;
 
-    private AudioSource footstepAudio;
-    private AudioSource landingAudio;
-    private AudioSource wallrunAudio;
-    private AudioSource jetpackAudio;
-    private AudioSource slidingAudio;
+    
     private bool playJetpack;
 
     private float footStepAudioTime;
@@ -50,13 +46,6 @@ public class PlayerControl : MonoBehaviour
         wallrunControl.enabled = false;
         rayCastHelper = GetComponent<RayCastHelper>();
         checkpointControl = GetComponent<CheckpointControl>();
-
-        AudioSource[] sources = GetComponents<AudioSource>();
-        footstepAudio = sources[1];
-        landingAudio = sources[2];
-        wallrunAudio = sources[3];
-        jetpackAudio = sources[4];
-        slidingAudio = sources[6];
     }
 
     public void RespawnAt(Vector3 position)
@@ -85,14 +74,14 @@ public class PlayerControl : MonoBehaviour
         footStepAudioTime += Time.deltaTime;
         if (Moving && footStepAudioTime > .5f && !IsJumping())
         {
-            footstepAudio.Play();
+            Globals.AudioSources.footStep.Play();
             footStepAudioTime = 0;
         }
 
         if (IsJumping()) wasInAir = true;
         if (characterControl.isGrounded && wasInAir)
         {
-            landingAudio.Play();
+            Globals.AudioSources.landing.Play();
             wasInAir = false;
         }
     }
@@ -122,7 +111,6 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Alpha1) || characterControl.transform.position.y <= heightBeforeFall - 20) checkpointControl.Revert();
     }
 
-    // TODO: Beta etc., Camera position bei restart (selbst machen und config file); Danebenschießen: Zeit minus; Nicht benutze Assets alle löschen!!!
     private void ApplyWallrun()
     {
         if (wallrun && (Input.GetButtonDown("Jump") || !IsMovingForwardsOrSidewards()))
@@ -172,7 +160,7 @@ public class PlayerControl : MonoBehaviour
         cylinderRight = wallInfo.Right;
         firstPersonCamera.Rotate(wallInfo.Right);
 
-        wallrunAudio.Play();
+        Globals.AudioSources.wallrun.Play();
     }
 
     private void EndWallrun()
@@ -241,7 +229,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (playJetpack)
             {
-                jetpackAudio.Play();
+                Globals.AudioSources.jetpack.Play();
                 playJetpack = false;
             }
 

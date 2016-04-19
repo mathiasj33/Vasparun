@@ -20,7 +20,6 @@ public class GunControl : MonoBehaviour
 
     private ParticleSystem gunParticles;
     private Transform start;
-    private AudioSource laserAudio;
     private Animator animator;
 
     private Vector3 startRotation;
@@ -34,7 +33,6 @@ public class GunControl : MonoBehaviour
         gunParticles = GameObject.Find("LaserParticle").GetComponent<ParticleSystem>();
         start = GameObject.Find("Tip").transform;
         animator = GetComponent<Animator>();
-        laserAudio = GameObject.Find("Player").GetComponents<AudioSource>()[5];
 
         startRotation = transform.localRotation.eulerAngles;
         startPosition = transform.localPosition;
@@ -72,6 +70,10 @@ public class GunControl : MonoBehaviour
                     go.AddComponent<FadeOutScript>();
                     go.GetComponent<MeshCollider>().enabled = false;
                 }
+                else if(go.tag == "WarpPoint")
+                {
+                    Debug.Log("Warp");
+                }
             }
             else
             {
@@ -86,7 +88,7 @@ public class GunControl : MonoBehaviour
     private void PlayShootEffects(LineRenderer laser)
     {
         gunParticles.Play();
-        laserAudio.Play();
+        Globals.AudioSources.laser.Play();
         animator.SetTrigger("Shoot");
         StartCoroutine(FadeLaserOut(laser));
     }
