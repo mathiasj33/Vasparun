@@ -8,32 +8,23 @@ public class PlayerControl : MonoBehaviour
 
     private Invoker invoker;
 
-    private FirstPersonCamera firstPersonCamera;  //TODO: z.B. cylinder in wallruncontrol usw usw alles refactoren
+    private FirstPersonCamera firstPersonCamera;
     private CharacterController characterControl;
     private WallrunControl wallrunControl;
     private RayCastHelper rayCastHelper;
-    private CheckpointControl checkpointControl;
 
-    private bool moving;
-    public bool Moving { get { return moving; } }
+    public bool Moving { get; private set; }
     private float yMovement;
+    public bool IsGrounded { get { return characterControl.isGrounded; } }
 
     private bool jetpack = false;
-    private bool jumpButtonReleased, jetpackAllowed = false;
+    private bool jumpButtonReleased, jetpackAllowed;
     private bool invokedJetpackEnd = false;
-
-    private bool wallrun, cylinder, cylinderRight, justJumpedFromWall, fellFromWall = false;
-    private GameObject currentWall;
-    private bool wallrunAllowed = true;
-
-    private float heightBeforeFall;
-    private bool heightSet;
-
-    
     private bool playJetpack;
 
-    private float footStepAudioTime;
-    private bool wasInAir;
+    private bool wallrun, cylinder, cylinderClockwise, justJumpedFromWall;
+    private GameObject currentWall;
+    private bool wallrunAllowed = true;
 
     void Start()
     {
@@ -45,92 +36,32 @@ public class PlayerControl : MonoBehaviour
         wallrunControl = GetComponent<WallrunControl>();
         wallrunControl.enabled = false;
         rayCastHelper = GetComponent<RayCastHelper>();
-        checkpointControl = GetComponent<CheckpointControl>();
-    }
-
-    public void RespawnAt(Vector3 position)
-    {
-        characterControl.transform.position = position;
-        heightBeforeFall = float.MinValue;
-        heightSet = false;
     }
 
     void Update()
     {
-        ApplyFootSounds();
-        ApplyRespawn();
         transform.forward = firstPersonCamera.Camera.transform.forward;
         ApplyWallrun();
         CheckJetpackAndJumpingAllowed();
-
-        if (!wallrun)
-            characterControl.Move(CalculateMovementVector() * Time.deltaTime * 60);
-
-        ApplyHeadbob();
-    }
-
-    private void ApplyFootSounds()
-    {
-        footStepAudioTime += Time.deltaTime;
-        if (Moving && footStepAudioTime > .5f && !IsJumping())
-        {
-            Globals.AudioSources.footStep.Play();
-            footStepAudioTime = 0;
-        }
-
-        if (IsJumping()) wasInAir = true;
-        if (characterControl.isGrounded && wasInAir)
-        {
-            Globals.AudioSources.landing.Play();
-            wasInAir = false;
-        }
-    }
-
-    private void ApplyHeadbob()
-    {
-        Vector2 headBob = firstPersonCamera.CalculateHeadBob(moving);
-        Vector3 offset = firstPersonCamera.Camera.transform.right * headBob.x;
-        offset.y = 0.9f + headBob.y;
-
-        firstPersonCamera.Camera.transform.position = transform.position + offset;
-    }
-
-    private void ApplyRespawn()
-    {
-        if (!IsJumping())
-        {
-            heightBeforeFall = float.MinValue;
-            heightSet = false;
-            return;
-        }
-        if (IsJumping() && !heightSet)
-        {
-            heightBeforeFall = characterControl.transform.position.y;
-            heightSet = true;
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha1) || characterControl.transform.position.y <= heightBeforeFall - 20) checkpointControl.Revert();
+        if (!wallrun) characterControl.Move(CalculateMovementVector() * Time.deltaTime * 60);
     }
 
     private void ApplyWallrun()
     {
-        if (wallrun && (Input.GetButtonDown("Jump") || !IsMovingForwardsOrSidewards()))
+        if (wallrun && (Input.GetButtonDown("Jump")))
         {
-            fellFromWall = !IsMovingForwardsOrSidewards();
             EndWallrun();
             justJumpedFromWall = true;
         }
-        if (!wallrunAllowed || fellFromWall) return;
-        justJumpedFromWall = false;
+        if (!wallrunAllowed) return;
 
+        justJumpedFromWall = false;
         WallInformation nearestWall;
-        if (!cylinder)
-        {
-            nearestWall = rayCastHelper.GetNearestWall();
-        }
+        if (!cylinder) nearestWall = rayCastHelper.GetNearestWall();
         else
         {
             Vector3 direction = currentWall.transform.position - transform.position;
-            nearestWall = rayCastHelper.GetWall(direction.normalized, cylinderRight);
+            nearestWall = rayCastHelper.GetWall(direction.normalized, cylinderClockwise);
         }
         bool isWall = nearestWall != null;
         if (isWall && !nearestWall.Allowed) return;
@@ -157,7 +88,7 @@ public class PlayerControl : MonoBehaviour
         wallrunControl.enabled = true;
         wallrun = true;
         cylinder = wallInfo.Cylinder;
-        cylinderRight = wallInfo.Right;
+        cylinderClockwise = wallInfo.Right;
         firstPersonCamera.Rotate(wallInfo.Right);
 
         Globals.AudioSources.wallrun.Play();
@@ -196,7 +127,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (Input.GetButtonDown("Jump"))
         {
-            if (IsJumping() && !justJumpedFromWall && !fellFromWall) return;
+            if (IsJumping() && !justJumpedFromWall) return;
             float factor = justJumpedFromWall ? 200 : 150f;
             if (justJumpedFromWall) yMovement = 0;
             yMovement += factor * 0.0008f;
@@ -210,7 +141,6 @@ public class PlayerControl : MonoBehaviour
         if (IsJumping() && (Input.GetButtonUp("Jump"))) jumpButtonReleased = true;
         if (!IsJumping())
         {
-            fellFromWall = false;
             EnableJetpack();
         }
     }
@@ -236,23 +166,24 @@ public class PlayerControl : MonoBehaviour
             if (!invokedJetpackEnd)
             {
                 invokedJetpackEnd = true;
-                invoker.Invoke(.5f, () =>
-                {
-                    if (IsJumping() && invokedJetpackEnd)
-                    {
-                        jetpackAllowed = false;
-                        jetpack = false;
-                    }
-                });
+                invoker.Invoke(.5f, () => StopJetpackIfStillInAir());
             }
 
-            yMovement += 20 * Time.deltaTime / 20;
+            yMovement += Time.deltaTime;  //20 * Time.deltaTime / 20
             yMovement = Mathf.Min(yMovement, .05f);
             jetpack = true;
-            fellFromWall = false;
         }
         else if (!jetpackAllowed || !IsJumping())
         {
+            jetpack = false;
+        }
+    }
+
+    private void StopJetpackIfStillInAir()
+    {
+        if (IsJumping() && invokedJetpackEnd)
+        {
+            jetpackAllowed = false;
             jetpack = false;
         }
     }
@@ -265,47 +196,23 @@ public class PlayerControl : MonoBehaviour
 
         float scale = speed * Time.deltaTime * 8;
 
-        if (FloatEquals(vertical, 0) && FloatEquals(horizontal, 0)) moving = false;
-        else moving = true;
+        if (Util.FloatEquals(vertical, 0) && Util.FloatEquals(horizontal, 0)) Moving = false;
+        else Moving = true;
 
-        if (vertical > 0)
-        {
-            dir += transform.forward;
-        }
-        if (vertical < 0)
-        {
-            dir -= transform.forward * .3f;
-        }
-        if (horizontal > 0)
-        {
-            dir += transform.right * .6f;
-        }
-        if (horizontal < 0)
-        {
-            dir -= transform.right * .6f;
-        }
+        if (vertical > 0) dir += transform.forward;
+        else if (vertical < 0) dir -= transform.forward * .3f;
+
+        if (horizontal > 0) dir += transform.right * .6f;
+        else if (horizontal < 0) dir -= transform.right * .6f;
+
         dir.y = 0;
         if(vertical > 0) dir.Normalize();
         dir *= speed * 8 * 0.016f;
         return dir;
     }
 
-    private bool IsJumping()
+    public bool IsJumping()
     {
         return !characterControl.isGrounded && !wallrun;
-    }
-
-    private bool FloatEquals(float f1, float f2)
-    {
-        return Mathf.Abs(f1 - f2) < 0.01f;
-    }
-
-    private bool IsMovingForwardsOrSidewards()
-    {
-        float vertical = Input.GetAxis("Vertical");
-        float horizontal = Input.GetAxis("Horizontal");
-
-        if (FloatEquals(vertical, 0) && FloatEquals(horizontal, 0)) return false;
-        return true;
     }
 }

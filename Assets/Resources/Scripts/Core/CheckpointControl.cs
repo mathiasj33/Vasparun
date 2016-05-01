@@ -1,35 +1,33 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class CheckpointControl : MonoBehaviour
 {
+    public Checkpoint LastCheckpoint { get; private set; }
+
     private CheckpointManager checkpointManager;
     private RayCastHelper rayCastHelper;
     private Checkpoint beforeLastCheckpoint;
-    private Checkpoint lastCheckpoint;
 
-    public Checkpoint LastCheckpoint { get { return lastCheckpoint; } }
-
-    private PlayerControl playerControl;
+    private RespawnControl respawnControl;
 
     void Start()
     {
         checkpointManager = GameObject.Find("Main").GetComponent<CheckpointManager>();
         rayCastHelper = GetComponent<RayCastHelper>();
-        playerControl = GameObject.Find("Player").GetComponent<PlayerControl>();
+        respawnControl = GameObject.Find("Player").GetComponent<RespawnControl>();
         InvokeRepeating("FindCheckpoint", 0, .2f);
     }
 
     public void Revert()
     {
-        lastCheckpoint.Revert();
-        playerControl.RespawnAt(lastCheckpoint.Position);
+        LastCheckpoint.Revert();
+        respawnControl.RespawnAt(LastCheckpoint.Position);
     }
 
     public void AddToRevertSet(ShootWallControl control)
     {
-        lastCheckpoint.AddToRevertSet(control);
+        LastCheckpoint.AddToRevertSet(control);
     }
 
     private void FindCheckpoint()
@@ -44,11 +42,11 @@ public class CheckpointControl : MonoBehaviour
         }
 
         Checkpoint checkpoint = checkpointManager.GetCheckpoint(go);
-        if (checkpoint != null && checkpoint != lastCheckpoint)
+        if (checkpoint != null && checkpoint != LastCheckpoint)
         {
             if(beforeLastCheckpoint != null) beforeLastCheckpoint.DestroyAllWalls();
-            if(lastCheckpoint != null) beforeLastCheckpoint = lastCheckpoint.Clone();
-            lastCheckpoint = checkpoint;
+            if(LastCheckpoint != null) beforeLastCheckpoint = LastCheckpoint.Clone();
+            LastCheckpoint = checkpoint;
         }
     }
 }

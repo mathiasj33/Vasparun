@@ -8,6 +8,8 @@ public class FirstPersonCamera : MonoBehaviour
     public GameObject Camera { get { return gameObject; } }
     public float cameraSensitivity = 10;
 
+    private PlayerControl playerControl;
+
     private float rotationY = 0.0f;
     private float rotationX = 0.0f;
     private float rotationZ = 0.0f;
@@ -22,6 +24,8 @@ public class FirstPersonCamera : MonoBehaviour
 
         rotationY = transform.localRotation.eulerAngles.y;
         if (Globals.Sensitivity != 0) cameraSensitivity = Globals.Sensitivity;
+
+        playerControl = GameObject.Find("Player").GetComponent<PlayerControl>();
     }
 
     void Update()
@@ -33,25 +37,23 @@ public class FirstPersonCamera : MonoBehaviour
         transform.localRotation = Quaternion.AngleAxis(rotationY, Vector3.up);
         transform.localRotation *= Quaternion.AngleAxis(rotationX, Vector3.left);
         transform.localRotation *= Quaternion.AngleAxis(rotationZ, Vector3.forward);
+
+        Vector2 headBob = CalculateHeadBob(playerControl.Moving);
+        Vector3 offset = transform.right * headBob.x;
+        offset.y = 0.9f + headBob.y;
+        transform.position = playerControl.gameObject.transform.position + offset;
     }
 
-    public Vector2 CalculateHeadBob(bool moving)
+    private Vector2 CalculateHeadBob(bool moving)
     {
         Vector2 bob = new Vector2();
-        float xPeriod = 7;
-        float yPeriod = 4;
-        if (!moving)
-        {
-            xPeriod /= 2;
-            yPeriod /= 2;
-        }
+        float xPeriod = moving ? 7 : 3.5f;
+        float yPeriod = moving ? 4 : 2;
 
         bob.x = (float)Mathf.Sin(Time.time * xPeriod) * .15f;
         bob.y = (float)Mathf.Sin((Time.time + 0.3f) * yPeriod) * .1f;
-        if (!moving)
-        {
-            bob /= 2;
-        }
+
+        if (!moving) bob /= 2;
         return bob;
     }
 

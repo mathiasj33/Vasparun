@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public class InitializeScript : MonoBehaviour
 {
@@ -21,11 +19,12 @@ public class InitializeScript : MonoBehaviour
 
     private void InitHitWalls()
     {
+        Material mat = Instantiate((Material)Resources.Load("Models/Materials/scifiWall"));
         foreach (Transform t in GameObject.Find("HitWalls").transform)
         {
             GameObject go = t.gameObject;
             go.tag = "NoWallrun";
-            go.GetComponent<MeshRenderer>().material = Instantiate((Material)Resources.Load("Models/Materials/scifiWall"));
+            go.GetComponent<MeshRenderer>().material = mat;
             go.AddComponent<ShootWallControl>();
             go.AddComponent<MeshCollider>();
 

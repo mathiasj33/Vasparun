@@ -4,9 +4,7 @@ using System.Collections;
 public class ShootWallControl : MonoBehaviour
 {
     private Shootable shootable;
-
     public bool Shot { get { return shootable.Shot; } }
-
     private CheckpointControl control;
 
     void Start()
@@ -15,9 +13,9 @@ public class ShootWallControl : MonoBehaviour
         control = GameObject.Find("Player").GetComponent<CheckpointControl>();
     }
 
-    public void Shoot()
+    public void ShootAt()
     {
-        shootable.Shoot();
+        shootable.ShootAt();
         control.AddToRevertSet(this);
         if (shootable.Shot)
         {
@@ -33,12 +31,17 @@ public class ShootWallControl : MonoBehaviour
         
         foreach(Transform t in transform)
         {
-            Material material = t.gameObject.GetComponent<MeshRenderer>().material;
-            Color originalColor = material.color;
-            material.color = new Color(originalColor.r, originalColor.g, originalColor.b, 1);
+            SetAlphaToOne(t);
             t.gameObject.GetComponent<MeshCollider>().enabled = true;
         }
 
         gameObject.GetComponent<MeshCollider>().enabled = true;
+    }
+
+    private void SetAlphaToOne(Transform t)
+    {
+        Material material = t.gameObject.GetComponent<MeshRenderer>().material;
+        Color originalColor = material.color;
+        material.color = new Color(originalColor.r, originalColor.g, originalColor.b, 1);
     }
 }

@@ -9,7 +9,7 @@
         this.numShotsNeeded = numShotsNeeded;
     }
 
-    public void Shoot()
+    public void ShootAt()
     {
         numShot++;
     }
