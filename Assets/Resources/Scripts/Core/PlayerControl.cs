@@ -10,7 +10,7 @@ public class PlayerControl : MonoBehaviour
 
     private FirstPersonCamera firstPersonCamera;
     private CharacterController characterControl;
-    private WallrunControl wallrunControl;
+    private DirectionMoveControl moveControl;
     private RayCastHelper rayCastHelper;
 
     public bool Moving { get; private set; }
@@ -26,6 +26,11 @@ public class PlayerControl : MonoBehaviour
     private GameObject currentWall;
     private bool wallrunAllowed = true;
 
+    private bool warping, afterWarp;  //TODO: afterSlidingVelocity und Visuals; Twitter update
+    private Vector3 warpTarget;
+    private Vector3 afterWarpVector;
+    private GameObject warpPoint;
+
     void Start()
     {
         AudioListener.volume = 0;
@@ -33,8 +38,7 @@ public class PlayerControl : MonoBehaviour
         invoker = GetComponent<Invoker>();
         firstPersonCamera = GameObject.Find("Main Camera").GetComponent<FirstPersonCamera>();
         characterControl = GetComponent<CharacterController>();
-        wallrunControl = GetComponent<WallrunControl>();
-        wallrunControl.enabled = false;
+        moveControl = GetComponent<DirectionMoveControl>();
         rayCastHelper = GetComponent<RayCastHelper>();
     }
 
@@ -42,8 +46,25 @@ public class PlayerControl : MonoBehaviour
     {
         transform.forward = firstPersonCamera.Camera.transform.forward;
         ApplyWallrun();
+        ApplyWarping();
         CheckJetpackAndJumpingAllowed();
-        if (!wallrun) characterControl.Move(CalculateMovementVector() * Time.deltaTime * 60);
+        if (!wallrun && !warping) characterControl.Move(CalculateMovementVector() * Time.deltaTime * 60);
+    }
+
+    public void InitiateWarp(GameObject target)
+    {
+        if(warping != false) warpPoint.GetComponent<EmissionColorScript>().DecreaseEmissionColor();
+        if (wallrun) EndWallrun();
+
+        warpPoint = target;
+        warpTarget = new Vector3(target.transform.position.x, target.transform.position.y - 2f, target.transform.position.z);
+        warping = true;
+
+        Vector3 dir = warpTarget - transform.position;
+        dir.Normalize();
+        moveControl.StartWarp(dir);
+
+        target.GetComponent<EmissionColorScript>().IncreaseEmissionColor();
     }
 
     private void ApplyWallrun()
@@ -65,10 +86,10 @@ public class PlayerControl : MonoBehaviour
         }
         bool isWall = nearestWall != null;
         if (isWall && !nearestWall.Allowed) return;
-        if (isWall)
+        if (isWall && !warping)
         {
             currentWall = nearestWall.GameObject;
-            wallrunControl.Direction = nearestWall.WallDirection;
+            moveControl.Direction = nearestWall.WallDirection;
         }
 
         if (IsJumping() && isWall && nearestWall.Distance <= 2f)
@@ -84,8 +105,7 @@ public class PlayerControl : MonoBehaviour
     private void InitiateWallrun(WallInformation wallInfo)
     {
         characterControl.enabled = false;
-        wallrunControl.Direction = wallInfo.WallDirection;
-        wallrunControl.enabled = true;
+        moveControl.StartWallrun(wallInfo.WallDirection);
         wallrun = true;
         cylinder = wallInfo.Cylinder;
         cylinderClockwise = wallInfo.Right;
@@ -96,13 +116,40 @@ public class PlayerControl : MonoBehaviour
 
     private void EndWallrun()
     {
-        wallrunControl.enabled = false;
+        moveControl.Stop();
         characterControl.enabled = true;
         wallrun = false;
         wallrunAllowed = false;
         cylinder = false;
         invoker.Invoke(.5f, () => wallrunAllowed = true);
         firstPersonCamera.RotateBack();
+    }
+
+    private void ApplyWarping()
+    {
+        if(warping)
+        {
+            if(Vector3.Distance(transform.position, warpTarget) <= .5f)
+            {
+                moveControl.Stop();
+                afterWarpVector = moveControl.Direction;
+                StartCoroutine("DecreaseAfterWarpVector");
+                warpPoint.GetComponent<EmissionColorScript>().DecreaseEmissionColor();
+                warping = false;
+                afterWarp = true;
+            }
+        }
+    }
+
+    private IEnumerator DecreaseAfterWarpVector()
+    {
+        while (afterWarpVector.magnitude > .1f)
+        {
+            afterWarpVector /= 1.5f;
+            yield return new WaitForSeconds(.1f);
+        }
+        afterWarpVector = Vector3.zero;
+        afterWarp = false;
     }
 
     private Vector3 CalculateMovementVector()
@@ -112,6 +159,7 @@ public class PlayerControl : MonoBehaviour
         ApplyJump();
         Vector3 inputVec = GetInputVector();
         if (jetpack) inputVec *= 1.5f;
+        if (afterWarp) inputVec += afterWarpVector;
         return inputVec + new Vector3(0, yMovement, 0);
     }
 
@@ -155,7 +203,7 @@ public class PlayerControl : MonoBehaviour
 
     private void ApplyJetpack()
     {
-        if (jumpButtonReleased && jetpackAllowed && IsJumping() && (Input.GetButton("Jump") ) && !justJumpedFromWall)
+        if (jumpButtonReleased && jetpackAllowed && IsJumping() && (Input.GetButton("Jump") ) && !justJumpedFromWall && !afterWarp)
         {
             if (playJetpack)
             {

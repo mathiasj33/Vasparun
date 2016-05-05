@@ -7,6 +7,7 @@ public class InitializeScript : MonoBehaviour
     {
         InitWorldColliders();
         InitHitWalls();
+        InitWarpPoints();
     }
 
     private void InitWorldColliders()
@@ -34,6 +35,20 @@ public class InitializeScript : MonoBehaviour
                 child.tag = "HitWall";
                 child.AddComponent<MeshCollider>();
             }
+        }
+    }
+
+    private void InitWarpPoints()
+    {
+        Material mat = Instantiate((Material)Resources.Load("Models/Materials/warpPoint"));
+        foreach (Transform t in GameObject.Find("WarpPoints").transform)
+        {
+            GameObject go = t.gameObject;
+            go.AddComponent<MeshCollider>();
+            go.layer = 9;
+            go.tag = "WarpPoint";
+            go.GetComponent<MeshRenderer>().material = mat;
+            go.AddComponent<EmissionColorScript>();
         }
     }
 }

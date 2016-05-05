@@ -5,6 +5,7 @@ public class ShootControl : MonoBehaviour
 {
     public Camera cam;
 
+    private PlayerControl playerControl;
     private Invoker invoker;
     private bool shootingAllowed = true;
 
@@ -15,6 +16,7 @@ public class ShootControl : MonoBehaviour
     void Start()
     {
         invoker = GameObject.Find("Player").GetComponent<Invoker>();
+        playerControl = GameObject.Find("Player").GetComponent<PlayerControl>();
 
         gunParticles = GameObject.Find("LaserParticle").GetComponent<ParticleSystem>();
         tipPosition = GameObject.Find("Tip").transform;
@@ -47,7 +49,7 @@ public class ShootControl : MonoBehaviour
                 }
                 else if(go.tag == "WarpPoint")
                 {
-                    Debug.Log("Warp");
+                    playerControl.InitiateWarp(go);
                 }
             }
             else
