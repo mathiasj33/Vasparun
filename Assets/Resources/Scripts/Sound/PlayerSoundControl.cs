@@ -4,12 +4,14 @@ using System.Collections;
 public class PlayerSoundControl : MonoBehaviour {
 
     private PlayerControl playerControl;
+    private Invoker invoker;
     private float footStepAudioTime;
     private bool wasInAir;
+    private bool playLanding = true;
     
     void Start () {
         playerControl = GetComponent<PlayerControl>();
-
+        invoker = GameObject.Find("Player").GetComponent<Invoker>();
     }
 	
 	void Update () {
@@ -21,10 +23,12 @@ public class PlayerSoundControl : MonoBehaviour {
         }
 
         if (playerControl.IsJumping()) wasInAir = true;
-        if (playerControl.IsGrounded && wasInAir)
+        if (playerControl.IsGrounded && wasInAir && playLanding)
         {
             Globals.AudioSources.landing.Play();
             wasInAir = false;
+            playLanding = false;
+            invoker.Invoke(.5f, () => playLanding = true);
         }
     }
 }

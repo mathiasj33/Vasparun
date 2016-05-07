@@ -2,13 +2,13 @@
 
 public class DirectionMoveControl : MonoBehaviour {
 
-    public float speed = 1;
+    private float speed = 1;
     public Vector3 Direction { get; set; }
     private bool running;
 	
     public void StartWallrun(Vector3 dir)
     {
-        speed = 1;
+        speed = 1.4f;
         Direction = dir;
         running = true;
     }

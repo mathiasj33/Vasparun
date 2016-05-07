@@ -26,7 +26,7 @@ public class PlayerControl : MonoBehaviour
     private GameObject currentWall;
     private bool wallrunAllowed = true;
 
-    private bool warping, afterWarp;  //TODO: afterSlidingVelocity und Visuals; Twitter update
+    private bool warping, afterWarp;
     private Vector3 warpTarget;
     private Vector3 afterWarpVector;
     private GameObject warpPoint;
@@ -74,7 +74,7 @@ public class PlayerControl : MonoBehaviour
             EndWallrun();
             justJumpedFromWall = true;
         }
-        if (!wallrunAllowed) return;
+        if (!wallrunAllowed || warping) return;
 
         justJumpedFromWall = false;
         WallInformation nearestWall;
@@ -145,6 +145,11 @@ public class PlayerControl : MonoBehaviour
     {
         while (afterWarpVector.magnitude > .1f)
         {
+            Debug.Log(characterControl.isGrounded); TODO: das ist falsch; alte maps mit neuen hitwalls; level 3 fertig und überarbeiten
+            if(!IsJumping())
+            {
+                break;
+            }
             afterWarpVector /= 1.5f;
             yield return new WaitForSeconds(.1f);
         }

@@ -7,6 +7,7 @@ using UnityEngine;
 public class Checkpoint
 {
     public Vector3 Position { get; set; }
+    public bool AlreadyFinished { get; set; }
     private HashSet<ShootWallControl> revertSet = new HashSet<ShootWallControl>();
 
     public Checkpoint(Vector3 position)

@@ -19,15 +19,15 @@ public class ShootWallControl : MonoBehaviour
         control.AddToRevertSet(this);
         if (shootable.Shot)
         {
-            gameObject.AddComponent<DissolveScript>();
+            gameObject.AddComponent<MoveDownScript>();
             gameObject.GetComponent<MeshCollider>().enabled = false;
         }
     }
 
     public void Revert()
     {
+        if(shootable.Shot) gameObject.AddComponent<MoveUpScript>();
         shootable.Revert();
-        gameObject.GetComponent<MeshRenderer>().material.SetFloat("_AlphaCut", 0);
         
         foreach(Transform t in transform)
         {

@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <office:document xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0" xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0" xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0" xmlns:config="urn:oasis:names:tc:opendocument:xmlns:config:1.0" xmlns:ooo="http://openoffice.org/2004/office" xmlns:ooow="http://openoffice.org/2004/writer" xmlns:oooc="http://openoffice.org/2004/calc" xmlns:dom="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rpt="http://openoffice.org/2005/report" xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:grddl="http://www.w3.org/2003/g/data-view#" xmlns:officeooo="http://openoffice.org/2009/office" xmlns:tableooo="http://openoffice.org/2009/table" xmlns:drawooo="http://openoffice.org/2010/draw" xmlns:calcext="urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0" xmlns:loext="urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0" xmlns:field="urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0" xmlns:formx="urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0" xmlns:css3t="http://www.w3.org/TR/css3-text/" office:version="1.2" office:mimetype="application/vnd.oasis.opendocument.text">
- <office:meta><meta:creation-date>2016-02-21T01:12:54.823000000</meta:creation-date><dc:date>2016-04-17T20:28:08.520000000</dc:date><meta:editing-duration>PT5H52M53S</meta:editing-duration><meta:editing-cycles>196</meta:editing-cycles><meta:generator>LibreOffice/4.4.7.2$Windows_x86 LibreOffice_project/f3153a8b245191196a4b6b9abd1d0da16eead600</meta:generator><meta:document-statistic meta:table-count="0" meta:image-count="0" meta:object-count="0" meta:page-count="4" meta:paragraph-count="84" meta:word-count="1532" meta:character-count="8727" meta:non-whitespace-character-count="7294"/></office:meta>
+ <office:meta><meta:creation-date>2016-02-21T01:12:54.823000000</meta:creation-date><dc:date>2016-05-07T01:24:29.240000000</dc:date><meta:editing-duration>PT6H9M6S</meta:editing-duration><meta:editing-cycles>202</meta:editing-cycles><meta:generator>LibreOffice/4.4.7.2$Windows_x86 LibreOffice_project/f3153a8b245191196a4b6b9abd1d0da16eead600</meta:generator><meta:document-statistic meta:table-count="0" meta:image-count="0" meta:object-count="0" meta:page-count="4" meta:paragraph-count="75" meta:word-count="1376" meta:character-count="7865" meta:non-whitespace-character-count="6575"/></office:meta>
  <office:settings>
   <config:config-item-set config:name="ooo:view-settings">
-   <config:config-item config:name="ViewAreaTop" config:type="long">55668</config:config-item>
+   <config:config-item config:name="ViewAreaTop" config:type="long">6350</config:config-item>
    <config:config-item config:name="ViewAreaLeft" config:type="long">0</config:config-item>
-   <config:config-item config:name="ViewAreaWidth" config:type="long">23682</config:config-item>
-   <config:config-item config:name="ViewAreaHeight" config:type="long">20692</config:config-item>
+   <config:config-item config:name="ViewAreaWidth" config:type="long">49135</config:config-item>
+   <config:config-item config:name="ViewAreaHeight" config:type="long">23629</config:config-item>
    <config:config-item config:name="ShowRedlineChanges" config:type="boolean">true</config:config-item>
    <config:config-item config:name="InBrowseMode" config:type="boolean">false</config:config-item>
    <config:config-item-map-indexed config:name="Views">
     <config:config-item-map-entry>
      <config:config-item config:name="ViewId" config:type="string">view2</config:config-item>
-     <config:config-item config:name="ViewLeft" config:type="long">12617</config:config-item>
-     <config:config-item config:name="ViewTop" config:type="long">69354</config:config-item>
+     <config:config-item config:name="ViewLeft" config:type="long">18644</config:config-item>
+     <config:config-item config:name="ViewTop" config:type="long">24409</config:config-item>
      <config:config-item config:name="VisibleLeft" config:type="long">0</config:config-item>
-     <config:config-item config:name="VisibleTop" config:type="long">55668</config:config-item>
-     <config:config-item config:name="VisibleRight" config:type="long">23680</config:config-item>
-     <config:config-item config:name="VisibleBottom" config:type="long">76359</config:config-item>
+     <config:config-item config:name="VisibleTop" config:type="long">6350</config:config-item>
+     <config:config-item config:name="VisibleRight" config:type="long">49133</config:config-item>
+     <config:config-item config:name="VisibleBottom" config:type="long">29977</config:config-item>
      <config:config-item config:name="ZoomType" config:type="short">0</config:config-item>
      <config:config-item config:name="ViewLayoutColumns" config:type="short">0</config:config-item>
      <config:config-item config:name="ViewLayoutBookMode" config:type="boolean">false</config:config-item>
@@ -59,7 +59,7 @@
    <config:config-item config:name="AllowPrintJobCancel" config:type="boolean">true</config:config-item>
    <config:config-item config:name="RsidRoot" config:type="int">1946782</config:config-item>
    <config:config-item config:name="TabsRelativeToIndent" config:type="boolean">true</config:config-item>
-   <config:config-item config:name="Rsid" config:type="int">8325292</config:config-item>
+   <config:config-item config:name="Rsid" config:type="int">8388198</config:config-item>
    <config:config-item config:name="UnxForceZeroExtLeading" config:type="boolean">false</config:config-item>
    <config:config-item config:name="LoadReadonly" config:type="boolean">false</config:config-item>
    <config:config-item config:name="PrintBlackFonts" config:type="boolean">false</config:config-item>
@@ -419,25 +419,16 @@
    <style:text-properties officeooo:rsid="006d2622" officeooo:paragraph-rsid="006d2622"/>
   </style:style>
   <style:style style:name="P58" style:family="paragraph" style:parent-style-name="Standard" style:list-style-name="L1">
-   <style:text-properties fo:font-weight="normal" officeooo:rsid="0026ab68" officeooo:paragraph-rsid="0026ab68" style:font-weight-asian="normal" style:font-weight-complex="normal"/>
-  </style:style>
-  <style:style style:name="P59" style:family="paragraph" style:parent-style-name="Standard" style:list-style-name="L1">
-   <style:text-properties fo:font-weight="normal" officeooo:rsid="002b6e7d" officeooo:paragraph-rsid="002b6e7d" style:font-weight-asian="normal" style:font-weight-complex="normal"/>
-  </style:style>
-  <style:style style:name="P60" style:family="paragraph" style:parent-style-name="Standard" style:list-style-name="L1">
-   <style:text-properties fo:font-weight="normal" officeooo:rsid="002e9007" officeooo:paragraph-rsid="002e9007" style:font-weight-asian="normal" style:font-weight-complex="normal"/>
-  </style:style>
-  <style:style style:name="P61" style:family="paragraph" style:parent-style-name="Standard" style:list-style-name="L2">
    <style:text-properties fo:font-weight="normal" officeooo:rsid="0065c485" officeooo:paragraph-rsid="0065c485" style:font-weight-asian="normal" style:font-weight-complex="normal"/>
   </style:style>
-  <style:style style:name="P62" style:family="paragraph" style:parent-style-name="Standard" style:list-style-name="L2">
+  <style:style style:name="P59" style:family="paragraph" style:parent-style-name="Standard" style:list-style-name="L1">
    <style:text-properties fo:font-weight="normal" officeooo:rsid="001fb42f" officeooo:paragraph-rsid="001fb42f" style:font-weight-asian="normal" style:font-weight-complex="normal"/>
   </style:style>
-  <style:style style:name="P63" style:family="paragraph" style:parent-style-name="Standard" style:list-style-name="L3">
+  <style:style style:name="P60" style:family="paragraph" style:parent-style-name="Standard" style:list-style-name="L2">
    <style:text-properties fo:font-weight="normal" officeooo:rsid="0066fd4b" officeooo:paragraph-rsid="0066fd4b" style:font-weight-asian="normal" style:font-weight-complex="normal"/>
   </style:style>
-  <style:style style:name="P64" style:family="paragraph" style:parent-style-name="Standard" style:list-style-name="L1">
-   <style:text-properties officeooo:rsid="002d4e90" officeooo:paragraph-rsid="002d4e90"/>
+  <style:style style:name="P61" style:family="paragraph" style:parent-style-name="Standard">
+   <style:text-properties fo:font-weight="normal" officeooo:rsid="007ffe66" officeooo:paragraph-rsid="007ffe66" style:font-weight-asian="normal" style:font-weight-complex="normal"/>
   </style:style>
   <style:style style:name="T1" style:family="text">
    <style:text-properties officeooo:rsid="001f9357"/>
@@ -651,58 +642,6 @@
     </style:list-level-properties>
    </text:list-level-style-bullet>
   </text:list-style>
-  <text:list-style style:name="L3">
-   <text:list-level-style-bullet text:level="1" text:style-name="Bullet_20_Symbols" text:bullet-char="•">
-    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
-     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.27cm" fo:text-indent="-0.635cm" fo:margin-left="1.27cm"/>
-    </style:list-level-properties>
-   </text:list-level-style-bullet>
-   <text:list-level-style-bullet text:level="2" text:style-name="Bullet_20_Symbols" text:bullet-char="◦">
-    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
-     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.905cm" fo:text-indent="-0.635cm" fo:margin-left="1.905cm"/>
-    </style:list-level-properties>
-   </text:list-level-style-bullet>
-   <text:list-level-style-bullet text:level="3" text:style-name="Bullet_20_Symbols" text:bullet-char="▪">
-    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
-     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2.54cm" fo:text-indent="-0.635cm" fo:margin-left="2.54cm"/>
-    </style:list-level-properties>
-   </text:list-level-style-bullet>
-   <text:list-level-style-bullet text:level="4" text:style-name="Bullet_20_Symbols" text:bullet-char="•">
-    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
-     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="3.175cm" fo:text-indent="-0.635cm" fo:margin-left="3.175cm"/>
-    </style:list-level-properties>
-   </text:list-level-style-bullet>
-   <text:list-level-style-bullet text:level="5" text:style-name="Bullet_20_Symbols" text:bullet-char="◦">
-    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
-     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="3.81cm" fo:text-indent="-0.635cm" fo:margin-left="3.81cm"/>
-    </style:list-level-properties>
-   </text:list-level-style-bullet>
-   <text:list-level-style-bullet text:level="6" text:style-name="Bullet_20_Symbols" text:bullet-char="▪">
-    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
-     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="4.445cm" fo:text-indent="-0.635cm" fo:margin-left="4.445cm"/>
-    </style:list-level-properties>
-   </text:list-level-style-bullet>
-   <text:list-level-style-bullet text:level="7" text:style-name="Bullet_20_Symbols" text:bullet-char="•">
-    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
-     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="5.08cm" fo:text-indent="-0.635cm" fo:margin-left="5.08cm"/>
-    </style:list-level-properties>
-   </text:list-level-style-bullet>
-   <text:list-level-style-bullet text:level="8" text:style-name="Bullet_20_Symbols" text:bullet-char="◦">
-    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
-     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="5.715cm" fo:text-indent="-0.635cm" fo:margin-left="5.715cm"/>
-    </style:list-level-properties>
-   </text:list-level-style-bullet>
-   <text:list-level-style-bullet text:level="9" text:style-name="Bullet_20_Symbols" text:bullet-char="▪">
-    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
-     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="6.35cm" fo:text-indent="-0.635cm" fo:margin-left="6.35cm"/>
-    </style:list-level-properties>
-   </text:list-level-style-bullet>
-   <text:list-level-style-bullet text:level="10" text:style-name="Bullet_20_Symbols" text:bullet-char="•">
-    <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
-     <style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="6.985cm" fo:text-indent="-0.635cm" fo:margin-left="6.985cm"/>
-    </style:list-level-properties>
-   </text:list-level-style-bullet>
-  </text:list-style>
   <style:page-layout style:name="pm1">
    <style:page-layout-properties fo:page-width="21.001cm" fo:page-height="29.7cm" style:num-format="1" style:print-orientation="portrait" fo:margin-top="2cm" fo:margin-bottom="2cm" fo:margin-left="2cm" fo:margin-right="2cm" style:writing-mode="lr-tb" style:footnote-max-height="0cm">
     <style:footnote-sep style:width="0.018cm" style:distance-before-sep="0.101cm" style:distance-after-sep="0.101cm" style:line-style="solid" style:adjustment="left" style:rel-width="25%" style:color="#000000"/>
@@ -738,45 +677,22 @@
    <text:p text:style-name="P7"/>
    <text:p text:style-name="P11">Gun:<text:line-break/>The player<text:span text:style-name="T5"> has a gun with which he can destroy specific walls by shooting at certain spots, in order to further continue the level. He has to aim at these walls in difficult situations, for example while wallrunning or jumping. He cannot aim down the sights.</text:span></text:p>
    <text:p text:style-name="P7"/>
-   <text:p text:style-name="P9">Powerups:</text:p>
-   <text:p text:style-name="P10">There are various powerups that the player can obtain during gameplay. They have a great effect on the gameplay but only last for a short duration. The player can choose when to activate his powerup, but he can only have one at a time.</text:p>
-   <text:p text:style-name="P10"/>
-   <text:p text:style-name="P10">These powerups exist:</text:p>
-   <text:list xml:id="list8806771565130549604" text:style-name="L1">
-    <text:list-item>
-     <text:p text:style-name="P58">Speed: The player gets faster for 5 seconds (use with shortcuts)</text:p>
-    </text:list-item>
-    <text:list-item>
-     <text:p text:style-name="P59">Slow motion: Everything happens in slow motion for 5 seconds (use when aiming)</text:p>
-    </text:list-item>
-    <text:list-item>
-     <text:p text:style-name="P64"><text:span text:style-name="T6">Increased damage: The player just has to hit any spot on the wall in order to </text:span><text:span text:style-name="T7">destroy</text:span><text:span text:style-name="T6"> it (one time use)</text:span></text:p>
-    </text:list-item>
-    <text:list-item>
-     <text:p text:style-name="P60">Jetpack fuel: The player can use his jetpack for 5 seconds (one time use)</text:p>
-    </text:list-item>
-   </text:list>
-   <text:p text:style-name="P7"/>
    <text:p text:style-name="P8">Checkpoints:</text:p>
    <text:p text:style-name="P19">After each section of the map, there are checkpoints. When the player falls down or decides to retry, he will respawn at the last checkpoint. He can also choose to restart the track from the beginning.<text:line-break/><text:span text:style-name="T25">Once the player passes a checkpoint, a UI element will indicate how much faster or slower he was compared to his fastest playthrough.</text:span></text:p>
-   <text:p text:style-name="P19"/>
-   <text:p text:style-name="P41">Lasers:</text:p>
-   <text:p text:style-name="P41">A window with moving lasers that the player has to avoid. The player has to jump through that window. <text:span text:style-name="T31">Blender integration??</text:span></text:p>
    <text:p text:style-name="P41"/>
    <text:p text:style-name="P41">Moving platforms:</text:p>
-   <text:p text:style-name="P41">Platforms that move. How can I integrate this with Blender??</text:p>
-   <text:p text:style-name="P41"/>
-   <text:p text:style-name="P41"/>
+   <text:p text:style-name="P41">Platforms that move.</text:p>
    <text:p text:style-name="P42"/>
-   <text:p text:style-name="P43"><text:soft-page-break/>Warp points:<text:line-break/>In some maps, there will be certain warp points where the player can pull himself to (like a Zelda hookshot). He will then keep his momentum and automatically unhook from the warp point. The player will shoot green lasers out if his gone if he wants to hook onto a point. He will have to do this in difficult situations such as jumping or wallrunning. Blender integration?</text:p>
+   <text:p text:style-name="P43">Warp points:<text:line-break/>In some maps, there will be certain warp points where the player can pull himself to (like a Zelda hookshot). He will then keep his momentum and automatically unhook from the warp point. He will have to do this in difficult situations such as jumping or wallrunning. Blender integration?</text:p>
    <text:p text:style-name="P42"/>
-   <text:p text:style-name="P12">Shortcuts:</text:p>
-   <text:p text:style-name="P20">In every map there are shortcuts. <text:span text:style-name="T10">These range from simple ones, such as being able to skip certain wallruns when using the jetpack intelligently, to complex jumps, that enable you to completely skip parts of the map. Players are encouraged to actively search for these shortcuts in order to beat the highscores. Some of them can only be achieved with powerups such as speed or jetpack fuel.</text:span></text:p>
+   <text:p text:style-name="P61">Enemies:<text:line-break/>In some maps, there will be enemies the player has to defeat. He will jump onto a platform and then won&apos;t be able to leave it until he has defeated all the enemies that spawned there. The enemies will be sphere robots that shoot at the player.</text:p>
+   <text:p text:style-name="P61"/>
+   <text:p text:style-name="P61">Infinite mode:<text:line-break/>There will be an infinite running mode in which the player has to run infinitely on a procedurally generated map.</text:p>
    <text:p text:style-name="P27"/>
    <text:p text:style-name="P10">Score system:</text:p>
    <text:p text:style-name="P24">For each player, the time taken to complete each map is measured. The one who completed the map in the shortest amount of time has the highest score.</text:p>
    <text:p text:style-name="P21"/>
-   <text:p text:style-name="P39">Graphics:<text:line-break/>The graphics are kept at a fairly simple but good-looking level. The heavy use of bloom effects achieves a futuristic look. Each map will have a unique skybox and a different bloom color than the orthers.</text:p>
+   <text:p text:style-name="P39"><text:soft-page-break/>Graphics:<text:line-break/>The graphics are kept at a fairly simple but good-looking level. The heavy use of bloom effects achieves a futuristic look. Each map will have a unique skybox and a different bloom color than the orthers.</text:p>
    <text:p text:style-name="P21"/>
    <text:p text:style-name="P22">Online / community integration:</text:p>
    <text:p text:style-name="P28">The <text:span text:style-name="T36">best times</text:span> for each map can be compared with the <text:span text:style-name="T36">best times</text:span> of other members of the community once an account has been created / via the steam account. <text:span text:style-name="T22">After completing a map, the player will see personal records as well as his global position.</text:span></text:p>
@@ -800,32 +716,32 @@
    <text:p text:style-name="P30">The server will be written in <text:span text:style-name="T34">Go</text:span>. It will connect to a MySQL database to store the user data and the map highscores.</text:p>
    <text:p text:style-name="P30"/>
    <text:p text:style-name="P47">The server will create backups regurarly so that the data is not lost.</text:p>
-   <text:p text:style-name="P47"><text:soft-page-break/></text:p>
+   <text:p text:style-name="P47"/>
    <text:p text:style-name="P48">When a highscore is submitted, it is first checked if the highscore can be achieved without cheating (~30 seconds less than the best time that I made)</text:p>
    <text:p text:style-name="P2"/>
    <text:p text:style-name="P6">Beta testing</text:p>
    <text:p text:style-name="P37">I will launch a closed beta with about 20 backers or interested people. First it will start for 10 people only so that I can fix these bugs and 2 weeks later the rest will get access to the beta. It will contain all features.</text:p>
    <text:p text:style-name="P2"/>
    <text:p text:style-name="P2">Achievements</text:p>
-   <text:list xml:id="list7543575072552762695" text:style-name="L2">
+   <text:list xml:id="list3946280344421211477" text:style-name="L1">
     <text:list-item>
-     <text:p text:style-name="P61">Finisher: Beat every <text:span text:style-name="T36">map</text:span></text:p>
+     <text:p text:style-name="P58">Finisher: Beat every <text:span text:style-name="T36">map</text:span></text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P62"><text:span text:style-name="T3">Master: </text:span>Beat the creator <text:span text:style-name="T14">of the game </text:span>in every map</text:p>
+     <text:p text:style-name="P59"><text:span text:style-name="T3">Master: </text:span>Beat the creator <text:span text:style-name="T14">of the game </text:span>in every map</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P61">Still alive: Complete each main map without dying</text:p>
+     <text:p text:style-name="P58">Still alive: Complete each main map without dying</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P61">Never gonna give up: Die <text:span text:style-name="T29">30</text:span> times on one map</text:p>
+     <text:p text:style-name="P58">Never gonna give up: Die <text:span text:style-name="T29">30</text:span> times on one map</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P61">...</text:p>
+     <text:p text:style-name="P58">...</text:p>
     </text:list-item>
    </text:list>
    <text:p text:style-name="P2"/>
-   <text:p text:style-name="P2">Marketing</text:p>
+   <text:p text:style-name="P2"><text:soft-page-break/>Marketing</text:p>
    <text:p text:style-name="P37"/>
    <text:p text:style-name="P37">Blog:</text:p>
    <text:p text:style-name="P37">Once the first level and the core mechanics are completed, I will start a blog on indieDB and a website for the game. These blog posted will be frequently updated (roughly once a week) and outline the progress, challenges and implementation details of the game. They will also explain why I made certain decision (e.g. using the Unity3D game engine etc.).</text:p>
@@ -837,39 +753,39 @@
    <text:p text:style-name="P37">Once I have gained some publicity and have a fairly well working game, I will start a Kickstarter campaign in order to <text:line-break/>a) gain even more publicity</text:p>
    <text:p text:style-name="P37">b) earn at least enough money to make the game possible and keep me motivated</text:p>
    <text:p text:style-name="P37">The money will be used for:</text:p>
-   <text:list xml:id="list4037907556536600882" text:style-name="L3">
+   <text:list xml:id="list6458717394513269033" text:style-name="L2">
     <text:list-item>
-     <text:p text:style-name="P63">Server costs <text:span text:style-name="T28">at least for 2 years</text:span>(How much?)</text:p>
+     <text:p text:style-name="P60">Server costs <text:span text:style-name="T28">at least for 2 years</text:span>(How much?)</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P63">Skyboxes(?)</text:p>
+     <text:p text:style-name="P60">Skyboxes(?)</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P63">Sound Effects</text:p>
+     <text:p text:style-name="P60">Sound Effects</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P63">Music</text:p>
+     <text:p text:style-name="P60">Music</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P63">Steam Greenlight <text:span text:style-name="T35">fees</text:span></text:p>
+     <text:p text:style-name="P60">Steam Greenlight <text:span text:style-name="T35">fees</text:span></text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P63">Motivational purposes</text:p>
+     <text:p text:style-name="P60">Motivational purposes</text:p>
     </text:list-item>
     <text:list-item>
-     <text:p text:style-name="P63">Future support</text:p>
+     <text:p text:style-name="P60">Future support</text:p>
     </text:list-item>
    </text:list>
    <text:p text:style-name="P37">The minimum required amount of money will have to be calculated.</text:p>
    <text:p text:style-name="P37"/>
    <text:p text:style-name="P37">As a stretch goal, community maps will be provided.</text:p>
    <text:p text:style-name="P37"/>
-   <text:p text:style-name="P54"><text:span text:style-name="T6">There will be different badges, including: 1$ - The next time I hit a seemingly unfixable bug, I will think of your support, 5$ - copy of the game, 10$ - copy of the game, 20$ - copy of the game + closed beta access, 100$ (only 5) → mentioned in credits, 150$ (only one) → create one main map </text:span><text:soft-page-break/><text:span text:style-name="T6">with me + all previous<text:line-break/></text:span><text:span text:style-name="T23">These are not final by any means<text:line-break/></text:span><text:span text:style-name="T6">Similar to </text:span><text:a xlink:type="simple" xlink:href="https://www.kickstarter.com/projects/80348891/pinstripe-an-adventure-through-hell?ref=category_recommended" text:style-name="Internet_20_link" text:visited-style-name="Visited_20_Internet_20_Link"><text:span text:style-name="T6">https://www.kickstarter.com/projects/80348891/pinstripe-an-adventure-through-hell?ref=category_recommended</text:span></text:a></text:p>
+   <text:p text:style-name="P54"><text:span text:style-name="T6">There will be different badges, including: 1$ - The next time I hit a seemingly unfixable bug, I will think of your support, 5$ - copy of the game, 10$ - copy of the game, 20$ - copy of the game + closed beta access, 100$ (only 5) → mentioned in credits, 150$ (only one) → create one main map with me + all previous<text:line-break/></text:span><text:span text:style-name="T23">These are not final by any means<text:line-break/></text:span><text:span text:style-name="T6">Similar to </text:span><text:a xlink:type="simple" xlink:href="https://www.kickstarter.com/projects/80348891/pinstripe-an-adventure-through-hell?ref=category_recommended" text:style-name="Internet_20_link" text:visited-style-name="Visited_20_Internet_20_Link"><text:span text:style-name="T6">https://www.kickstarter.com/projects/80348891/pinstripe-an-adventure-through-hell?ref=category_recommended</text:span></text:a></text:p>
    <text:p text:style-name="P37"/>
    <text:p text:style-name="P54"><text:span text:style-name="T6">There will be a lot of text describing the game, links to the blog and indieDB page and of course, most importantly, a </text:span><text:span text:style-name="T23">video</text:span><text:span text:style-name="T6">. This will show gameplay on a fairly cool map, shortcuts and all the main features until I cannot proceed any further because a not shootable wall is blocking me. The text on the wall says “Insert coins to proceed”.<text:line-break/>→ After that I will introduce myself, talk about me, my ambitions and Vasparun in general. I will outline the core principles that the viewers will have seen by now and express where I would like that project to go (a variety of community based maps with a decent voting system etc.).</text:span></text:p>
    <text:p text:style-name="P37"/>
    <text:p text:style-name="P37">News:</text:p>
-   <text:p text:style-name="P37">Once the kickstarter campaign is live, I will reach out to several German and no<text:span text:style-name="T25">n-</text:span>German <text:span text:style-name="T33">gaming </text:span>newspapers and provide them with a press kit of my game so that they can quickly get an overview. I will also provide some personal information about me as my young age might make their story more interesting and thus better for them.</text:p>
+   <text:p text:style-name="P37">Once the kickstarter campaign is live, I will reach out to several German and no<text:span text:style-name="T25">n-</text:span>German <text:span text:style-name="T33">gaming </text:span>newspapers and provide them with a press kit of my game so that they can quickly get an overview. I will also provide some personal information about me as my young age might make their story <text:soft-page-break/>more interesting and thus better for them.</text:p>
    <text:p text:style-name="P37"/>
    <text:p text:style-name="P45">Reviews:<text:line-break/>I will try to get several gaming sites such as RockPaperShotgun to review Vasparun.</text:p>
    <text:p text:style-name="P46">http://gamedevelopment.tutsplus.com/articles/promoting-your-indie-game-checklist--gamedev-7560</text:p>

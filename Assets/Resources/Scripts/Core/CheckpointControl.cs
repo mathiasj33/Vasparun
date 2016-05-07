@@ -42,11 +42,12 @@ public class CheckpointControl : MonoBehaviour
         }
 
         Checkpoint checkpoint = checkpointManager.GetCheckpoint(go);
-        if (checkpoint != null && checkpoint != LastCheckpoint)
+        if (checkpoint != null && checkpoint != LastCheckpoint && !checkpoint.AlreadyFinished)
         {
             if(beforeLastCheckpoint != null) beforeLastCheckpoint.DestroyAllWalls();
             if(LastCheckpoint != null) beforeLastCheckpoint = LastCheckpoint.Clone();
             LastCheckpoint = checkpoint;
+            checkpoint.AlreadyFinished = true;
         }
     }
 }
