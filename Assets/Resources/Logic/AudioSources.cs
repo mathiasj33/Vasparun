@@ -11,6 +11,7 @@ public class AudioSources
     public AudioSource wallrun;
     public AudioSource jetpack;
     public AudioSource laser;
+    public AudioSource wallDisappear;
 
     public AudioSources()
     {
@@ -20,5 +21,6 @@ public class AudioSources
         wallrun = sources[2];
         jetpack = sources[3];
         laser = sources[4];
+        wallDisappear = sources[5];
     }
 }

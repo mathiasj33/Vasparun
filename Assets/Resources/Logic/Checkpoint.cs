@@ -26,15 +26,6 @@ public class Checkpoint
         revertSet.Clear();
     }
 
-    public void DestroyAllWalls()
-    {
-        revertSet.ToList().ForEach(c =>
-        {
-            if (c.Shot) GameObject.Destroy(c.gameObject);
-        });
-        revertSet.Clear();
-    }
-
     public Checkpoint Clone()
     {
         Checkpoint clone = new Checkpoint(new Vector3(Position.x, Position.y, Position.z));

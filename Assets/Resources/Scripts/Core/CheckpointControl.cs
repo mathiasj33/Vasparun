@@ -7,7 +7,6 @@ public class CheckpointControl : MonoBehaviour
 
     private CheckpointManager checkpointManager;
     private RayCastHelper rayCastHelper;
-    private Checkpoint beforeLastCheckpoint;
 
     private RespawnControl respawnControl;
 
@@ -44,8 +43,6 @@ public class CheckpointControl : MonoBehaviour
         Checkpoint checkpoint = checkpointManager.GetCheckpoint(go);
         if (checkpoint != null && checkpoint != LastCheckpoint && !checkpoint.AlreadyFinished)
         {
-            if(beforeLastCheckpoint != null) beforeLastCheckpoint.DestroyAllWalls();
-            if(LastCheckpoint != null) beforeLastCheckpoint = LastCheckpoint.Clone();
             LastCheckpoint = checkpoint;
             checkpoint.AlreadyFinished = true;
         }

@@ -19,14 +19,17 @@ public class ShootWallControl : MonoBehaviour
         control.AddToRevertSet(this);
         if (shootable.Shot)
         {
-            gameObject.AddComponent<MoveDownScript>();
+            ChangeEmissionColorScript redToGreen = gameObject.AddComponent<ChangeEmissionColorScript>();
+            redToGreen.Begin = Color.red;
+            redToGreen.End = Color.green;
             gameObject.GetComponent<MeshCollider>().enabled = false;
+            Globals.AudioSources.wallDisappear.Play();
         }
     }
 
     public void Revert()
     {
-        if(shootable.Shot) gameObject.AddComponent<MoveUpScript>();
+        gameObject.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", new Color(1, 0, 0));
         shootable.Revert();
         
         foreach(Transform t in transform)

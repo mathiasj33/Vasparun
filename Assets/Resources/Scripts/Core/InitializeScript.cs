@@ -45,10 +45,9 @@ public class InitializeScript : MonoBehaviour
         {
             GameObject go = t.gameObject;
             go.AddComponent<MeshCollider>();
-            go.layer = 9;
             go.tag = "WarpPoint";
             go.GetComponent<MeshRenderer>().material = mat;
-            go.AddComponent<EmissionColorScript>();
+            go.AddComponent<EmissionStrengthScript>();
         }
     }
 }

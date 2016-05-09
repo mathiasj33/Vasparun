@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EmissionColorScript : MonoBehaviour {
+public class EmissionStrengthScript : MonoBehaviour {
 
     private Material Mat { get { return gameObject.GetComponent<MeshRenderer>().material; } }
     private Color startColor;

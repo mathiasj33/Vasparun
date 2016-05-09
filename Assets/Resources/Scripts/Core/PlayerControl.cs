@@ -53,7 +53,7 @@ public class PlayerControl : MonoBehaviour
 
     public void InitiateWarp(GameObject target)
     {
-        if(warping != false) warpPoint.GetComponent<EmissionColorScript>().DecreaseEmissionColor();
+        if(warping != false) warpPoint.GetComponent<EmissionStrengthScript>().DecreaseEmissionColor();
         if (wallrun) EndWallrun();
 
         warpPoint = target;
@@ -64,7 +64,7 @@ public class PlayerControl : MonoBehaviour
         dir.Normalize();
         moveControl.StartWarp(dir);
 
-        target.GetComponent<EmissionColorScript>().IncreaseEmissionColor();
+        target.GetComponent<EmissionStrengthScript>().IncreaseEmissionColor();
     }
 
     private void ApplyWallrun()
@@ -134,7 +134,7 @@ public class PlayerControl : MonoBehaviour
                 moveControl.Stop();
                 afterWarpVector = moveControl.Direction;
                 StartCoroutine("DecreaseAfterWarpVector");
-                warpPoint.GetComponent<EmissionColorScript>().DecreaseEmissionColor();
+                warpPoint.GetComponent<EmissionStrengthScript>().DecreaseEmissionColor();
                 warping = false;
                 afterWarp = true;
             }
@@ -143,9 +143,9 @@ public class PlayerControl : MonoBehaviour
 
     private IEnumerator DecreaseAfterWarpVector()
     {
+        yield return new WaitForSeconds(.01f);  //needed for y Movement not being null and thus "isGrounded" returning the correct result
         while (afterWarpVector.magnitude > .1f)
         {
-            Debug.Log(characterControl.isGrounded); TODO: das ist falsch; alte maps mit neuen hitwalls; level 3 fertig und überarbeiten
             if(!IsJumping())
             {
                 break;

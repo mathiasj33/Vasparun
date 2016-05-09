@@ -12,12 +12,12 @@
 		_AlphaCut("AlphaCut", Range(0,1)) = 1
 	}
 	SubShader {
-		Tags { "RenderType"="Opaque" }
+		Tags { "Queue" = "Transparent" "RenderType" = "Fade" }
 		LOD 200
 		
 		CGPROGRAM
 		// Physically based Standard lighting model, and enable shadows on all light types
-		#pragma surface surf Standard fullforwardshadows
+		#pragma surface surf Standard fullforwardshadows alpha:fade
 
 		// Use shader model 3.0 target, to get nicer looking lighting
 		#pragma target 3.0
@@ -50,7 +50,7 @@
 			o.Metallic = _Metallic;
 			o.Smoothness = _Glossiness;
 			o.Emission = _EmissionColor * _Emission * tex2D(_EmissionTex, IN.uv_EmissionTex);
-			o.Alpha = c.a;
+			o.Alpha = tex2D(_EmissionTex, IN.uv_EmissionTex);
 		}
 		ENDCG
 	}
