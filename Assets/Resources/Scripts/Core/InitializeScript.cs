@@ -2,52 +2,16 @@
 
 public class InitializeScript : MonoBehaviour
 {
-
     void Start()
     {
-        InitWorldColliders();
-        InitHitWalls();
-        InitWarpPoints();
-    }
-
-    private void InitWorldColliders()
-    {
-        foreach (Transform t in GameObject.Find("World").transform)
+        GameObject[] scene = GameObject.FindObjectsOfType<GameObject>();
+        foreach (GameObject go in scene)
         {
-            t.gameObject.AddComponent<MeshCollider>();
-        }
-    }
-
-    private void InitHitWalls()
-    {
-        Material mat = Instantiate((Material)Resources.Load("Models/Materials/scifiWall"));
-        foreach (Transform t in GameObject.Find("HitWalls").transform)
-        {
-            GameObject go = t.gameObject;
-            go.tag = "NoWallrun";
-            go.GetComponent<MeshRenderer>().material = mat;
-            go.AddComponent<ShootWallControl>();
-            go.AddComponent<MeshCollider>();
-
-            foreach (Transform c in t)
+            if(go.name.StartsWith("level"))
             {
-                GameObject child = c.gameObject;
-                child.tag = "HitWall";
-                child.AddComponent<MeshCollider>();
+                Initializer.Init(go.gameObject);
+                break;
             }
-        }
-    }
-
-    private void InitWarpPoints()
-    {
-        Material mat = Instantiate((Material)Resources.Load("Models/Materials/warpPoint"));
-        foreach (Transform t in GameObject.Find("WarpPoints").transform)
-        {
-            GameObject go = t.gameObject;
-            go.AddComponent<MeshCollider>();
-            go.tag = "WarpPoint";
-            go.GetComponent<MeshRenderer>().material = mat;
-            go.AddComponent<EmissionStrengthScript>();
         }
     }
 }
