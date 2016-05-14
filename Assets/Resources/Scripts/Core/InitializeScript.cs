@@ -7,7 +7,7 @@ public class InitializeScript : MonoBehaviour
         GameObject[] scene = GameObject.FindObjectsOfType<GameObject>();
         foreach (GameObject go in scene)
         {
-            if(go.name.StartsWith("level"))
+            if(go.name.StartsWith("level") || go.name.StartsWith("piece"))
             {
                 Initializer.Init(go.gameObject);
                 break;
