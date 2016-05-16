@@ -3,21 +3,66 @@ using System.Collections.Generic;
 
 public class InfiniteMapScript : MonoBehaviour
 {
+    private RayCastHelper rayCastHelper;
+    private PlayerControl playerControl;
 
     private Queue<int> lastUsedPieces = new Queue<int>();
+    private GameObject last = null;
+    private bool attach = false;
 
     void Start()
     {
-        CreateMap();
+        playerControl = GameObject.Find("Player").GetComponent<PlayerControl>();
+        rayCastHelper = GameObject.Find("Player").GetComponent<RayCastHelper>();
+        CreatePieces(5);
     }
 
-    private void CreateMap()
+    void Update() {
+        CheckMoveToOrigin();
+        CheckCreateNewPiece();
+    }
+
+    private void CheckMoveToOrigin()
     {
-        GameObject last = null;
-        for (int i = 0; i < 10; i++)
+        if (playerControl.gameObject.transform.position.magnitude >= 300 && playerControl.IsGrounded)
         {
-            int piece = Random.Range(1, 14);
-            while (lastUsedPieces.Contains(piece)) piece = Random.Range(1, 14);
+            Vector3 dir = playerControl.gameObject.transform.position - new Vector3(0, 0, 0);
+            playerControl.gameObject.transform.position = new Vector3(0, 0, 0);
+            GameObject[] scene = GameObject.FindObjectsOfType<GameObject>();
+            foreach (GameObject go in scene)
+            {
+                if (go.name.StartsWith("piece"))
+                {
+                    go.transform.position -= dir;
+                }
+            }
+        }
+    }
+
+    private void CheckCreateNewPiece()
+    {
+        GameObject under = rayCastHelper.GetUnderPlayer();
+        if (under != null && under.name == "A" && attach)
+        {
+            CreatePieces(1);
+            attach = false;
+        }
+        else if (under == null || under.name != "A")
+        {
+            attach = true;
+        }
+    }
+
+    private void CreatePieces(int amount)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            int piece = Random.Range(1, 17);
+            while (lastUsedPieces.Contains(piece)) piece = Random.Range(1, 17);
+
+            lastUsedPieces.Enqueue(piece);
+            if (lastUsedPieces.Count > 5) lastUsedPieces.Dequeue();
+
             GameObject go = (GameObject)Instantiate(Resources.Load("Models/Infinite/piece" + piece));
             if (last != null)
             {
@@ -27,25 +72,8 @@ public class InfiniteMapScript : MonoBehaviour
             Initializer.Init(go);
             Transform world = go.transform.Find("World");
             last = world.GetChild(world.childCount - 1).gameObject;
-            lastUsedPieces.Enqueue(piece);
-            if (lastUsedPieces.Count > 5) lastUsedPieces.Dequeue();
+
+            go.AddComponent<DestroyScript>();
         }
-    }
-
-    private void Test()
-    {
-        GameObject one = (GameObject)Instantiate(Resources.Load("Models/Infinite/piece" + 5));
-        GameObject two = (GameObject)Instantiate(Resources.Load("Models/Infinite/piece" + 4));
-
-        Transform oneWorld = one.transform.Find("World");
-        GameObject oneLast = oneWorld.GetChild(oneWorld.childCount - 1).gameObject;
-
-        Debug.Log(oneLast.transform.position);
-
-        two.transform.position += oneLast.transform.position;
-        Destroy(oneLast);
-
-        Initializer.Init(one);
-        Initializer.Init(two);
     }
 }

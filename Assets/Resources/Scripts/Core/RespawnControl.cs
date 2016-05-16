@@ -21,7 +21,6 @@ public class RespawnControl : MonoBehaviour
         transform.position = position;
         heightBeforeFall = float.MinValue;
         heightSet = false;
-
     }
 
     void Update()
