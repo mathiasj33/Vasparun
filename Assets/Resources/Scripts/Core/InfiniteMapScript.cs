@@ -17,7 +17,16 @@ public class InfiniteMapScript : MonoBehaviour
         CreatePieces(5);
     }
 
-    void Update() {
+    public void Recreate()
+    {
+        GetAllPieces().ForEach(go => Destroy(go));
+        last = null;
+        CreatePieces(5);
+        Globals.DistanceOrigin = new Vector3(0, 0, 0);
+    }
+
+    void Update()
+    {
         CheckMoveToOrigin();
         CheckCreateNewPiece();
     }
@@ -28,14 +37,8 @@ public class InfiniteMapScript : MonoBehaviour
         {
             Vector3 dir = playerControl.gameObject.transform.position - new Vector3(0, 0, 0);
             playerControl.gameObject.transform.position = new Vector3(0, 0, 0);
-            GameObject[] scene = GameObject.FindObjectsOfType<GameObject>();
-            foreach (GameObject go in scene)
-            {
-                if (go.name.StartsWith("piece"))
-                {
-                    go.transform.position -= dir;
-                }
-            }
+            GetAllPieces().ForEach(go => go.transform.position -= dir);
+            Globals.DistanceOrigin -= dir;
         }
     }
 
@@ -57,8 +60,8 @@ public class InfiniteMapScript : MonoBehaviour
     {
         for (int i = 0; i < amount; i++)
         {
-            int piece = Random.Range(1, 17);
-            while (lastUsedPieces.Contains(piece)) piece = Random.Range(1, 17);
+            int piece = Random.Range(1, 31);
+            while (lastUsedPieces.Contains(piece)) piece = Random.Range(1, 31);
 
             lastUsedPieces.Enqueue(piece);
             if (lastUsedPieces.Count > 5) lastUsedPieces.Dequeue();
@@ -69,11 +72,22 @@ public class InfiniteMapScript : MonoBehaviour
                 go.transform.position += last.transform.position;
                 Destroy(last);
             }
-            Initializer.Init(go);
+            Initializer.Init(go, true);
             Transform world = go.transform.Find("World");
             last = world.GetChild(world.childCount - 1).gameObject;
 
             go.AddComponent<DestroyScript>();
         }
+    }
+
+    private List<GameObject> GetAllPieces()
+    {
+        List<GameObject> pieces = new List<GameObject>();
+        GameObject[] scene = GameObject.FindObjectsOfType<GameObject>();
+        foreach (GameObject go in scene)
+        {
+            if (go.name.StartsWith("piece")) pieces.Add(go);
+        }
+        return pieces;
     }
 }

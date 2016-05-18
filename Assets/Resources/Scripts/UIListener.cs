@@ -20,6 +20,12 @@ public class UIListener : MonoBehaviour {
         SceneManager.LoadScene(2);
     }
 
+    public void LoadInfinite()
+    {
+        if (IsModalWindowDisplayed()) return;
+        SceneManager.LoadScene(3);
+    }
+
     public void ShowOptions()
     {
         if (IsModalWindowDisplayed()) return;

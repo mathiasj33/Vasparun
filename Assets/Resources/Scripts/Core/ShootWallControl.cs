@@ -3,6 +3,8 @@ using System.Collections;
 
 public class ShootWallControl : MonoBehaviour
 {
+    public bool infiniteMode = false;
+
     private Shootable shootable;
     public bool Shot { get { return shootable.Shot; } }
     private CheckpointControl control;
@@ -16,7 +18,7 @@ public class ShootWallControl : MonoBehaviour
     public void ShootAt()
     {
         shootable.ShootAt();
-        control.AddToRevertSet(this);
+        if(!infiniteMode) control.AddToRevertSet(this);
         if (shootable.Shot)
         {
             ChangeEmissionColorScript redToGreen = gameObject.AddComponent<ChangeEmissionColorScript>();

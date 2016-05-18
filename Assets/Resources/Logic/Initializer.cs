@@ -6,10 +6,10 @@ using UnityEngine;
 
 public class Initializer
 {
-    public static void Init(GameObject level)
+    public static void Init(GameObject level, bool infiniteMode)
     {
         InitWorldColliders(level);
-        InitHitWalls(level);
+        InitHitWalls(level, infiniteMode);
         InitWarpPoints(level);
     }
 
@@ -21,7 +21,7 @@ public class Initializer
         }
     }
 
-    private static void InitHitWalls(GameObject level)
+    private static void InitHitWalls(GameObject level, bool infiniteMode)
     {
         Material mat = GameObject.Instantiate((Material)Resources.Load("Models/Materials/scifiWall"));
         foreach (Transform t in level.transform.Find("HitWalls"))
@@ -29,7 +29,8 @@ public class Initializer
             GameObject go = t.gameObject;
             go.tag = "NoWallrun";
             go.GetComponent<MeshRenderer>().material = mat;
-            go.AddComponent<ShootWallControl>();
+            ShootWallControl control = go.AddComponent<ShootWallControl>();
+            control.infiniteMode = infiniteMode;
             go.AddComponent<MeshCollider>();
 
             foreach (Transform c in t)

@@ -9,7 +9,7 @@ public class InitializeScript : MonoBehaviour
         {
             if(go.name.StartsWith("level") || go.name.StartsWith("piece"))
             {
-                Initializer.Init(go.gameObject);
+                Initializer.Init(go.gameObject, false);
                 break;
             }
         }

@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerControl : MonoBehaviour
+public class PlayerControl : MonoBehaviour  //TODO: mehr tiles; springen verbessern (chris)
 {
     public float speed;
 
@@ -33,7 +33,7 @@ public class PlayerControl : MonoBehaviour
 
     void Start()
     {
-        AudioListener.volume = 0;
+        //AudioListener.volume = 0;
 
         invoker = GetComponent<Invoker>();
         firstPersonCamera = GameObject.Find("Main Camera").GetComponent<FirstPersonCamera>();
@@ -49,22 +49,6 @@ public class PlayerControl : MonoBehaviour
         ApplyWarping();
         CheckJetpackAndJumpingAllowed();
         if (!wallrun && !warping) characterControl.Move(CalculateMovementVector() * Time.deltaTime * 60);
-    }
-
-    public void InitiateWarp(GameObject target)
-    {
-        if(warping != false) warpPoint.GetComponent<EmissionStrengthScript>().DecreaseEmissionColor();
-        if (wallrun) EndWallrun();
-
-        warpPoint = target;
-        warpTarget = new Vector3(target.transform.position.x, target.transform.position.y - 2f, target.transform.position.z);
-        warping = true;
-
-        Vector3 dir = warpTarget - transform.position;
-        dir.Normalize();
-        moveControl.StartWarp(dir);
-
-        target.GetComponent<EmissionStrengthScript>().IncreaseEmissionColor();
     }
 
     private void ApplyWallrun()
@@ -125,11 +109,29 @@ public class PlayerControl : MonoBehaviour
         firstPersonCamera.RotateBack();
     }
 
+    public void InitiateWarp(GameObject target)
+    {
+        if (warping != false) warpPoint.GetComponent<EmissionStrengthScript>().DecreaseEmissionColor();
+        if (wallrun) EndWallrun();
+
+        warpPoint = target;
+        warpTarget = new Vector3(target.transform.position.x, target.transform.position.y - 2f, target.transform.position.z);
+        warping = true;
+
+        Vector3 dir = warpTarget - transform.position;
+        dir.Normalize();
+        moveControl.StartWarp(dir);
+
+        yMovement = -9.81f * 0.016f / 20;
+
+        target.GetComponent<EmissionStrengthScript>().IncreaseEmissionColor();
+    }
+
     private void ApplyWarping()
     {
         if(warping)
         {
-            if(Vector3.Distance(transform.position, warpTarget) <= .5f)
+            if(Vector3.Distance(transform.position, warpTarget) <= 1f)
             {
                 moveControl.Stop();
                 afterWarpVector = moveControl.Direction;

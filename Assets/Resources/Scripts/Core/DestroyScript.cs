@@ -10,7 +10,7 @@ public class DestroyScript : MonoBehaviour {
 	}
 	
 	void Update () {
-        if(Vector3.Distance(transform.position, player.position) >= 400)
+        if(Vector3.Distance(transform.position, player.position) >= 800)
         {
             Destroy(gameObject);
         }
