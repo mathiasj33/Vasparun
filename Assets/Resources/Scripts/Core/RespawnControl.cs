@@ -45,6 +45,10 @@ public class RespawnControl : MonoBehaviour
             {
                 infiniteMapScript.Recreate();
                 RespawnAt(new Vector3(0, 0, 0));
+
+                GameObject.Find("Main").GetComponent<ScoreScript>().Reset();
+                Globals.DistanceOrigin = new Vector3(0, 0, 0);
+                Globals.LastTileStart = new Vector3(0, 0, 0);
             }
             else checkpointControl.Revert();
         }

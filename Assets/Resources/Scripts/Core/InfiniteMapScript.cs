@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class InfiniteMapScript : MonoBehaviour
 {
     private RayCastHelper rayCastHelper;
+    private NewTileCheckerScript newTileChecker;
     private PlayerControl playerControl;
 
     private Queue<int> lastUsedPieces = new Queue<int>();
@@ -14,6 +15,7 @@ public class InfiniteMapScript : MonoBehaviour
     {
         playerControl = GameObject.Find("Player").GetComponent<PlayerControl>();
         rayCastHelper = GameObject.Find("Player").GetComponent<RayCastHelper>();
+        newTileChecker = GameObject.Find("Main").GetComponent<NewTileCheckerScript>();
         CreatePieces(5);
     }
 
@@ -22,7 +24,6 @@ public class InfiniteMapScript : MonoBehaviour
         GetAllPieces().ForEach(go => Destroy(go));
         last = null;
         CreatePieces(5);
-        Globals.DistanceOrigin = new Vector3(0, 0, 0);
     }
 
     void Update()
@@ -38,21 +39,17 @@ public class InfiniteMapScript : MonoBehaviour
             Vector3 dir = playerControl.gameObject.transform.position - new Vector3(0, 0, 0);
             playerControl.gameObject.transform.position = new Vector3(0, 0, 0);
             GetAllPieces().ForEach(go => go.transform.position -= dir);
+
             Globals.DistanceOrigin -= dir;
+            Globals.LastTileStart -= dir;
         }
     }
 
     private void CheckCreateNewPiece()
     {
-        GameObject under = rayCastHelper.GetUnderPlayer();
-        if (under != null && under.name == "A" && attach)
+        if(newTileChecker.NewTile)
         {
             CreatePieces(1);
-            attach = false;
-        }
-        else if (under == null || under.name != "A")
-        {
-            attach = true;
         }
     }
 
@@ -73,6 +70,11 @@ public class InfiniteMapScript : MonoBehaviour
                 Destroy(last);
             }
             Initializer.Init(go, true);
+            Initializer.GetCheckpointGameObjects(go.transform.Find("World").gameObject).ForEach(cgo =>
+            {
+                cgo.tag = "NoWallrun";
+            });
+
             Transform world = go.transform.Find("World");
             last = world.GetChild(world.childCount - 1).gameObject;
 

@@ -131,7 +131,7 @@ public class PlayerControl : MonoBehaviour  //TODO: mehr tiles; springen verbess
     {
         if(warping)
         {
-            if(Vector3.Distance(transform.position, warpTarget) <= 1f)
+            if(Vector3.Distance(transform.position, warpTarget) <= 1f)  //TODO: manchmal wird man nicht von warpPoint detached; failsafe code dafür
             {
                 moveControl.Stop();
                 afterWarpVector = moveControl.Direction;

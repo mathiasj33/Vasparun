@@ -13,6 +13,26 @@ public class Initializer
         InitWarpPoints(level);
     }
 
+    public static List<GameObject> GetCheckpointGameObjects(GameObject level)
+    {
+        List<GameObject> gos = new List<GameObject>();
+        foreach (Transform t in level.transform)
+        {
+            GameObject go = t.gameObject;
+            if (IsCheckpointGameObject(go))
+            {
+                gos.Add(go);
+            }
+        }
+        return gos;
+    }
+
+    private static bool IsCheckpointGameObject(GameObject go)
+    {
+        Bounds bounds = go.GetComponent<MeshCollider>().bounds;
+        return go.transform.rotation.eulerAngles.z == 0 && bounds.extents.y < .5f;
+    }
+
     private static void InitWorldColliders(GameObject level)
     {
         foreach (Transform t in level.transform.Find("World"))

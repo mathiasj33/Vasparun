@@ -17,22 +17,13 @@ public class CheckpointManager : MonoBehaviour {
 
     private void AddCheckpointObjects()
     {
-        foreach(Transform t in GameObject.Find("World").transform)
+        Initializer.GetCheckpointGameObjects(GameObject.Find("World")).ForEach(go =>
         {
-            GameObject go = t.gameObject;
-            Bounds bounds = go.GetComponent<MeshCollider>().bounds;
-            if (IsCheckpointGameObject(go))
-            {
-                Checkpoint checkpoint = new Checkpoint(bounds.center + new Vector3(0, .5f, 0));
-                checkpoints.Add(go, checkpoint);
-                if (go.tag == "Untagged") go.tag = "NoWallrun";
-            }
-        }
-    }
+            if (go.tag == "Untagged") go.tag = "NoWallrun";
 
-    private bool IsCheckpointGameObject(GameObject go)
-    {
-        Bounds bounds = go.GetComponent<MeshCollider>().bounds;
-        return go.transform.rotation.eulerAngles.z == 0 && bounds.extents.y < .5f;
+            Bounds bounds = go.GetComponent<MeshCollider>().bounds;
+            Checkpoint checkpoint = new Checkpoint(bounds.center + new Vector3(0, .5f, 0));
+            checkpoints.Add(go, checkpoint);
+        });
     }
 }
