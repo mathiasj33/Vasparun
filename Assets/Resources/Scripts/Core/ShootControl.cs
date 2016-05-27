@@ -4,10 +4,13 @@ using System.Collections;
 public class ShootControl : MonoBehaviour
 {
     public Camera cam;
+    public bool infiniteMode = false;
 
     private PlayerControl playerControl;
     private Invoker invoker;
     private bool shootingAllowed = true;
+
+    private ScoreScript scoreScript;
 
     private ParticleSystem gunParticles;
     private Transform tipPosition;
@@ -17,6 +20,7 @@ public class ShootControl : MonoBehaviour
     {
         invoker = GameObject.Find("Player").GetComponent<Invoker>();
         playerControl = GameObject.Find("Player").GetComponent<PlayerControl>();
+        if (infiniteMode) scoreScript = GameObject.Find("Main").GetComponent<ScoreScript>();
 
         gunParticles = GameObject.Find("LaserParticle").GetComponent<ParticleSystem>();
         tipPosition = GameObject.Find("Tip").transform;
@@ -36,8 +40,9 @@ public class ShootControl : MonoBehaviour
             RaycastHit hit;
 
             LineRenderer laser = CreateLaser();
+            bool rayHit = Physics.Raycast(ray, out hit);
 
-            if (Physics.Raycast(ray, out hit) && Vector3.Distance(hit.point, gameObject.transform.position) < 50)
+            if (rayHit && Vector3.Distance(hit.point, gameObject.transform.position) < 50)
             {
                 laser.SetPosition(1, hit.point);
                 GameObject go = hit.collider.gameObject;
@@ -47,14 +52,19 @@ public class ShootControl : MonoBehaviour
                     go.AddComponent<FadeOutScript>();
                     go.GetComponent<MeshCollider>().enabled = false;
                 }
-                else if(go.tag == "WarpPoint")
+                else if (go.tag == "WarpPoint")
                 {
                     playerControl.InitiateWarp(go);
                 }
+                else if(infiniteMode) scoreScript.Minus();
             }
             else
             {
                 laser.SetPosition(1, ray.GetPoint(50));
+                if (!rayHit && infiniteMode)
+                {
+                    scoreScript.Minus();
+                }
             }
             PlayShootEffects(laser);
             shootingAllowed = false;

@@ -33,7 +33,7 @@ public class PlayerControl : MonoBehaviour  //TODO: mehr tiles; springen verbess
 
     void Start()
     {
-        //AudioListener.volume = 0;
+        AudioListener.volume = 0;
 
         invoker = GetComponent<Invoker>();
         firstPersonCamera = GameObject.Find("Main Camera").GetComponent<FirstPersonCamera>();

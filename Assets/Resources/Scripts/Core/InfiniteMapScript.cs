@@ -19,7 +19,14 @@ public class InfiniteMapScript : MonoBehaviour
         CreatePieces(5);
     }
 
-    public void Recreate()
+    public void NewMap()
+    {
+        GenerateMap();
+        Globals.DistanceOrigin = new Vector3(0, 0, 0);
+        GameObject.Find("Main").GetComponent<ScoreScript>().Reset();
+    }
+
+    private void GenerateMap()
     {
         GetAllPieces().ForEach(go => Destroy(go));
         last = null;
@@ -41,7 +48,6 @@ public class InfiniteMapScript : MonoBehaviour
             GetAllPieces().ForEach(go => go.transform.position -= dir);
 
             Globals.DistanceOrigin -= dir;
-            Globals.LastTileStart -= dir;
         }
     }
 

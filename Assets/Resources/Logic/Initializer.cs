@@ -27,6 +27,11 @@ public class Initializer
         return gos;
     }
 
+    public static bool IsWallRunOnly(GameObject go)
+    {
+        return !IsCheckpointGameObject(go) && !go.name.StartsWith("Cylinder") && !go.name.StartsWith("Cube");
+    }
+
     private static bool IsCheckpointGameObject(GameObject go)
     {
         Bounds bounds = go.GetComponent<MeshCollider>().bounds;
@@ -37,7 +42,7 @@ public class Initializer
     {
         foreach (Transform t in level.transform.Find("World"))
         {
-            t.gameObject.AddComponent<MeshCollider>();
+            MeshCollider collider = t.gameObject.AddComponent<MeshCollider>();
         }
     }
 
