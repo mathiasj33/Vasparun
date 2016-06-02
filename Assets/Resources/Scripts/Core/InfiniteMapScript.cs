@@ -44,10 +44,11 @@ public class InfiniteMapScript : MonoBehaviour
         if (playerControl.gameObject.transform.position.magnitude >= 300 && playerControl.IsGrounded)
         {
             Vector3 dir = playerControl.gameObject.transform.position - new Vector3(0, 0, 0);
+
             playerControl.gameObject.transform.position = new Vector3(0, 0, 0);
             GetAllPieces().ForEach(go => go.transform.position -= dir);
-
             Globals.DistanceOrigin -= dir;
+            Globals.WarpTarget -= dir;
         }
     }
 

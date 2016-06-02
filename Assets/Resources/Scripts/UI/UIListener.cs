@@ -6,7 +6,6 @@ public class UIListener : MonoBehaviour {
 
     public GameObject optionsPanel;
     public GameObject creditsPanel;
-    public GameObject surveyPanel;
 
     public void LoadLevel1()
     {
@@ -23,10 +22,10 @@ public class UIListener : MonoBehaviour {
     public void LoadInfinite()
     {
         if (IsModalWindowDisplayed()) return;
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(4);
     }
 
-    public void ShowOptions()
+    public void ShowOptions() //TODO: will ich options wirklich so haben?
     {
         if (IsModalWindowDisplayed()) return;
         optionsPanel.SetActive(true);
@@ -39,7 +38,7 @@ public class UIListener : MonoBehaviour {
         optionsPanel.SetActive(false);
     }
 
-    public void ShowCredits()
+    public void ShowCredits()  //TODO: Fade in
     {
         if (IsModalWindowDisplayed()) return;
         creditsPanel.SetActive(true);
@@ -50,12 +49,6 @@ public class UIListener : MonoBehaviour {
         creditsPanel.SetActive(false);
     }
 
-    public void ShowSurvey()
-    {
-        if (IsModalWindowDisplayed()) return;
-        surveyPanel.SetActive(true);
-    }
-
     public void LeaveGame()
     {
         Application.Quit();
@@ -63,6 +56,6 @@ public class UIListener : MonoBehaviour {
 
     private bool IsModalWindowDisplayed()
     {
-        return optionsPanel.activeSelf || creditsPanel.activeSelf || surveyPanel.activeSelf;
+        return optionsPanel.activeSelf || creditsPanel.activeSelf;
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerControl : MonoBehaviour  //TODO: mehr tiles; springen verbessern (chris)
+public class PlayerControl : MonoBehaviour  //TODO: mehr tiles
 {
     public float speed;
 
@@ -27,7 +27,6 @@ public class PlayerControl : MonoBehaviour  //TODO: mehr tiles; springen verbess
     private bool wallrunAllowed = true;
 
     private bool warping, afterWarp;
-    private Vector3 warpTarget;
     private Vector3 afterWarpVector;
     private GameObject warpPoint;
 
@@ -115,10 +114,10 @@ public class PlayerControl : MonoBehaviour  //TODO: mehr tiles; springen verbess
         if (wallrun) EndWallrun();
 
         warpPoint = target;
-        warpTarget = new Vector3(target.transform.position.x, target.transform.position.y - 2f, target.transform.position.z);
+        Globals.WarpTarget = new Vector3(target.transform.position.x, target.transform.position.y - 2f, target.transform.position.z);
         warping = true;
 
-        Vector3 dir = warpTarget - transform.position;
+        Vector3 dir = Globals.WarpTarget - transform.position;
         dir.Normalize();
         moveControl.StartWarp(dir);
 
@@ -131,7 +130,7 @@ public class PlayerControl : MonoBehaviour  //TODO: mehr tiles; springen verbess
     {
         if(warping)
         {
-            if(Vector3.Distance(transform.position, warpTarget) <= 1f)  //TODO: manchmal wird man nicht von warpPoint detached; failsafe code dafür
+            if(Vector3.Distance(transform.position, Globals.WarpTarget) <= 1f)  //TODO: manchmal wird man nicht von warpPoint detached; failsafe code dafür (distanz erhöht sich wieder zu warppoint)
             {
                 moveControl.Stop();
                 afterWarpVector = moveControl.Direction;
