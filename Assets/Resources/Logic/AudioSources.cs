@@ -15,12 +15,17 @@ public class AudioSources
 
     public AudioSources()
     {
-        AudioSource[] sources = GameObject.Find("AudioSources").GetComponents<AudioSource>();
+        AudioSource[] sources = GetAudioSources();
         footStep = sources[0];
         landing = sources[1];
         wallrun = sources[2];
         jetpack = sources[3];
         laser = sources[4];
         wallDisappear = sources[5];
+    }
+
+    public AudioSource[] GetAudioSources()
+    {
+        return GameObject.Find("AudioSources").GetComponents<AudioSource>();
     }
 }

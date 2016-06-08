@@ -19,7 +19,7 @@ public class NewTileCheckerScript : MonoBehaviour {
     {
         NewTile = false;
         GameObject under = rayCastHelper.GetUnderPlayer();
-        if (under != null && under.name == "A" && !tileAlreadyHandled)
+        if (under != null && under.name == "A" && !tileAlreadyHandled) //TODO: nicht mit dem namen der tile machen sondern mit pieceXX vergleichen mit letztem piece
         {
             NewTile = true;
             tileAlreadyHandled = true;
