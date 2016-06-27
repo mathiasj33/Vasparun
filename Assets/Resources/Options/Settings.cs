@@ -17,19 +17,19 @@ static class Settings
         PlayerPrefs.SetFloat(key, value);
     }
 
-    public static int GetInt(string key)
+    public static int GetInt(string key, int defaultValue)
     {
-        return PlayerPrefs.GetInt(key);
+        return PlayerPrefs.GetInt(key, defaultValue);
     }
 
-    public static bool GetBool(string key)
+    public static bool GetBool(string key, bool defaultValue)
     {
-        return IntToBool(GetInt(key));
+        return IntToBool(GetInt(key, BoolToInt(defaultValue)));
     }
 
-    public static float GetFloat(string key)
+    public static float GetFloat(string key, float defaultValue)
     {
-        return PlayerPrefs.GetFloat(key);
+        return PlayerPrefs.GetFloat(key, defaultValue);
     }
 
     private static int BoolToInt(bool value)

@@ -7,7 +7,7 @@ public class UIListener : MonoBehaviour {  //TODO: Pause menu
     public GameObject optionsPanel;
     public GameObject creditsPanel;
 
-    public void LoadLevel1()
+    public void LoadLevel1()   //TODO: level selection menu
     {
         if (IsModalWindowDisplayed()) return;
         SceneManager.LoadScene(1);
@@ -25,10 +25,9 @@ public class UIListener : MonoBehaviour {  //TODO: Pause menu
         optionsPanel.SetActive(true);
     }
 
-    public void HideOptions() //TODO: options weiter implementieren
+    public void HideAndApplyOptions() //TODO: options weiter implementieren
     {
-        Slider slider = GameObject.Find("SensitivitySlider").GetComponent<Slider>();
-        Globals.Sensitivity = slider.value;
+        GameObject.Find("Main").GetComponent<OptionsListener>().ApplyOptions();
         optionsPanel.SetActive(false);
     }
 

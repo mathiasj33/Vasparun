@@ -130,7 +130,7 @@ public class PlayerControl : MonoBehaviour  //TODO: mehr tiles
     {
         if(warping)
         {
-            if(Vector3.Distance(transform.position, Globals.WarpTarget) <= 1f)  //TODO: manchmal wird man nicht von warpPoint detached; failsafe code dafür (distanz erhöht sich wieder zu warppoint)
+            if(Vector3.Distance(transform.position, Globals.WarpTarget) <= 1f)  //TODO: funktioniert warppoint bug jetzt?
             {
                 moveControl.Stop();
                 afterWarpVector = moveControl.Direction;
