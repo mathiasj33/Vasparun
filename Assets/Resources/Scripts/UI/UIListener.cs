@@ -1,16 +1,36 @@
-﻿using UnityEngine;
+﻿using System.Threading;
+using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIListener : MonoBehaviour {  //TODO: Pause menu
 
+    public GameObject selectionsPanel;
     public GameObject optionsPanel;
     public GameObject creditsPanel;
+    public GameObject loadingPanel;
 
-    public void LoadLevel1()   //TODO: level selection menu
+    public void ShowLevelSelection()  //TODO: credits aktualisieren
     {
         if (IsModalWindowDisplayed()) return;
-        SceneManager.LoadScene(1);
+        selectionsPanel.SetActive(true);
+    }
+
+    public void CloseLevelSelection()
+    {
+        selectionsPanel.SetActive(false);
+    }
+
+    public void LoadLevel(int level)
+    {
+        ShowLoadingPanel();
+        SceneManager.LoadSceneAsync(level);
+    }
+
+    public void ShowLoadingPanel()
+    {
+        loadingPanel.SetActive(true);
     }
 
     public void LoadInfinite()
@@ -25,7 +45,7 @@ public class UIListener : MonoBehaviour {  //TODO: Pause menu
         optionsPanel.SetActive(true);
     }
 
-    public void HideAndApplyOptions() //TODO: options weiter implementieren
+    public void HideAndApplyOptions()
     {
         GameObject.Find("Main").GetComponent<OptionsListener>().ApplyOptions();
         optionsPanel.SetActive(false);
@@ -49,6 +69,6 @@ public class UIListener : MonoBehaviour {  //TODO: Pause menu
 
     private bool IsModalWindowDisplayed()
     {
-        return optionsPanel.activeSelf || creditsPanel.activeSelf;
+        return selectionsPanel.activeSelf || optionsPanel.activeSelf || creditsPanel.activeSelf || loadingPanel.activeSelf;
     }
 }
