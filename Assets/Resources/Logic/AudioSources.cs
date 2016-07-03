@@ -26,6 +26,7 @@ public class AudioSources
 
     public AudioSource[] GetAudioSources()
     {
-        return GameObject.Find("AudioSources").GetComponents<AudioSource>();
+        GameObject sources = GameObject.Find("AudioSources");
+        return sources.GetComponents<AudioSource>();
     }
 }

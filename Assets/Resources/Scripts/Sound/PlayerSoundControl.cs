@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerSoundControl : MonoBehaviour {
+public class PlayerSoundControl : MonoBehaviour {  //TODO: landing beim mainMenu wegmachen
 
     private PlayerControl playerControl;
     private Invoker invoker;

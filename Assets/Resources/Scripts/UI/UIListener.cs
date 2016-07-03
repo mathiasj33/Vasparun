@@ -4,14 +4,14 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UIListener : MonoBehaviour {  //TODO: Pause menu
+public class UIListener : MonoBehaviour {  //TODO: Pause menu, Highscores etc. und anmelden und so
 
     public GameObject selectionsPanel;
     public GameObject optionsPanel;
     public GameObject creditsPanel;
     public GameObject loadingPanel;
 
-    public void ShowLevelSelection()  //TODO: credits aktualisieren
+    public void ShowLevelSelection()  //TODO: credits aktualisieren; alpha version entfernen
     {
         if (IsModalWindowDisplayed()) return;
         selectionsPanel.SetActive(true);
