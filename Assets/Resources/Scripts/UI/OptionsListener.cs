@@ -25,8 +25,8 @@ public class OptionsListener : MonoBehaviour
         fullscreenToggle.isOn = Settings.GetBool("fullscreen", true);
         vsyncToggle.isOn = Settings.GetBool("vsync", true);
 
-        musicSlider.value = Settings.GetFloat("musicVolume", 20);
         effectsSlider.value = Settings.GetFloat("soundEffectsVolume", 20);
+        musicSlider.value = Settings.GetFloat("musicVolume", 20);
 
         ApplyOptions();
     }
@@ -39,6 +39,11 @@ public class OptionsListener : MonoBehaviour
         GraphicsOptions.SetAntiAliasing(antialiasingDropdown.captionText.text, antialiasingDropdown.value);
         GraphicsOptions.SetVsync(vsyncToggle.isOn);
 
+        ApplyMusicOptions();
+    }
+
+    public void ApplyMusicOptions()
+    {
         MusicOptions.SetMusicVolume(musicSlider.value);
         MusicOptions.SetSoundEffectsVolume(effectsSlider.value);
     }

@@ -4,9 +4,10 @@ using UnityEngine.SceneManagement;
 
 public class IngameMenuListener : MonoBehaviour {  //TODO: Menu noch für andere levels und infinite
 
-    public GameObject menuCanvas;  Panel und OptionsPanel abwechselnd und listener für options.
+    public GameObject mainPanel;
     public GameObject crosshairCanvas;
     public GameObject optionsPanel;
+    public GameObject loadingPanel;
 
     private bool paused = false;
 	
@@ -22,7 +23,7 @@ public class IngameMenuListener : MonoBehaviour {  //TODO: Menu noch für andere
         if (optionsPanel.activeSelf) return;
         paused = !paused;
 
-        menuCanvas.SetActive(!menuCanvas.activeSelf);
+        mainPanel.SetActive(!mainPanel.activeSelf);
         crosshairCanvas.SetActive(!crosshairCanvas.activeSelf);
         GameObject.Find("Main Camera").GetComponent<FirstPersonCamera>().enabled = !paused;
         GameObject.Find("Gun").GetComponent<GunMovementControl>().enabled = !paused;
@@ -34,14 +35,23 @@ public class IngameMenuListener : MonoBehaviour {  //TODO: Menu noch für andere
 
     public void ShowOptions()
     {
+        mainPanel.SetActive(false);
         optionsPanel.SetActive(true);
     }
 
-    public void GoToMainMenu()  //TODO: hier noch async und loading
+    public void HideAndApplyOptions()
+    {
+        GameObject.Find("Main").GetComponent<OptionsListener>().ApplyOptions();
+        optionsPanel.SetActive(false);
+        mainPanel.SetActive(true);
+    }
+
+    public void GoToMainMenu()  TODO: Music und AudioSources werden bei neu laden dupliziert!!
     {
         if (optionsPanel.activeSelf) return;
         Time.timeScale = 1;
-        SceneManager.LoadScene(0);
+        loadingPanel.SetActive(true);
+        SceneManager.LoadSceneAsync(0);
     }
 
     public void Quit()

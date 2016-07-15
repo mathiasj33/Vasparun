@@ -6,7 +6,6 @@ using System;
 public class FirstPersonCamera : MonoBehaviour
 {
     public GameObject Camera { get { return gameObject; } }
-    public float cameraSensitivity = 10;
 
     private PlayerControl playerControl;
 
@@ -23,15 +22,14 @@ public class FirstPersonCamera : MonoBehaviour
         Cursor.visible = false;
 
         rotationY = transform.localRotation.eulerAngles.y;
-        if (Globals.Sensitivity != 0) cameraSensitivity = Globals.Sensitivity;
 
         playerControl = GameObject.Find("Player").GetComponent<PlayerControl>();
     }
 
     void Update()
     {
-        rotationY += Input.GetAxis("Mouse X") * (cameraSensitivity / 10);
-        rotationX += Input.GetAxis("Mouse Y") * (cameraSensitivity / 10);
+        rotationY += Input.GetAxis("Mouse X") * (Globals.Sensitivity / 10);
+        rotationX += Input.GetAxis("Mouse Y") * (Globals.Sensitivity / 10);
         rotationX = Mathf.Clamp(rotationX, -90, 90);
 
         transform.localRotation = Quaternion.AngleAxis(rotationY, Vector3.up);

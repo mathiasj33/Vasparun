@@ -11,7 +11,14 @@ public class UIListener : MonoBehaviour {  //TODO: Pause menu, Highscores etc. u
     public GameObject creditsPanel;
     public GameObject loadingPanel;
 
-    public void ShowLevelSelection()  //TODO: credits aktualisieren; alpha version entfernen
+    private OptionsListener optionsListener;
+
+    public void Start()
+    {
+        optionsListener = GameObject.Find("Main").GetComponent<OptionsListener>();
+    }
+
+    public void ShowLevelSelection()  //TODO: credits aktualisieren
     {
         if (IsModalWindowDisplayed()) return;
         selectionsPanel.SetActive(true);
@@ -45,9 +52,14 @@ public class UIListener : MonoBehaviour {  //TODO: Pause menu, Highscores etc. u
         optionsPanel.SetActive(true);
     }
 
+    public void ApplyMusicOptions()
+    {
+        optionsListener.ApplyMusicOptions();
+    }
+
     public void HideAndApplyOptions()
     {
-        GameObject.Find("Main").GetComponent<OptionsListener>().ApplyOptions();
+        optionsListener.ApplyOptions();
         optionsPanel.SetActive(false);
     }
 
