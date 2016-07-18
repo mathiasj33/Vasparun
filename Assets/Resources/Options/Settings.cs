@@ -17,6 +17,11 @@ static class Settings
         PlayerPrefs.SetFloat(key, value);
     }
 
+    public static void SetString(string key, string value)
+    {
+        PlayerPrefs.SetString(key, value);
+    }
+
     public static int GetInt(string key, int defaultValue)
     {
         return PlayerPrefs.GetInt(key, defaultValue);
@@ -30,6 +35,11 @@ static class Settings
     public static float GetFloat(string key, float defaultValue)
     {
         return PlayerPrefs.GetFloat(key, defaultValue);
+    }
+
+    public static string GetString(string key, string defaultValue)
+    {
+        return PlayerPrefs.GetString(key, defaultValue);
     }
 
     private static int BoolToInt(bool value)

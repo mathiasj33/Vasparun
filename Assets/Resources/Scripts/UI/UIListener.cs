@@ -4,12 +4,13 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UIListener : MonoBehaviour {  //TODO: Pause menu, Highscores etc. und anmelden und so
+public class UIListener : MonoBehaviour {  //TODO: Highscores etc. und anmelden und so
 
     public GameObject selectionsPanel;
     public GameObject optionsPanel;
     public GameObject creditsPanel;
     public GameObject loadingPanel;
+    public GameObject userPanel;
 
     private OptionsListener optionsListener;
 
@@ -31,8 +32,9 @@ public class UIListener : MonoBehaviour {  //TODO: Pause menu, Highscores etc. u
 
     public void LoadLevel(int level)
     {
+        level++; //match level to scene number
         ShowLoadingPanel();
-        SceneManager.LoadSceneAsync(level);
+        SceneManager.LoadScene(level);
     }
 
     public void ShowLoadingPanel()
@@ -43,7 +45,8 @@ public class UIListener : MonoBehaviour {  //TODO: Pause menu, Highscores etc. u
     public void LoadInfinite()
     {
         if (IsModalWindowDisplayed()) return;
-        SceneManager.LoadScene(4);
+        ShowLoadingPanel();
+        SceneManager.LoadScene(5);
     }
 
     public void ShowOptions()
@@ -81,6 +84,6 @@ public class UIListener : MonoBehaviour {  //TODO: Pause menu, Highscores etc. u
 
     private bool IsModalWindowDisplayed()
     {
-        return selectionsPanel.activeSelf || optionsPanel.activeSelf || creditsPanel.activeSelf || loadingPanel.activeSelf;
+        return selectionsPanel.activeSelf || optionsPanel.activeSelf || creditsPanel.activeSelf || loadingPanel.activeSelf || userPanel.activeSelf;
     }
 }

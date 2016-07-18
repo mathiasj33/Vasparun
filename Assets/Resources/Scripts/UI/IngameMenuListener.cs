@@ -2,21 +2,26 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class IngameMenuListener : MonoBehaviour {  //TODO: Menu noch für andere levels und infinite
+public class IngameMenuListener : MonoBehaviour {
 
     public GameObject mainPanel;
     public GameObject crosshairCanvas;
     public GameObject optionsPanel;
     public GameObject loadingPanel;
 
+    public GameObject bestTimeCanvas;
+
     private bool paused = false;
 	
 	void Update () {
-        if(Input.GetButtonDown("Escape"))
-        {
-            ResumeOrStop();
-        }
-	}
+        if(Input.GetButtonDown("Escape")) ResumeOrStop();
+        if (Input.GetKeyDown("t")) ShowBestTimeCanvas();
+    }
+
+    public void ShowBestTimeCanvas()
+    {
+
+    }
 
     public void ResumeOrStop()
     {
@@ -46,12 +51,12 @@ public class IngameMenuListener : MonoBehaviour {  //TODO: Menu noch für andere
         mainPanel.SetActive(true);
     }
 
-    public void GoToMainMenu()  TODO: Music und AudioSources werden bei neu laden dupliziert!!
+    public void GoToMainMenu()
     {
         if (optionsPanel.activeSelf) return;
         Time.timeScale = 1;
         loadingPanel.SetActive(true);
-        SceneManager.LoadSceneAsync(0);
+        SceneManager.LoadScene(1);
     }
 
     public void Quit()

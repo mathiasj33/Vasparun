@@ -33,11 +33,11 @@ public class CheckpointControl : MonoBehaviour
     {
         GameObject go = rayCastHelper.GetUnderPlayer();
         if (go == null) return;
-        if (go.tag == "Finish")
+        if (go.tag == "Finish")  TODO: Hier weiter - in andere klasse und isOnGround muss true sein
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(1);
         }
 
         Checkpoint checkpoint = checkpointManager.GetCheckpoint(go);
