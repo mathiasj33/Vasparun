@@ -26,6 +26,7 @@ public class ScoreScript : MonoBehaviour {
     {
 
         FadeInAndOutScript fader = minusText.gameObject.AddComponent<FadeInAndOutScript>();
+        fader.InfiniteMode = true;
         fader.Canvas = canvas;
         fader.Text = minusText;
         minus -= 50;

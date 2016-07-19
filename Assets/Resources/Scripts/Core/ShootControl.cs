@@ -10,6 +10,7 @@ public class ShootControl : MonoBehaviour
     private Invoker invoker;
     private bool shootingAllowed = true;
 
+    private TimeScript timeScript;
     private ScoreScript scoreScript;
 
     private ParticleSystem gunParticles;
@@ -21,6 +22,7 @@ public class ShootControl : MonoBehaviour
         invoker = GameObject.Find("Player").GetComponent<Invoker>();
         playerControl = GameObject.Find("Player").GetComponent<PlayerControl>();
         if (infiniteMode) scoreScript = GameObject.Find("Main").GetComponent<ScoreScript>();
+        else timeScript = GameObject.Find("Main").GetComponent<TimeScript>();
 
         gunParticles = GameObject.Find("LaserParticle").GetComponent<ParticleSystem>();
         tipPosition = GameObject.Find("Tip").transform;
@@ -56,14 +58,16 @@ public class ShootControl : MonoBehaviour
                 {
                     playerControl.InitiateWarp(go);
                 }
-                else if(infiniteMode) scoreScript.Minus();
+                else if (infiniteMode) scoreScript.Minus();
+                else timeScript.Plus();
             }
             else
             {
                 laser.SetPosition(1, ray.GetPoint(50));
-                if (!rayHit && infiniteMode)
+                if (!rayHit)
                 {
-                    scoreScript.Minus();
+                    if (infiniteMode) scoreScript.Minus();
+                    else timeScript.Plus();
                 }
             }
             PlayShootEffects(laser);

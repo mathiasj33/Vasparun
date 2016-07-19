@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class FadeInAndOutScript : MonoBehaviour {  //TODO: Destroy(this) überall
 
+    public bool InfiniteMode { get; set; }
     public Canvas Canvas { get; set; }
     public Text Text { get; set; }
 
@@ -17,7 +18,8 @@ public class FadeInAndOutScript : MonoBehaviour {  //TODO: Destroy(this) überal
 	
     private void InitNewText()
     {
-        newTextGO = (GameObject)Instantiate(Resources.Load("Prefabs/Minus"));
+        string path = InfiniteMode ? "Prefabs/Minus" : "Prefabs/Plus";
+        newTextGO = (GameObject)Instantiate(Resources.Load(path));
         newText = newTextGO.GetComponent<Text>();
         newText.transform.SetParent(Canvas.transform, false);
         newText.fontSize = Text.fontSize;
