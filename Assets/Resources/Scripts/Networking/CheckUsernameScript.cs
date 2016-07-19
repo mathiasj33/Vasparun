@@ -40,7 +40,7 @@ public class CheckUsernameScript : MonoBehaviour
     public void CheckAvailability()
     {
         string username = userField.GetComponent<InputField>().text;
-        if(username.Contains("$") || username.Contains(","))
+        if(username.Contains("$") || username.Contains(":"))
         {
             alreadyExistsMsg.SetActive(false);
             wrongCharsMsg.SetActive(true);

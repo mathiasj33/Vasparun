@@ -18,7 +18,7 @@ public class CheckFinishedScript : MonoBehaviour {
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            GameObject.Find("Main").GetComponent<CheckBesttimesScript>().ShowBesttimes();
+            GameObject.Find("Main").GetComponent<BesttimesScript>().ShowBesttimes();
             Destroy(this);
         }
     }

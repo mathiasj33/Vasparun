@@ -38,8 +38,6 @@ public class TimeScript : MonoBehaviour {
 
     private void SetTimeText()
     {
-        int minutes = (int)(time / 60);
-        float seconds = time % 60;
-        timeText.text = minutes + "m " + seconds.ToString("0.0") + "s";
+        timeText.text = TimeFormatter.Format(time);
     }
 }
