@@ -10,32 +10,15 @@ public class IngameMenuListener : MonoBehaviour {
     public GameObject loadingPanel;
 
     public GameObject bestTimeCanvas;
-
-    private bool paused = false;
 	
 	void Update () {
         if(Input.GetButtonDown("Escape")) ResumeOrStop();
-        if (Input.GetKeyDown("t")) ShowBestTimeCanvas();
-    }
-
-    public void ShowBestTimeCanvas()
-    {
-
     }
 
     public void ResumeOrStop()
     {
         if (optionsPanel.activeSelf) return;
-        paused = !paused;
-
-        mainPanel.SetActive(!mainPanel.activeSelf);
-        crosshairCanvas.SetActive(!crosshairCanvas.activeSelf);
-        GameObject.Find("Main Camera").GetComponent<FirstPersonCamera>().enabled = !paused;
-        GameObject.Find("Gun").GetComponent<GunMovementControl>().enabled = !paused;
-        GameObject.Find("Player").GetComponent<ShootControl>().enabled = !paused;
-        Cursor.visible = paused;
-        Cursor.lockState = paused ? CursorLockMode.None : CursorLockMode.Locked;
-        Time.timeScale = paused ? 0 : 1;
+        GameObject.Find("Main").GetComponent<PauseScript>().ResumeOrStop(true);
     }
 
     public void ShowOptions()

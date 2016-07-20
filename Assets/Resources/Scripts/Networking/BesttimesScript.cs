@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Text;
 
-public class BesttimesScript : MonoBehaviour {  TODO: Pausieren, main menu button, try again, zum typen scrollen der es auch ist, andere maps und infinite
+public class BesttimesScript : MonoBehaviour {   //TODO: main menu button, try again, zum typen scrollen der es auch ist, eigenen score hochladen und comparen, new highscore message wenn besser, andere maps und infinite
 
     public int level;
 
@@ -21,6 +21,8 @@ public class BesttimesScript : MonoBehaviour {  TODO: Pausieren, main menu butto
 	public void ShowBesttimes()
     {
         canvas.SetActive(true);
+        GameObject.Find("Main").GetComponent<PauseScript>().ResumeOrStop(false);
+
         WWWForm form = new WWWForm();
         form.AddField("op", "SelectAllUserTimes");
         form.AddField("level", level);
@@ -66,8 +68,15 @@ public class BesttimesScript : MonoBehaviour {  TODO: Pausieren, main menu butto
             timesString.Append(timeString).AppendLine();
         }
 
-        users.text = userString.ToString();
-        times.text = timesString.ToString();
+        //users.text = userString.ToString();
+        //times.text = timesString.ToString();
+        users.text = "";
+        times.text = "";
+        for(int i = 0; i < 100; i++)
+        {
+            users.text += "User" + i + "\n";
+            times.text += "Time" + i + "\n";
+        }
 
         scrollView.SetActive(true);
     }
@@ -83,6 +92,6 @@ public class BesttimesScript : MonoBehaviour {  TODO: Pausieren, main menu butto
         timesTrans.anchoredPosition = usersTrans.anchoredPosition;
 
         RectTransform contentTrans = content.GetComponent<RectTransform>();
-        contentTrans.offsetMin = new Vector2(contentTrans.offsetMin.x, 531 - users.preferredHeight);
+        contentTrans.offsetMin = new Vector2(contentTrans.offsetMin.x, 441.5f - users.preferredHeight);
     }
 }

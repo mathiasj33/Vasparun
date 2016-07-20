@@ -16,8 +16,6 @@ public class CheckFinishedScript : MonoBehaviour {
         if (go == null) return;
         if (go.tag == "Finish" && !playerControl.IsJumping())
         {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
             GameObject.Find("Main").GetComponent<BesttimesScript>().ShowBesttimes();
             Destroy(this);
         }
