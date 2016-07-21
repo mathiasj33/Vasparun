@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class CheckUsernameScript : MonoBehaviour
+public class CheckUsernameScript : MonoBehaviour  //TODO: server backups und gescheit aufsetzen (DigitalOcean checklist -> firewall, fail2ban, admin account etc. etc.)
 {
     public GameObject userPanel;
     public GameObject userField;
@@ -37,7 +37,7 @@ public class CheckUsernameScript : MonoBehaviour
         }
     }
 
-    public void CheckAvailability()
+    public void CheckAvailability()  //TODO: character limit für UI (im Textfield und MySQL)
     {
         string username = userField.GetComponent<InputField>().text;
         if(username.Contains("$") || username.Contains(":"))

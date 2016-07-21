@@ -21,6 +21,14 @@ public class IngameMenuListener : MonoBehaviour {
         GameObject.Find("Main").GetComponent<PauseScript>().ResumeOrStop(true);
     }
 
+    public void RestartLevel()
+    {
+        if (optionsPanel.activeSelf) return;
+        loadingPanel.SetActive(true);
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
     public void ShowOptions()
     {
         mainPanel.SetActive(false);
